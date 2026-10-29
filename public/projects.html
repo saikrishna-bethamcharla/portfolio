@@ -1449,20 +1449,20 @@ function drawAuthenticWear(ctx, W, H, isDark = true) {
   ctx.restore();
 }
 
-function drawClassicBadge(ctx, x, y, w, h, text, textColor, borderColor) {
+function drawClassicBadge(ctx, x, y, w, h, text, textColor, borderColor, fontSize = 28) {
   ctx.save();
   ctx.strokeStyle = borderColor;
-  ctx.lineWidth = 2.4;
+  ctx.lineWidth = 2.2;
   ctx.strokeRect(x, y, w, h);
 
   ctx.lineWidth = 1.0;
   ctx.strokeRect(x + 4, y + 4, w - 8, h - 8);
 
   ctx.fillStyle = textColor;
-  ctx.font = '700 36px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.font = `700 ${fontSize}px "Newsreader", "Times New Roman", Georgia, serif`;
   ctx.textAlign = 'center';
   ctx.letterSpacing = '0.14em';
-  ctx.fillText(text, x + w / 2, y + h * 0.70);
+  ctx.fillText(text, x + w / 2, y + h * 0.68);
   ctx.restore();
 }
 
@@ -1662,7 +1662,7 @@ function generateDoorCover() {
   const ctx = canvas.getContext('2d');
   const W = 800, H = 1560;
 
-  // 1. Weathered charcoal / midnight black cardstock (matches The Last Summer)
+  // 1. Weathered charcoal / midnight black cardstock
   const bg = ctx.createLinearGradient(0, 0, W, H);
   bg.addColorStop(0, '#101014');
   bg.addColorStop(0.4, '#0a0a0d');
@@ -1671,40 +1671,38 @@ function generateDoorCover() {
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
-  // Surface paper texture
   ctx.fillStyle = 'rgba(255, 255, 255, 0.025)';
-  for (let i = 0; i < 1100; i++) {
-    const rx = Math.random() * W;
-    const ry = Math.random() * H;
+  for (let i = 0; i < 900; i++) {
+    const rx = Math.random() * W, ry = Math.random() * H;
     ctx.fillRect(rx, ry, Math.random() * 2 + 1, Math.random() * 2 + 1);
   }
 
-  // 2. Physical Cardboard Edge & Corner Wear
   drawAuthenticWear(ctx, W, H, true);
 
-  // 3. TOP CREDIT: Small Tracked Serif Caps
+  // 2. TOP CREDIT
   ctx.fillStyle = '#c5b8a5';
-  ctx.font = '600 17px "Newsreader", Georgia, serif';
+  ctx.font = '600 16px "Newsreader", Georgia, serif';
   ctx.textAlign = 'center';
   ctx.letterSpacing = '0.30em';
-  ctx.fillText('A FILM BY SAI KRISHNA', W / 2, 95);
+  ctx.fillText('A FILM BY SAI KRISHNA', W / 2, 85);
 
-  // 4. TITLE: Stacked Tall Condensed Serif
-  drawCondensedSerifTitle(ctx, ['THE DOOR', 'AT 11:47'], W / 2, 215, {
-    scaleX: 0.88,
-    scaleY: 1.28,
-    fontSize: 98,
-    lineHeight: 114,
-    color: '#f0e8d8',
-    shadowColor: 'rgba(0, 0, 0, 0.75)',
-    letterSpacing: '0.05em'
-  });
+  // 3. TITLE
+  ctx.fillStyle = '#f0e8d8';
+  ctx.font = '700 86px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.letterSpacing = '0.04em';
+  ctx.fillText('THE DOOR', W / 2, 195);
+  ctx.fillText('AT 11:47', W / 2, 290);
 
-  // 5. HERO ARTWORK: The Liminal Doorway Ajar (Painterly Vertical Flame Silhouette)
-  const dX = W / 2;
-  const dY = 820;
+  ctx.strokeStyle = 'rgba(230, 57, 70, 0.45)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(140, 320);
+  ctx.lineTo(W - 140, 320);
+  ctx.stroke();
 
-  // Atmospheric fiery glow behind door
+  // 4. HERO VISUAL: Painterly vertical woodblock flame and doorway
+  const dX = W / 2, dY = 740;
+
   const halo = ctx.createRadialGradient(dX, dY, 40, dX, dY, 320);
   halo.addColorStop(0, 'rgba(230, 57, 70, 0.55)');
   halo.addColorStop(0.4, 'rgba(247, 127, 0, 0.28)');
@@ -1715,12 +1713,8 @@ function generateDoorCover() {
   ctx.arc(dX, dY, 340, 0, Math.PI * 2);
   ctx.fill();
 
-  // Woodblock / Dry-brush Flame Doorway Silhouette
   ctx.save();
-  const flameH = 560;
-  const flameTop = dY - flameH * 0.52;
-
-  const doorW = 160, doorH = 340;
+  const doorW = 170, doorH = 370;
   const doorL = dX - doorW / 2;
   const doorT = dY - doorH / 2 + 30;
 
@@ -1739,6 +1733,8 @@ function generateDoorCover() {
   ctx.closePath();
   ctx.fill();
 
+  const flameH = 620;
+  const flameTop = dY - flameH * 0.52;
   for (let f = 0; f < 38; f++) {
     const fx = dX + (Math.sin(f * 2.3) * (doorW * 0.95));
     const startFY = doorT + doorH * 0.9;
@@ -1772,11 +1768,175 @@ function generateDoorCover() {
   ctx.strokeStyle = '#e63946';
   ctx.lineWidth = 1.6;
   ctx.stroke();
-
   ctx.restore();
 
-  // 6. BOTTOM RIGHT: Vintage Boxed [ VHS ] Badge
-  drawClassicBadge(ctx, W - 220, H - 150, 155, 78, 'VHS', '#f0e8d8', '#f0e8d8');
+  // 5. CURATED EDITORIAL
+  const subY = 1110;
+  ctx.fillStyle = '#f0e8d8';
+  ctx.font = 'italic 20px "Newsreader", Georgia, serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.01em';
+  ctx.fillText('“A mind-bending journey into liminal time and reality.”', W / 2, subY);
+
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.fillStyle = '#e63946';
+  ctx.letterSpacing = '0.24em';
+  ctx.fillText('AI SHORT FILM • DIRECTED WITH SEEDANCE 2.0 & KLING 3.0', W / 2, subY + 36);
+
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(80, H - 200);
+  ctx.lineTo(W - 80, H - 200);
+  ctx.stroke();
+
+  // Left metadata
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#e63946';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.20em';
+  ctx.fillText('WRITTEN & DIRECTED', 80, H - 160);
+
+  ctx.fillStyle = '#f0e8d8';
+  ctx.font = '700 16px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.08em';
+  ctx.fillText('SAI KRISHNA BETHAMCHARLA', 80, H - 134);
+
+  // 6. BOTTOM RIGHT: Full [ SHORT FILM ] Badge
+  const bW = 210, bH = 74;
+  const bX = W - 80 - bW, bY = H - 172;
+  drawClassicBadge(ctx, bX, bY, bW, bH, 'SHORT FILM', '#f0e8d8', '#e63946', 26);
+
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+function generateGmcksCover(portraitImg) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 800;
+  canvas.height = 1560;
+  const ctx = canvas.getContext('2d');
+  const W = 800, H = 1560;
+
+  // 1. Archival Aged Crimson / Burgundy Cardstock
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#261014');
+  bg.addColorStop(0.4, '#1b090c');
+  bg.addColorStop(0.75, '#120507');
+  bg.addColorStop(1, '#0b0204');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.025)';
+  for (let i = 0; i < 900; i++) {
+    const rx = Math.random() * W, ry = Math.random() * H;
+    ctx.fillRect(rx, ry, Math.random() * 2 + 1, Math.random() * 2 + 1);
+  }
+
+  drawAuthenticWear(ctx, W, H, true);
+
+  // 2. TOP HEADER
+  ctx.fillStyle = '#d4a373';
+  ctx.font = '600 15px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.30em';
+  ctx.fillText('PRANIC HEALING FOUNDATION PRESENTS', W / 2, 75);
+
+  ctx.strokeStyle = 'rgba(212, 163, 115, 0.4)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(80, 95);
+  ctx.lineTo(W - 80, 95);
+  ctx.stroke();
+
+  ctx.fillStyle = '#f5eedc';
+  ctx.font = '600 13px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.24em';
+  ctx.fillText('A FILM BY SAI KRISHNA BETHAMCHARLA', W / 2, 126);
+
+  // 3. MONUMENTAL TITLE & AMBER SUBTITLE
+  ctx.fillStyle = '#f5eedc';
+  ctx.font = '700 108px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.letterSpacing = '-0.02em';
+  ctx.fillText('GMCKS', W / 2, 245);
+
+  ctx.fillStyle = '#d4a373';
+  ctx.font = '600 22px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.30em';
+  ctx.fillText('THE ARCHIVAL DOCUMENTARY', W / 2, 292);
+
+  ctx.strokeStyle = 'rgba(212, 163, 115, 0.4)';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  ctx.moveTo(180, 318);
+  ctx.lineTo(W - 180, 318);
+  ctx.stroke();
+
+  // 4. HERO VISUAL: Archival Pencil-Sketch Cameo
+  const pCX = W / 2, pCY = 680, pRX = 270, pRY = 310;
+
+  drawGoldenLotus(ctx, pCX, pCY - 30, pRX * 1.15, 'rgba(215, 165, 55, 0.45)');
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.ellipse(pCX, pCY, pRX, pRY, 0, 0, Math.PI * 2);
+  ctx.clip();
+
+  if (portraitImg && portraitImg.complete && portraitImg.naturalWidth) {
+    const sW = portraitImg.naturalWidth, sH = portraitImg.naturalHeight;
+    ctx.drawImage(portraitImg, 0, 0, sW, sH, pCX - pRX, pCY - pRY, pRX * 2, pRY * 2);
+  } else {
+    drawDetailedPencilSketch(ctx, pCX, pCY, pRX * 0.9);
+  }
+  ctx.restore();
+
+  ctx.strokeStyle = '#f5eedc';
+  ctx.lineWidth = 2.4;
+  ctx.beginPath();
+  ctx.ellipse(pCX, pCY, pRX, pRY, 0, 0, Math.PI * 2);
+  ctx.stroke();
+
+  ctx.strokeStyle = 'rgba(215, 165, 55, 0.55)';
+  ctx.lineWidth = 1.0;
+  ctx.beginPath();
+  ctx.ellipse(pCX, pCY, pRX + 5, pRY + 5, 0, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // 5. CURATED EDITORIAL DETAILS
+  const qY = 1050;
+  ctx.fillStyle = '#f5eedc';
+  ctx.font = 'italic 21px "Newsreader", Georgia, serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.01em';
+  ctx.fillText('“A life dedicated to transforming modern energy healing.”', W / 2, qY);
+
+  ctx.font = '600 13px "Inter Tight", sans-serif';
+  ctx.fillStyle = '#d4a373';
+  ctx.letterSpacing = '0.22em';
+  ctx.fillText('ORIGINAL SCORE & COLOR TIMING BY SAI KRISHNA', W / 2, qY + 36);
+
+  ctx.strokeStyle = 'rgba(212, 163, 115, 0.3)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(80, H - 200);
+  ctx.lineTo(W - 80, H - 200);
+  ctx.stroke();
+
+  // Left metadata
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#d4a373';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.18em';
+  ctx.fillText('SPECIAL PRESENTATION', 80, H - 160);
+
+  ctx.fillStyle = '#f5eedc';
+  ctx.font = '500 14px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.08em';
+  ctx.fillText('42 MINUTES • ARCHIVAL RESTORATION', 80, H - 132);
+
+  // 6. BOTTOM RIGHT: Full [ DOCUMENTARY ] Badge
+  const bW = 240, bH = 74;
+  const bX = W - 80 - bW, bY = H - 172;
+  drawClassicBadge(ctx, bX, bY, bW, bH, 'DOCUMENTARY', '#f5eedc', '#d4a373', 25);
 
   return canvas.toDataURL('image/webp', 0.95);
 }
@@ -1874,7 +2034,7 @@ function generateGmcksSpine(phLogoImg) {
   ctx.fillText('GMCKS DOCUMENTARY', 0, 26);
   ctx.restore();
 
-  // 5. BOTTOM SECTION: SAI KRISHNA + Boxed [ VHS ] Badge
+  // 5. BOTTOM SECTION: SAI KRISHNA + Boxed [ DOC ] Badge
   ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
   ctx.lineWidth = 1;
   ctx.beginPath();
@@ -1895,99 +2055,11 @@ function generateGmcksSpine(phLogoImg) {
 
   const bW = 140, bH = 75;
   const bX = (W - bW) / 2, bY = H - 150;
-  drawClassicBadge(ctx, bX, bY, bW, bH, 'VHS', '#f5eedc', '#d4a373');
+  drawClassicBadge(ctx, bX, bY, bW, bH, 'DOC', '#f5eedc', '#d4a373', 24);
 
   ctx.fillStyle = '#8d99ae';
   ctx.font = '600 12px "Inter Tight", sans-serif';
   ctx.fillText('2023 • 42 MIN', W / 2, H - 38);
-
-  return canvas.toDataURL('image/webp', 0.95);
-}
-
-function generateGmcksCover(portraitImg) {
-  const canvas = document.createElement('canvas');
-  canvas.width = 800;
-  canvas.height = 1560;
-  const ctx = canvas.getContext('2d');
-  const W = 800, H = 1560;
-
-  // 1. Archival Aged Crimson / Burgundy Cardstock
-  const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, '#261014');
-  bg.addColorStop(0.4, '#1b090c');
-  bg.addColorStop(0.75, '#120507');
-  bg.addColorStop(1, '#0b0204');
-  ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, W, H);
-
-  // Surface paper fibers
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.025)';
-  for (let i = 0; i < 1100; i++) {
-    const rx = Math.random() * W;
-    const ry = Math.random() * H;
-    ctx.fillRect(rx, ry, Math.random() * 2 + 1, Math.random() * 2 + 1);
-  }
-
-  // 2. Physical Cardboard Edge & Corner Wear
-  drawAuthenticWear(ctx, W, H, true);
-
-  // 3. TOP CREDIT: Small Tracked Serif Caps
-  ctx.fillStyle = '#d4a373';
-  ctx.font = '600 17px "Newsreader", Georgia, serif';
-  ctx.textAlign = 'center';
-  ctx.letterSpacing = '0.30em';
-  ctx.fillText('A FILM BY SAI KRISHNA', W / 2, 95);
-
-  // 4. TITLE: Stacked Tall Condensed Serif
-  drawCondensedSerifTitle(ctx, ['GMCKS', 'DOCUMENTARY'], W / 2, 215, {
-    scaleX: 0.86,
-    scaleY: 1.28,
-    fontSize: 90,
-    lineHeight: 110,
-    color: '#f5eedc',
-    shadowColor: 'rgba(0, 0, 0, 0.75)',
-    letterSpacing: '0.06em'
-  });
-
-  // 5. HERO ARTWORK: Authentic Hand-Drawn Pencil-Sketch Portrait of GMCKS
-  const pCX = W / 2;
-  const pCY = 830;
-  const pRX = 285;
-  const pRY = 335;
-
-  // Soft radiant golden lotus aura
-  drawGoldenLotus(ctx, pCX, pCY - 30, pRX * 1.15, 'rgba(215, 165, 55, 0.45)');
-
-  // Cameo clipping mask
-  ctx.save();
-  ctx.beginPath();
-  ctx.ellipse(pCX, pCY, pRX, pRY, 0, 0, Math.PI * 2);
-  ctx.clip();
-
-  if (portraitImg && portraitImg.complete && portraitImg.naturalWidth) {
-    const sW = portraitImg.naturalWidth;
-    const sH = portraitImg.naturalHeight;
-    ctx.drawImage(portraitImg, 0, 0, sW, sH, pCX - pRX, pCY - pRY, pRX * 2, pRY * 2);
-  } else {
-    drawDetailedPencilSketch(ctx, pCX, pCY, pRX * 0.9);
-  }
-  ctx.restore();
-
-  // Fine dual antique gold & graphite rim
-  ctx.strokeStyle = '#f5eedc';
-  ctx.lineWidth = 2.4;
-  ctx.beginPath();
-  ctx.ellipse(pCX, pCY, pRX, pRY, 0, 0, Math.PI * 2);
-  ctx.stroke();
-
-  ctx.strokeStyle = 'rgba(215, 165, 55, 0.55)';
-  ctx.lineWidth = 1.0;
-  ctx.beginPath();
-  ctx.ellipse(pCX, pCY, pRX + 5, pRY + 5, 0, 0, Math.PI * 2);
-  ctx.stroke();
-
-  // 6. BOTTOM RIGHT: Vintage Boxed [ VHS ] Badge
-  drawClassicBadge(ctx, W - 220, H - 150, 155, 78, 'VHS', '#f5eedc', '#f5eedc');
 
   return canvas.toDataURL('image/webp', 0.95);
 }
@@ -2195,7 +2267,7 @@ function generateVasudhaCover(vLogoImg, chairmanImg, siteImg, cleanroomImg) {
   const ctx = canvas.getContext('2d');
   const W = 800, H = 1560;
 
-  // 1. Deep Prussian Navy Bookcloth Base
+  // 1. Deep Prussian Navy Bookcloth
   const bg = ctx.createLinearGradient(0, 0, W, H);
   bg.addColorStop(0, '#0f263e');
   bg.addColorStop(0.35, '#0b1d30');
@@ -2204,100 +2276,99 @@ function generateVasudhaCover(vLogoImg, chairmanImg, siteImg, cleanroomImg) {
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
-  // Woven cloth grain
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
-  for (let i = 0; i < 1100; i++) {
-    const rx = Math.random() * W;
-    const ry = Math.random() * H;
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.025)';
+  for (let i = 0; i < 900; i++) {
+    const rx = Math.random() * W, ry = Math.random() * H;
     ctx.fillRect(rx, ry, Math.random() * 3 + 1, Math.random() * 2 + 1);
   }
 
-  // 2. Physical Cardboard Edge & Corner Wear
   drawAuthenticWear(ctx, W, H, true);
 
-  // 3. TOP CREDIT: Small Tracked Serif Caps
-  ctx.fillStyle = '#9cb8d4';
-  ctx.font = '600 17px "Newsreader", Georgia, serif';
+  // 2. TOP HEADER RULE & METADATA
+  ctx.fillStyle = '#e8dfce';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
   ctx.textAlign = 'center';
-  ctx.letterSpacing = '0.30em';
-  ctx.fillText('A PLATFORM BY SAI KRISHNA', W / 2, 95);
+  ctx.letterSpacing = '0.32em';
+  ctx.fillText('VASUDHA PHARMA CHEM LIMITED', W / 2, 75);
 
-  // 4. TITLE: Stacked Tall Condensed Serif
-  drawCondensedSerifTitle(ctx, ['VASUDHA', 'PHARMA'], W / 2, 215, {
-    scaleX: 0.86,
-    scaleY: 1.28,
-    fontSize: 94,
-    lineHeight: 110,
-    color: '#fdfbf6',
-    shadowColor: 'rgba(0, 0, 0, 0.75)',
-    letterSpacing: '0.06em'
-  });
-
-  // 5. HERO ARTWORK: Architectural Cleanroom & Hexagonal Heraldic Centerpiece
-  const hCX = W / 2;
-  const hCY = 830;
-  const hR = 275;
-
-  // Soft crimson & sapphire halo
-  const halo = ctx.createRadialGradient(hCX, hCY, 40, hCX, hCY, hR * 1.35);
-  halo.addColorStop(0, 'rgba(214, 40, 40, 0.35)');
-  halo.addColorStop(0.45, 'rgba(22, 58, 94, 0.45)');
-  halo.addColorStop(0.8, 'rgba(10, 30, 50, 0.15)');
-  halo.addColorStop(1, 'transparent');
-  ctx.fillStyle = halo;
+  ctx.strokeStyle = 'rgba(214, 40, 40, 0.6)';
+  ctx.lineWidth = 1.2;
   ctx.beginPath();
-  ctx.arc(hCX, hCY, hR * 1.35, 0, Math.PI * 2);
+  ctx.moveTo(70, 95);
+  ctx.lineTo(W - 70, 95);
+  ctx.stroke();
+
+  ctx.fillStyle = '#d62828';
+  ctx.beginPath();
+  ctx.arc(W / 2, 95, 4.5, 0, Math.PI * 2);
   ctx.fill();
 
-  // Outer concentric molecular gold rings
-  ctx.strokeStyle = '#d62828';
-  ctx.lineWidth = 2.4;
+  ctx.fillStyle = '#9cb8d4';
+  ctx.font = '600 12px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.24em';
+  ctx.fillText('ENTERPRISE DIGITAL ARCHITECTURE • 80+ EXPORT MARKETS', W / 2, 126);
+
+  // 3. MONUMENTAL CORPORATE TITLE
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
+  ctx.font = '700 100px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.letterSpacing = '-0.01em';
+  ctx.fillText('VASUDHA', W / 2 + 2, 237);
+
+  ctx.fillStyle = '#fdfbf7';
+  ctx.fillText('VASUDHA', W / 2, 235);
+
+  ctx.fillStyle = '#e63946';
+  ctx.font = '700 24px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.34em';
+  ctx.fillText('PHARMA CHEM LIMITED', W / 2, 282);
+
+  ctx.strokeStyle = 'rgba(230, 57, 70, 0.4)';
+  ctx.lineWidth = 1;
   ctx.beginPath();
-  ctx.arc(hCX, hCY, hR + 10, 0, Math.PI * 2);
+  ctx.moveTo(140, 305);
+  ctx.lineTo(W - 140, 305);
   ctx.stroke();
 
-  ctx.strokeStyle = 'rgba(253, 251, 246, 0.4)';
-  ctx.lineWidth = 1.0;
-  ctx.beginPath();
-  ctx.arc(hCX, hCY, hR + 20, 0, Math.PI * 2);
-  ctx.stroke();
+  // 4. HERO VISUAL: Cleanroom Facility Architectural Landscape Window
+  const fX = 85, fY = 345, fW = W - 170, fH = 580;
 
-  // Architectural Cleanroom cameo
-  ctx.save();
-  ctx.beginPath();
-  ctx.arc(hCX, hCY, hR, 0, Math.PI * 2);
-  ctx.clip();
+  ctx.fillStyle = '#061320';
+  ctx.fillRect(fX, fY, fW, fH);
 
   if (cleanroomImg && cleanroomImg.complete && cleanroomImg.naturalWidth) {
-    ctx.drawImage(cleanroomImg, 0, 0, cleanroomImg.naturalWidth, cleanroomImg.naturalHeight, hCX - hR, hCY - hR, hR * 2, hR * 2);
-    // Subtle cool duotone glaze
-    const glaze = ctx.createLinearGradient(0, hCY - hR, 0, hCY + hR);
-    glaze.addColorStop(0, 'rgba(15, 38, 62, 0.35)');
-    glaze.addColorStop(1, 'rgba(7, 19, 32, 0.65)');
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(fX, fY, fW, fH);
+    ctx.clip();
+    ctx.drawImage(cleanroomImg, 0, 0, cleanroomImg.naturalWidth, cleanroomImg.naturalHeight, fX, fY, fW, fH);
+
+    const glaze = ctx.createLinearGradient(fX, fY, fX, fY + fH);
+    glaze.addColorStop(0, 'rgba(15, 38, 62, 0.25)');
+    glaze.addColorStop(0.7, 'rgba(7, 19, 32, 0.45)');
+    glaze.addColorStop(1, 'rgba(5, 12, 20, 0.85)');
     ctx.fillStyle = glaze;
-    ctx.fillRect(hCX - hR, hCY - hR, hR * 2, hR * 2);
-  } else {
-    ctx.fillStyle = '#0f263e';
-    ctx.fillRect(hCX - hR, hCY - hR, hR * 2, hR * 2);
+    ctx.fillRect(fX, fY, fW, fH);
+    ctx.restore();
   }
-  ctx.restore();
 
-  // Rim around cameo
-  ctx.strokeStyle = '#fdfbf6';
+  ctx.strokeStyle = '#d62828';
   ctx.lineWidth = 2.4;
-  ctx.beginPath();
-  ctx.arc(hCX, hCY, hR, 0, Math.PI * 2);
-  ctx.stroke();
+  ctx.strokeRect(fX, fY, fW, fH);
 
-  // Center Emblem: Iconic Hexagonal Vasudha 'V' Seal
-  const hexSize = 88;
+  ctx.strokeStyle = 'rgba(253, 251, 246, 0.35)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(fX + 4, fY + 4, fW - 8, fH - 8);
+
+  // Overlapping Hexagonal Seal at bottom center of the frame
+  const hexX = W / 2, hexY = fY + fH;
+  const hexR = 78;
   ctx.save();
-  ctx.translate(hCX, hCY);
+  ctx.translate(hexX, hexY);
   ctx.beginPath();
   for (let i = 0; i < 6; i++) {
-    const angle = (i * Math.PI) / 3 - Math.PI / 6;
-    const hx = Math.cos(angle) * hexSize;
-    const hy = Math.sin(angle) * hexSize;
+    const ang = (i * Math.PI) / 3 - Math.PI / 6;
+    const hx = Math.cos(ang) * hexR;
+    const hy = Math.sin(ang) * hexR;
     if (i === 0) ctx.moveTo(hx, hy);
     else ctx.lineTo(hx, hy);
   }
@@ -2309,13 +2380,51 @@ function generateVasudhaCover(vLogoImg, chairmanImg, siteImg, cleanroomImg) {
   ctx.stroke();
 
   if (vLogoImg && vLogoImg.complete && vLogoImg.naturalWidth) {
-    const logoDraw = hexSize * 1.3;
-    ctx.drawImage(vLogoImg, -logoDraw / 2, -logoDraw / 2, logoDraw, logoDraw);
+    const lSize = hexR * 1.35;
+    ctx.drawImage(vLogoImg, -lSize / 2, -lSize / 2, lSize, lSize);
   }
   ctx.restore();
 
-  // 6. BOTTOM RIGHT: Boxed [ WEB ] Badge
-  drawClassicBadge(ctx, W - 220, H - 150, 155, 78, 'WEB', '#fdfbf6', '#d62828');
+  // 5. CURATED EDITORIAL CONTENT
+  const textY = hexY + 115;
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 15px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.22em';
+  ctx.fillText('GLOBAL ACTIVE PHARMACEUTICAL INGREDIENTS', W / 2, textY);
+
+  ctx.fillStyle = '#b8cadb';
+  ctx.font = '400 18px "Newsreader", Georgia, serif';
+  ctx.letterSpacing = '0.01em';
+  ctx.fillText('“Engineered digital infrastructure connecting enterprise manufacturing', W / 2, textY + 38);
+  ctx.fillText('capabilities across 80+ global export markets.”', W / 2, textY + 68);
+
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(110, textY + 105);
+  ctx.lineTo(W - 110, textY + 105);
+  ctx.stroke();
+
+  // Architecture metadata
+  ctx.fillStyle = '#9cb8d4';
+  ctx.font = '600 12px "Inter Tight", sans-serif';
+  ctx.textAlign = 'left';
+  ctx.letterSpacing = '0.20em';
+  ctx.fillText('LEAD ARCHITECT', 85, H - 180);
+  ctx.fillStyle = '#fdfbf7';
+  ctx.font = '700 16px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.08em';
+  ctx.fillText('SAI KRISHNA BETHAMCHARLA', 85, H - 152);
+
+  ctx.fillStyle = '#9cb8d4';
+  ctx.font = '500 13px "Inter Tight", monospace, sans-serif';
+  ctx.fillText('EST. 1987 // HYDERABAD, INDIA', 85, H - 124);
+
+  // 6. BOTTOM RIGHT: Full [ WEBSITE ] Badge
+  const bW = 200, bH = 74;
+  const bX = W - 85 - bW, bY = H - 175;
+  drawClassicBadge(ctx, bX, bY, bW, bH, 'WEBSITE', '#fdfbf7', '#d62828', 28);
 
   return canvas.toDataURL('image/webp', 0.95);
 }
@@ -2503,7 +2612,7 @@ function generateZaiLabsCover(zaiLogoImg, zaiOgImg) {
   const ctx = canvas.getContext('2d');
   const W = 800, H = 1560;
 
-  // 1. Weathered Obsidian / Midnight Slate Base
+  // 1. Deep Obsidian Slate Background
   const bg = ctx.createLinearGradient(0, 0, W, H);
   bg.addColorStop(0, '#070f0d');
   bg.addColorStop(0.35, '#040908');
@@ -2512,59 +2621,75 @@ function generateZaiLabsCover(zaiLogoImg, zaiOgImg) {
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
-  // Surface texture / carbon grain
   ctx.fillStyle = 'rgba(255, 255, 255, 0.025)';
-  for (let i = 0; i < 1100; i++) {
-    const rx = Math.random() * W;
-    const ry = Math.random() * H;
+  for (let i = 0; i < 900; i++) {
+    const rx = Math.random() * W, ry = Math.random() * H;
     ctx.fillRect(rx, ry, Math.random() * 2 + 1, Math.random() * 2 + 1);
   }
 
-  // 2. Physical Cardboard Edge & Corner Wear
   drawAuthenticWear(ctx, W, H, true);
 
-  // 3. TOP CREDIT: Small Tracked Serif Caps
-  ctx.fillStyle = '#8ea89d';
-  ctx.font = '600 17px "Newsreader", Georgia, serif';
-  ctx.textAlign = 'center';
-  ctx.letterSpacing = '0.30em';
-  ctx.fillText('A PLATFORM BY SAI KRISHNA', W / 2, 95);
+  // 2. MODERN ASYMMETRIC HEADER
+  ctx.fillStyle = '#64748b';
+  ctx.font = '700 12px "Inter Tight", monospace, sans-serif';
+  ctx.textAlign = 'left';
+  ctx.letterSpacing = '0.22em';
+  ctx.fillText('ZAI LABS STUDIO // ARCHIVE 02', 75, 75);
 
-  // 4. TITLE: Stacked Tall Condensed Serif (ZAI / LABS)
-  drawCondensedSerifTitle(ctx, ['ZAI', 'LABS'], W / 2, 215, {
-    scaleX: 0.88,
-    scaleY: 1.28,
-    fontSize: 110,
-    lineHeight: 125,
-    color: '#f4f8f6',
-    shadowColor: 'rgba(0, 0, 0, 0.85)',
-    letterSpacing: '0.08em'
-  });
+  ctx.textAlign = 'right';
+  ctx.fillStyle = '#00f2fe';
+  ctx.fillText('CO-INNOVATION ENGINE', W - 75, 75);
 
-  // 5. HERO ARTWORK: Massive Floating 3D Portal Orb (100% Round, Zero Distortion, Glowing Aura)
-  const orbCX = W / 2;
-  const orbCY = 840;
-  const orbR = 280; // 560px diameter
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(75, 95);
+  ctx.lineTo(W - 75, 95);
+  ctx.stroke();
 
-  // Radiant cyan + emerald nebula aura blending smoothly into obsidian
+  // 3. ASYMMETRIC BOLD TITLE & MANIFESTO
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#00f2fe';
+  ctx.font = '700 14px "Inter Tight", monospace, sans-serif';
+  ctx.letterSpacing = '0.34em';
+  ctx.fillText('// AI CO-INNOVATION STUDIO', 75, 145);
+
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '900 102px "Inter Tight", "Helvetica Neue", sans-serif';
+  ctx.letterSpacing = '-0.02em';
+  ctx.fillText('ZAI LABS', 75, 245);
+
+  ctx.fillStyle = '#10b981';
+  ctx.font = '800 24px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.24em';
+  ctx.fillText('INNOVATING TOMORROW', 75, 288);
+
+  ctx.strokeStyle = 'rgba(0, 242, 254, 0.35)';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  ctx.moveTo(75, 315);
+  ctx.lineTo(W - 75, 315);
+  ctx.stroke();
+
+  // 4. HERO VISUAL: 3D PORTAL ORB (100% Round, Floating in Deep Space)
+  const orbCX = W / 2, orbCY = 660, orbR = 260;
+
   const nebula = ctx.createRadialGradient(orbCX, orbCY, 30, orbCX, orbCY, orbR * 1.5);
   nebula.addColorStop(0, 'rgba(0, 242, 254, 0.38)');
-  nebula.addColorStop(0.45, 'rgba(16, 185, 129, 0.24)');
-  nebula.addColorStop(0.75, 'rgba(0, 120, 255, 0.08)');
+  nebula.addColorStop(0.45, 'rgba(16, 185, 129, 0.22)');
+  nebula.addColorStop(0.8, 'rgba(0, 120, 255, 0.06)');
   nebula.addColorStop(1, 'transparent');
   ctx.fillStyle = nebula;
   ctx.beginPath();
   ctx.arc(orbCX, orbCY, orbR * 1.5, 0, Math.PI * 2);
   ctx.fill();
 
-  // Orbital rings with delicate ticks
   ctx.strokeStyle = 'rgba(0, 242, 254, 0.4)';
   ctx.lineWidth = 1.2;
   ctx.beginPath();
   ctx.arc(orbCX, orbCY, orbR + 24, 0, Math.PI * 2);
   ctx.stroke();
 
-  // Secondary dashed ring
   ctx.save();
   ctx.strokeStyle = 'rgba(16, 185, 129, 0.35)';
   ctx.lineWidth = 1;
@@ -2574,28 +2699,59 @@ function generateZaiLabsCover(zaiLogoImg, zaiOgImg) {
   ctx.stroke();
   ctx.restore();
 
-  // Render the 3D Zai Labs Logo inside the circular portal - 100% PERFECTLY ROUND
   const targetCoverLogo = zaiLogoImg || zaiMarkImg;
   const logoDrawSize = orbR * 2;
-  const logoDrawX = orbCX - orbR;
-  const logoDrawY = orbCY - orbR;
-
   ctx.save();
   ctx.beginPath();
   ctx.arc(orbCX, orbCY, orbR - 2, 0, Math.PI * 2);
   ctx.clip();
-  drawPerfectSquareZaiLogo(ctx, targetCoverLogo, logoDrawX, logoDrawY, logoDrawSize);
+  drawPerfectSquareZaiLogo(ctx, targetCoverLogo, orbCX - orbR, orbCY - orbR, logoDrawSize);
   ctx.restore();
 
-  // Glowing rim
   ctx.strokeStyle = '#00f2fe';
   ctx.lineWidth = 2.8;
   ctx.beginPath();
   ctx.arc(orbCX, orbCY, orbR - 2, 0, Math.PI * 2);
   ctx.stroke();
 
-  // 6. BOTTOM RIGHT: Vintage Boxed [ WEB ] Badge
-  drawClassicBadge(ctx, W - 220, H - 150, 155, 78, 'WEB', '#f4f8f6', '#00f2fe');
+  // 5. CURATED TECHNOLOGY CAPABILITIES & EDITORIAL
+  const btmY = 1000;
+  ctx.fillStyle = '#e2e8f0';
+  ctx.font = '700 15px "Inter Tight", sans-serif';
+  ctx.textAlign = 'left';
+  ctx.letterSpacing = '0.20em';
+  ctx.fillText('GENERATIVE AI FILMS • WEBGL 3D • REACT 19 & NEXT.JS', 75, btmY);
+
+  ctx.fillStyle = '#94a3b8';
+  ctx.font = '400 19px "Newsreader", Georgia, serif';
+  ctx.letterSpacing = '0.01em';
+  ctx.fillText('“Transforming ambitious ideas into powerful digital experiences through', 75, btmY + 42);
+  ctx.fillText('cutting-edge artificial intelligence, spatial tech, and creative engineering.”', 75, btmY + 72);
+
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(75, btmY + 115);
+  ctx.lineTo(W - 75, btmY + 115);
+  ctx.stroke();
+
+  ctx.fillStyle = '#00f2fe';
+  ctx.font = '700 12px "Inter Tight", monospace, sans-serif';
+  ctx.letterSpacing = '0.20em';
+  ctx.fillText('LEAD ARCHITECT', 75, H - 180);
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 16px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.08em';
+  ctx.fillText('SAI KRISHNA BETHAMCHARLA', 75, H - 152);
+
+  ctx.fillStyle = '#64748b';
+  ctx.font = '500 13px "Inter Tight", monospace, sans-serif';
+  ctx.fillText('URL: ZAILABS.CO.IN // GLOBAL', 75, H - 124);
+
+  // 6. BOTTOM RIGHT: Full [ WEBSITE ] Badge
+  const bW = 200, bH = 74;
+  const bX = W - 75 - bW, bY = H - 175;
+  drawClassicBadge(ctx, bX, bY, bW, bH, 'WEBSITE', '#ffffff', '#00f2fe', 28);
 
   return canvas.toDataURL('image/webp', 0.95);
 }
@@ -2794,48 +2950,52 @@ function generatePranicHealingCover(phLogoImg, mandalaImg, gmcksImg) {
 
   // 1. Warm Antique Ivory / Natural Linen Paper Base
   const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, '#fcf9f2');
-  bg.addColorStop(0.35, '#f5efe3');
-  bg.addColorStop(0.7, '#ece1cd');
-  bg.addColorStop(1, '#e2d3bb');
+  bg.addColorStop(0, '#fdfaf4');
+  bg.addColorStop(0.35, '#f7f1e5');
+  bg.addColorStop(0.7, '#f0e6d3');
+  bg.addColorStop(1, '#e6d8bf');
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
-  // Natural paper fibers
   ctx.fillStyle = 'rgba(120, 90, 40, 0.035)';
-  for (let i = 0; i < 1100; i++) {
-    const rx = Math.random() * W;
-    const ry = Math.random() * H;
+  for (let i = 0; i < 900; i++) {
+    const rx = Math.random() * W, ry = Math.random() * H;
     ctx.fillRect(rx, ry, Math.random() * 2 + 1, Math.random() * 2 + 1);
   }
 
-  // 2. Physical Cardboard Edge & Corner Wear
   drawAuthenticWear(ctx, W, H, false);
 
-  // 3. TOP CREDIT: Small Tracked Serif Caps
-  ctx.fillStyle = '#7a623c';
-  ctx.font = '600 17px "Newsreader", Georgia, serif';
+  // 2. TOP SPIRITUAL HEADER
+  ctx.fillStyle = '#8c6b12';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
   ctx.textAlign = 'center';
   ctx.letterSpacing = '0.30em';
-  ctx.fillText('A PLATFORM BY SAI KRISHNA', W / 2, 95);
+  ctx.fillText('WORLD PRANIC HEALING FOUNDATION', W / 2, 75);
 
-  // 4. TITLE: Stacked Tall Condensed Serif (PRANIC / HEALING)
-  drawCondensedSerifTitle(ctx, ['PRANIC', 'HEALING'], W / 2, 215, {
-    scaleX: 0.88,
-    scaleY: 1.28,
-    fontSize: 94,
-    lineHeight: 110,
-    color: '#0c3631',
-    shadowColor: 'rgba(180, 145, 50, 0.25)',
-    letterSpacing: '0.06em'
-  });
+  ctx.strokeStyle = '#c59b27';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  ctx.moveTo(90, 95);
+  ctx.lineTo(W - 90, 95);
+  ctx.stroke();
 
-  // 5. HERO ARTWORK: Radiant Sacred Energy Mandala & Central PH Logo Medallion
-  const mCX = W / 2;
-  const mCY = 840;
-  const mR = 275; // 550px diameter
+  ctx.fillStyle = '#c59b27';
+  ctx.beginPath();
+  ctx.moveTo(W / 2, 89);
+  ctx.lineTo(W / 2 + 5, 95);
+  ctx.lineTo(W / 2, 101);
+  ctx.lineTo(W / 2 - 5, 95);
+  ctx.closePath();
+  ctx.fill();
 
-  // Soft golden spiritual sunburst
+  ctx.fillStyle = '#00838f';
+  ctx.font = '700 12px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.22em';
+  ctx.fillText('ANDHRA PRADESH & TELANGANA CHAPTER', W / 2, 125);
+
+  // 3. COMMANDING SACRED MANDALA (Upper-Center Classical Layout)
+  const mCX = W / 2, mCY = 440, mR = 230;
+
   const sunburst = ctx.createRadialGradient(mCX, mCY, 20, mCX, mCY, mR * 1.45);
   sunburst.addColorStop(0, 'rgba(247, 215, 115, 0.55)');
   sunburst.addColorStop(0.45, 'rgba(223, 187, 67, 0.22)');
@@ -2846,13 +3006,12 @@ function generatePranicHealingCover(phLogoImg, mandalaImg, gmcksImg) {
   ctx.arc(mCX, mCY, mR * 1.45, 0, Math.PI * 2);
   ctx.fill();
 
-  // Radiating golden sunburst rays (36 delicate rays)
   ctx.save();
   ctx.strokeStyle = 'rgba(197, 155, 39, 0.35)';
   ctx.lineWidth = 1.2;
   for (let a = 0; a < Math.PI * 2; a += Math.PI / 18) {
     const r1 = mR + 8;
-    const r2 = mR + 36;
+    const r2 = mR + 32;
     ctx.beginPath();
     ctx.moveTo(mCX + Math.cos(a) * r1, mCY + Math.sin(a) * r1);
     ctx.lineTo(mCX + Math.cos(a) * r2, mCY + Math.sin(a) * r2);
@@ -2860,20 +3019,18 @@ function generatePranicHealingCover(phLogoImg, mandalaImg, gmcksImg) {
   }
   ctx.restore();
 
-  // Concentric Sacred Geometry Rings
   ctx.strokeStyle = '#c59b27';
-  ctx.lineWidth = 2.0;
+  ctx.lineWidth = 1.8;
   ctx.beginPath();
   ctx.arc(mCX, mCY, mR + 6, 0, Math.PI * 2);
   ctx.stroke();
 
-  ctx.strokeStyle = 'rgba(0, 131, 143, 0.45)';
-  ctx.lineWidth = 1.0;
+  ctx.strokeStyle = 'rgba(0, 131, 143, 0.4)';
+  ctx.lineWidth = 1;
   ctx.beginPath();
   ctx.arc(mCX, mCY, mR + 14, 0, Math.PI * 2);
   ctx.stroke();
 
-  // Draw the Sacred Energy Mandala Image
   const heroImg = mandalaImg || gmcksImg;
   if (heroImg && heroImg.complete && heroImg.naturalWidth) {
     ctx.save();
@@ -2887,34 +3044,93 @@ function generatePranicHealingCover(phLogoImg, mandalaImg, gmcksImg) {
     ctx.restore();
   }
 
-  // Inner golden rim
   ctx.strokeStyle = '#c59b27';
-  ctx.lineWidth = 3;
+  ctx.lineWidth = 2.8;
   ctx.beginPath();
   ctx.arc(mCX, mCY, mR - 2, 0, Math.PI * 2);
   ctx.stroke();
 
-  // Perfectly Round Circular PH Logo Medallion in exact center of Mandala
   if (phLogoImg && phLogoImg.complete && phLogoImg.naturalWidth) {
-    const medSize = 110;
+    const medSize = 100;
+    const medY = mCY + mR - 20;
     ctx.save();
     ctx.beginPath();
-    ctx.arc(mCX, mCY, medSize / 2, 0, Math.PI * 2);
+    ctx.arc(mCX, medY, medSize / 2, 0, Math.PI * 2);
     ctx.fillStyle = '#ffffff';
     ctx.fill();
     ctx.clip();
-    ctx.drawImage(phLogoImg, 0, 0, phLogoImg.naturalWidth, phLogoImg.naturalHeight, mCX - medSize / 2, mCY - medSize / 2, medSize, medSize);
+    ctx.drawImage(phLogoImg, 0, 0, phLogoImg.naturalWidth, phLogoImg.naturalHeight, mCX - medSize / 2, medY - medSize / 2, medSize, medSize);
     ctx.restore();
 
     ctx.strokeStyle = '#c59b27';
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 2.4;
     ctx.beginPath();
-    ctx.arc(mCX, mCY, medSize / 2, 0, Math.PI * 2);
+    ctx.arc(mCX, medY, medSize / 2, 0, Math.PI * 2);
     ctx.stroke();
   }
 
-  // 6. BOTTOM RIGHT: Vintage Boxed [ WEB ] Badge
-  drawClassicBadge(ctx, W - 220, H - 150, 155, 78, 'WEB', '#0c3631', '#c59b27');
+  // 4. CLASSICAL ILLUMINATED MANUSCRIPT TITLE & TENETS
+  const tY = 760;
+  ctx.fillStyle = '#8c6b12';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.30em';
+  ctx.fillText('ENERGY HEALING BY GRAND MASTER CHOA KOK SUI', W / 2, tY);
+
+  ctx.fillStyle = '#0f3c3a';
+  ctx.font = '700 82px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.letterSpacing = '0.04em';
+  ctx.fillText('PRANIC HEALING', W / 2, tY + 84);
+
+  ctx.fillStyle = '#9e7d1d';
+  ctx.font = 'italic 400 24px "Newsreader", Georgia, serif';
+  ctx.letterSpacing = '0.03em';
+  ctx.fillText('A powerful no-touch energy healing system', W / 2, tY + 128);
+
+  ctx.strokeStyle = 'rgba(197, 155, 39, 0.45)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(150, tY + 155);
+  ctx.lineTo(W - 150, tY + 155);
+  ctx.stroke();
+
+  ctx.fillStyle = '#00838f';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.22em';
+  ctx.fillText('NO-TOUCH • SCIENTIFIC • SYSTEMATIC • COMPLETELY SECULAR', W / 2, tY + 188);
+
+  ctx.fillStyle = '#5c4918';
+  ctx.font = '400 18px "Newsreader", Georgia, serif';
+  ctx.letterSpacing = '0.01em';
+  ctx.fillText('“A comprehensive web portal bridging ancient energy wisdom with modern', W / 2, tY + 228);
+  ctx.fillText('digital infrastructure across 36 regional healing centers in AP & Telangana.”', W / 2, tY + 258);
+
+  // 5. FOOTER ARCHITECTURE METADATA & FULL [ WEBSITE ] BADGE
+  ctx.strokeStyle = 'rgba(197, 155, 39, 0.35)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(90, H - 210);
+  ctx.lineTo(W - 90, H - 210);
+  ctx.stroke();
+
+  ctx.fillStyle = '#8c6b12';
+  ctx.font = '700 12px "Inter Tight", sans-serif';
+  ctx.textAlign = 'left';
+  ctx.letterSpacing = '0.20em';
+  ctx.fillText('LEAD ARCHITECT', 90, H - 170);
+  ctx.fillStyle = '#0f3c3a';
+  ctx.font = '700 17px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.08em';
+  ctx.fillText('SAI KRISHNA BETHAMCHARLA', 90, H - 142);
+
+  ctx.fillStyle = '#7a6742';
+  ctx.font = '500 13px "Inter Tight", sans-serif';
+  ctx.fillText('REGIONAL PORTAL // 36 HUBS', 90, H - 118);
+
+  // 6. BOTTOM RIGHT: Full [ WEBSITE ] Badge
+  const bW = 200, bH = 74;
+  const bX = W - 90 - bW, bY = H - 172;
+  drawClassicBadge(ctx, bX, bY, bW, bH, 'WEBSITE', '#0f3c3a', '#c59b27', 28);
 
   return canvas.toDataURL('image/webp', 0.95);
 }

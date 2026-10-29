@@ -322,19 +322,13 @@ html, body {
 }
 
 #cap-sub .cap-mask {
+  font-family: "Inter Tight", sans-serif;
   color: var(--cobalt);
-  font-weight: 600;
-  letter-spacing: .12em;
-  min-height: 14px;
-}
-
-#cap-year .cap-mask {
-  font-family: "Inter Tight", system-ui, sans-serif;
-  font-weight: 500;
-  font-size: 11px;
-  letter-spacing: .1em;
-  color: var(--muted);
-  min-height: 14px;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  min-height: 18px;
 }
 
 /* ── 6. ARROWS ──────────────────────────────────────────────────── */
@@ -734,7 +728,6 @@ html, body {
 <div id="caption" aria-live="polite">
   <div id="cap-title"><div class="cap-mask"><span></span></div></div>
   <div id="cap-sub"><div class="cap-mask"><span></span></div></div>
-  <div id="cap-year"><div class="cap-mask"><span></span></div></div>
 </div>
 
 <!-- 6. ARROWS -->
@@ -1075,7 +1068,6 @@ const tabBtns     = Array.from(document.querySelectorAll('.tab-btn'));
 const playRing    = document.getElementById('play-ring');
 const capTitle    = document.getElementById('cap-title');
 const capSub      = document.getElementById('cap-sub');
-const capYear     = document.getElementById('cap-year');
 const arrLeft     = document.getElementById('arr-left');
 const arrRight    = document.getElementById('arr-right');
 const detail      = document.getElementById('detail');
@@ -3347,8 +3339,7 @@ function setActiveFilm(fi, dir) {
   const film = FILMS[fi];
 
   swapCaptionLine(capTitle, film.title, dir, '');
-  swapCaptionLine(capSub, film.romaji, dir, 'color: var(--cobalt);');
-  swapCaptionLine(capYear, `${film.year} • ${film.genre}`, dir, '');
+  swapCaptionLine(capSub, film.genre, dir, 'color: var(--cobalt);');
 
   updateCategoryTabs(film.category);
 }
@@ -3420,7 +3411,7 @@ function openDetail() {
 
   const film = FILMS[active];
 
-  dlSub.textContent    = film.romaji;
+  dlSub.textContent    = film.genre;
   dlTitle.textContent  = film.title;
   dlMeta.textContent   = `${film.year} / ${film.genre} / ${film.minutes}`;
   dlSyn.textContent    = film.synopsis;
@@ -3761,11 +3752,10 @@ async function init() {
   measureDimensions();
   buildShelf();
 
-  // Initial caption setup (GMCKS Documentary)
+  // Initial caption setup
   const film = FILMS[active];
   capTitle.querySelector('span').textContent = film.title;
-  capSub.querySelector('span').textContent   = film.romaji;
-  capYear.querySelector('span').textContent  = `${film.year} • ${film.genre}`;
+  capSub.querySelector('span').textContent   = film.genre;
 
   // Initial active category tab
   updateCategoryTabs(film.category);

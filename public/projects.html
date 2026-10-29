@@ -99,28 +99,32 @@ html, body {
 
 #topbar-center {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 5px;
+  justify-content: center;
   color: #ffffff;
   text-decoration: none;
 }
 
-#logo-cjk {
-  font-family: "Inter Tight", "Noto Sans JP", sans-serif;
+.project-showcase-title {
+  font-family: "Inter Tight", "Helvetica Neue", sans-serif;
   font-weight: 700;
   font-size: 13px;
-  letter-spacing: .22em;
+  letter-spacing: .28em;
+  text-transform: uppercase;
   color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
 }
 
-#logo-en {
-  font-family: "Inter Tight", sans-serif;
-  font-weight: 600;
-  font-size: 9px;
-  letter-spacing: .38em;
-  padding-left: .38em;
-  color: var(--cobalt);
+.project-showcase-title::before,
+.project-showcase-title::after {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 1px;
+  background: var(--cobalt);
+  opacity: 0.8;
 }
 
 #topbar-right {
@@ -616,12 +620,15 @@ html, body {
     padding: 0 16px;
   }
 
-  #logo-cjk {
+  .project-showcase-title {
     font-size: 11px;
+    letter-spacing: .2em;
+    gap: 8px;
   }
 
-  #logo-en {
-    font-size: 7.5px;
+  .project-showcase-title::before,
+  .project-showcase-title::after {
+    width: 10px;
   }
 
   #topbar-right {
@@ -693,21 +700,18 @@ html, body {
 <!-- 1. TOP BAR -->
 <header id="topbar">
   <div id="topbar-left">
-    <a href="/" class="lbl box" id="back-link">← BACK / 戻る</a>
+    <a href="/" class="lbl box" id="back-link">← BACK</a>
   </div>
-  <a href="#shelf" id="topbar-center">
-    <div id="logo-cjk">SAI KRISHNA</div>
-    <div id="logo-en">BETHAMCHARLA</div>
-  </a>
-  <div id="topbar-right" class="lbl">
-    WORKS 2022年〜2026年
+  <div id="topbar-center">
+    <span class="project-showcase-title">PROJECT SHOWCASE</span>
   </div>
+  <div id="topbar-right"></div>
 </header>
 
 <!-- 2. PROJECT CATEGORY TABS -->
 <nav id="tabs" aria-label="Project categories">
   <div id="tab-indicator" aria-hidden="true"></div>
-  <button class="tab-btn lbl box" data-category="all">ALL / 全作品</button>
+  <button class="tab-btn lbl box" data-category="all">ALL PROJECTS</button>
   <button class="tab-btn lbl box" data-category="websites">WEBSITES</button>
   <button class="tab-btn lbl box" data-category="cinematic">CINEMATIC VIDEOS</button>
   <button class="tab-btn lbl box" data-category="motion">MOTION & POST</button>
@@ -759,11 +763,10 @@ html, body {
 
 <!-- 8. DETAIL VIEW (DIALOG) -->
 <div id="detail" role="dialog" aria-modal="true" aria-label="Project detail">
-  <button id="detail-close" class="lbl box" aria-label="Close detail">CLOSE / 閉じる</button>
+  <button id="detail-close" class="lbl box" aria-label="Close detail">CLOSE</button>
   <div id="detail-logo">
     <div id="detail-logo-inner">
-      <div id="logo-cjk" style="font-size: 13px;">SAI KRISHNA</div>
-      <div id="logo-en" style="font-size: 8px;">BETHAMCHARLA</div>
+      <span class="project-showcase-title" style="font-size: 11px; letter-spacing: .24em;">PROJECT SHOWCASE</span>
     </div>
   </div>
 
@@ -774,7 +777,7 @@ html, body {
     <div class="dl-mask"><div id="dl-synopsis"></div></div>
     <div class="dl-mask"><div id="dl-credit"></div></div>
     <div class="dl-mask">
-      <button id="dl-watch" class="lbl box">EXPLORE PROJECT / 映画を見る</button>
+      <button id="dl-watch" class="lbl box">EXPLORE PROJECT</button>
     </div>
   </div>
 
@@ -801,7 +804,7 @@ html, body {
 <div id="cursor" aria-hidden="true">
   <div id="cur-ring"></div>
   <div id="cur-dot"></div>
-  <div id="cur-label"><span>OPEN</span><span>開く</span></div>
+  <div id="cur-label"><span>OPEN</span></div>
 </div>
 
 <script>
@@ -886,12 +889,12 @@ const FILMS = [
     category: 'websites',
     title: 'Vasudha Pharma Chem Limited',
     romaji: 'VASUDHA PHARMA CHEM',
-    kanji: '国際医薬品',
+    kanji: '',
     year: '2023',
     genre: 'CORPORATE WEBSITE',
     minutes: '80+ EXPORT MARKETS',
     synopsis: 'Designed and engineered the official enterprise corporate website and digital portal for Vasudha Pharma Chem Limited, scaling global product showcases across 80+ export markets.',
-    credit: 'Website Architecture — Sai Krishna Bethamcharla. 監督作品',
+    credit: 'Website Architecture — Sai Krishna Bethamcharla',
     liveUrl: 'https://saikrishna-bethamcharla.github.io/vasudhapharma/',
     customTextures: true,
     customSpineUrl: null,
@@ -902,12 +905,12 @@ const FILMS = [
     category: 'websites',
     title: 'Zai Labs AI Platform',
     romaji: 'ZAI LABS',
-    kanji: '未来革新',
+    kanji: '',
     year: '2024',
     genre: 'AI & WEB PLATFORM',
     minutes: 'INNOVATING TOMORROW',
     synopsis: 'Engineered the official digital presence and generative AI platform for Zai Labs, combining artificial intelligence, technology, and creative excellence.',
-    credit: 'Technical Lead & Architecture — Sai Krishna Bethamcharla. 監督作品',
+    credit: 'Technical Lead & Architecture — Sai Krishna Bethamcharla',
     liveUrl: 'https://zailabs.co.in/',
     customTextures: true,
     customSpineUrl: null,
@@ -918,12 +921,12 @@ const FILMS = [
     category: 'websites',
     title: 'Pranic Healing Portal',
     romaji: 'PRANIC HEALING',
-    kanji: '生命エネルギー',
+    kanji: '',
     year: '2022',
     genre: 'WEB ARCHITECTURE',
     minutes: '36 REGIONAL HUBS',
     synopsis: 'End-to-end digital transformation and patient education platform connecting healing practitioners across India.',
-    credit: 'Digital Lead — Sai Krishna Bethamcharla. 監督作品',
+    credit: 'Digital Lead — Sai Krishna Bethamcharla',
     liveUrl: '#'
   },
 
@@ -933,12 +936,12 @@ const FILMS = [
     category: 'cinematic',
     title: 'The Door at 11:47',
     romaji: 'THE DOOR AT 11:47',
-    kanji: '扉の時刻',
+    kanji: '',
     year: '2024',
     genre: 'AI SHORT FILM',
     minutes: '14 MIN TRAILER',
     synopsis: 'An original cinematic short exploring liminal time, directed and generated with Seedance 2.0, Kling 3.0, and DaVinci Resolve.',
-    credit: 'Written and Directed by Sai Krishna Bethamcharla. 監督作品',
+    credit: 'Written and Directed by Sai Krishna Bethamcharla',
     liveUrl: 'https://youtu.be/r9kHcvYWZ4c'
   },
   {
@@ -946,12 +949,12 @@ const FILMS = [
     category: 'cinematic',
     title: 'Odyssey Narrative',
     romaji: 'ODYSSEY',
-    kanji: '宇宙の旅',
+    kanji: '',
     year: '2025',
     genre: 'SCI-FI CINEMA',
     minutes: '18 MIN CHRONICLE',
     synopsis: 'Multi-shot neural video direction maintaining persistent character facial continuity, virtual camera blocking, and cinematic grade.',
-    credit: 'Generative AI Direction — Sai Krishna Bethamcharla. 監督作品',
+    credit: 'Generative AI Direction — Sai Krishna Bethamcharla',
     liveUrl: 'https://www.youtube.com/@saikrishna_bethamcharla'
   },
   {
@@ -959,12 +962,12 @@ const FILMS = [
     category: 'cinematic',
     title: 'Noon in Ashes',
     romaji: 'HAI NO SHOGO',
-    kanji: '灰の正午',
+    kanji: '',
     year: '2026',
     genre: 'WESTERN CINEMA',
     minutes: 'THEATRICAL TEASER',
     synopsis: 'Theatrical cinematic trailer exploring desert isolation and debt settlement, rendered with multi-stage neural visual continuity.',
-    credit: 'Cinematic Direction — Sai Krishna Bethamcharla. 監督作品',
+    credit: 'Cinematic Direction — Sai Krishna Bethamcharla',
     liveUrl: 'https://www.youtube.com/@saikrishna_bethamcharla'
   },
 
@@ -974,12 +977,12 @@ const FILMS = [
     category: 'motion',
     title: 'GMCKS Documentary',
     romaji: 'GMCKS LIFE',
-    kanji: '生命伝記',
+    kanji: '',
     year: '2023',
     genre: 'DOCUMENTARY',
     minutes: '42 MIN FILM',
     synopsis: 'Pioneered signature pencil-sketch visual documentary aesthetic for archival footage restoration and spiritual history narrative.',
-    credit: 'Directed & Post-Produced by Sai Krishna Bethamcharla. 監督作品',
+    credit: 'Directed & Post-Produced by Sai Krishna Bethamcharla',
     liveUrl: 'https://youtu.be/yajmIsC6Pno',
     customTextures: true,
     customSpineUrl: null,
@@ -990,12 +993,12 @@ const FILMS = [
     category: 'motion',
     title: 'Neo Belva Commercial',
     romaji: 'NEO BELVA',
-    kanji: '映像広告',
+    kanji: '',
     year: '2025',
     genre: 'COMMERCIAL REEL',
     minutes: '3 MIN SHOWCASE',
     synopsis: 'High-energy beat-synced editorial assembly with narrative color grading and kinetic typography for luxury architectural development.',
-    credit: 'Editorial Assembly — Sai Krishna Bethamcharla. 監督作品',
+    credit: 'Editorial Assembly — Sai Krishna Bethamcharla',
     liveUrl: 'https://www.youtube.com/@saikrishna_bethamcharla'
   },
   {
@@ -1003,12 +1006,12 @@ const FILMS = [
     category: 'motion',
     title: 'Green Field International',
     romaji: 'GREEN FIELD',
-    kanji: '国際学校',
+    kanji: '',
     year: '2024',
     genre: 'COMMERCIAL FILM',
     minutes: '5 MIN CAMPAIGN',
     synopsis: 'Cinematic brand commercial for Green Field School International featuring hand-drawn motion accents and spatial sound design.',
-    credit: 'Motion Design — Sai Krishna Bethamcharla. 監督作品',
+    credit: 'Motion Design — Sai Krishna Bethamcharla',
     liveUrl: 'https://www.youtube.com/@saikrishna_bethamcharla'
   },
 
@@ -1018,12 +1021,12 @@ const FILMS = [
     category: 'branding',
     title: 'Aura Organics Luxury',
     romaji: 'AURA ORGANICS',
-    kanji: '天然化粧品',
+    kanji: '',
     year: '2023',
     genre: 'LUXURY PACKAGING',
     minutes: '24 ASSET SUITE',
     synopsis: 'Comprehensive luxury brand identity, high-end packaging design, product cinematography, and e-commerce architecture.',
-    credit: 'Creative Direction — Sai Krishna Bethamcharla. 監督作品',
+    credit: 'Creative Direction — Sai Krishna Bethamcharla',
     liveUrl: '#'
   },
   {
@@ -1031,12 +1034,12 @@ const FILMS = [
     category: 'branding',
     title: 'Dr. Rashmi Katari',
     romaji: 'VIRUPAKSHA',
-    kanji: '健康聖域',
+    kanji: '',
     year: '2024',
     genre: 'SANCTUARY BRAND',
     minutes: '12 BRAND ASSETS',
     synopsis: 'Holistic visual identity, content strategy, and patient booking portal for Virupaksha Niramayata Living Sanctuary.',
-    credit: 'Brand Architecture — Sai Krishna Bethamcharla. 監督作品',
+    credit: 'Brand Architecture — Sai Krishna Bethamcharla',
     liveUrl: '#'
   },
   {
@@ -1044,12 +1047,12 @@ const FILMS = [
     category: 'branding',
     title: 'Abacus Campus Identity',
     romaji: 'ABACUS CAMPUS',
-    kanji: '教育ブランド',
+    kanji: '',
     year: '2025',
     genre: 'SPATIAL BRANDING',
     minutes: '30 CAMPUS ASSETS',
     synopsis: 'Architectural brand deployment, institutional visual guidelines, signage typography, and digital exhibition showcase.',
-    credit: 'Spatial Design — Sai Krishna Bethamcharla. 監督作品',
+    credit: 'Spatial Design — Sai Krishna Bethamcharla',
     liveUrl: '#'
   }
 ];
@@ -2548,12 +2551,12 @@ function generateZaiLabsCover(zaiLogoImg, zaiOgImg) {
   // 5. TYPOGRAPHY: Striking Modern Asymmetric Poster Layout (NO generic certificate boxes!)
   const textTopY = 770;
 
-  // Japanese Sub-title / Cyber Moniker
+  // Cyber Moniker
   ctx.fillStyle = '#00f2fe';
   ctx.font = '700 16px "Inter Tight", monospace, sans-serif';
   ctx.textAlign = 'left';
   ctx.letterSpacing = '0.36em';
-  ctx.fillText('// 未来革新 • AI CO-INNOVATION STUDIO', 65, textTopY);
+  ctx.fillText('// AI CO-INNOVATION STUDIO', 65, textTopY);
 
   // Massive Monumental Headline: ZAI LABS (Clean geometric sans, ultra-bold)
   ctx.fillStyle = 'rgba(0, 0, 0, 0.9)';
@@ -2864,7 +2867,7 @@ function setActiveFilm(fi, dir) {
   const film = FILMS[fi];
 
   swapCaptionLine(capTitle, film.title, dir, '');
-  swapCaptionLine(capSub, `${film.romaji} / ${film.kanji}`, dir, 'color: var(--cobalt);');
+  swapCaptionLine(capSub, film.romaji, dir, 'color: var(--cobalt);');
   swapCaptionLine(capYear, `${film.year} • ${film.genre}`, dir, '');
 
   updateCategoryTabs(film.category);
@@ -2937,17 +2940,17 @@ function openDetail() {
 
   const film = FILMS[active];
 
-  dlSub.textContent    = `${film.romaji} / ${film.kanji}`;
+  dlSub.textContent    = film.romaji;
   dlTitle.textContent  = film.title;
   dlMeta.textContent   = `${film.year} / ${film.genre} / ${film.minutes}`;
   dlSyn.textContent    = film.synopsis;
-  dlCredit.textContent = film.credit || 'Directed & Engineered by Sai Krishna Bethamcharla. 監督作品';
+  dlCredit.textContent = film.credit || 'Directed & Engineered by Sai Krishna Bethamcharla';
 
   if (film.liveUrl && film.liveUrl !== '#') {
-    dlWatch.textContent = 'EXPLORE PROJECT / 映画を見る';
+    dlWatch.textContent = 'EXPLORE PROJECT';
     dlWatch.onclick = () => window.open(film.liveUrl, '_blank', 'noopener,noreferrer');
   } else {
-    dlWatch.textContent = 'INTERNAL ARCHIVE / 資料保管';
+    dlWatch.textContent = 'INTERNAL ARCHIVE';
     dlWatch.onclick = null;
   }
 
@@ -3269,7 +3272,7 @@ async function init() {
   // Initial caption setup (GMCKS Documentary)
   const film = FILMS[active];
   capTitle.querySelector('span').textContent = film.title;
-  capSub.querySelector('span').textContent   = `${film.romaji} / ${film.kanji}`;
+  capSub.querySelector('span').textContent   = film.romaji;
   capYear.querySelector('span').textContent  = `${film.year} • ${film.genre}`;
 
   // Initial active category tab

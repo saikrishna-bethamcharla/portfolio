@@ -999,6 +999,22 @@ const FILMS = [
     customCoverUrl: null
   },
   {
+    id: 'godavari',
+    category: 'motion',
+    title: 'Godavari Ghee Heritage Ad',
+    romaji: 'GODAVARI GHEE',
+    kanji: '',
+    year: '2024',
+    genre: 'FMCG COMMERCIAL',
+    minutes: 'HERITAGE FILM',
+    synopsis: 'Commercial brand film and FMCG broadcast campaign for Godavari Ghee (KNB Group Since 1951), celebrating traditional culinary warmth, pure cow & desi ghee, and motherly love across generations.',
+    credit: 'Commercial Direction & Post — Sai Krishna Bethamcharla',
+    liveUrl: '#',
+    customTextures: true,
+    customSpineUrl: null,
+    customCoverUrl: null
+  },
+  {
     id: 'storm',
     category: 'motion',
     title: 'Green Field International',
@@ -3736,6 +3752,230 @@ function generateNeoBelvaCover(emblemImg, lockupImg) {
   return canvas.toDataURL('image/webp', 0.95);
 }
 
+
+// ═══════════════════════════════════════════════════════════════════
+// GODAVARI GHEE FMCG CAMPAIGN (Spine & Cover)
+// ═══════════════════════════════════════════════════════════════════
+function generateGodavariSpine(gheeLogoImg, knbLogoImg) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 300; canvas.height = 1800;
+  const ctx = canvas.getContext('2d');
+  const W = 300, H = 1800;
+
+  // Deep royal crimson / antique kumkum cloth gradient
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#4a080d');
+  bg.addColorStop(0.35, '#300508');
+  bg.addColorStop(0.7, '#200305');
+  bg.addColorStop(1, '#120103');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle silk / linen weave grain
+  ctx.fillStyle = 'rgba(250, 204, 21, 0.025)';
+  for (let i = 0; i < H; i += 4) {
+    ctx.fillRect(0, i, W, 1);
+  }
+
+  drawCornerSpineWear(ctx, W, H);
+
+  // Top Hero: Red & Gold Scalloped Godavari Logo
+  const lY = 175;
+  if (gheeLogoImg) {
+    const cleanCanvas = makeTransparentCanvas(gheeLogoImg, 240);
+    const bounds = getImageBounds(cleanCanvas);
+    const destW = 260;
+    const destH = destW * (bounds.h / bounds.w);
+    ctx.drawImage(
+      cleanCanvas,
+      bounds.x, bounds.y, bounds.w, bounds.h,
+      (W - destW) / 2, lY - destH / 2, destW, destH
+    );
+  } else {
+    // Stylized gold lotus medallion
+    ctx.strokeStyle = '#facc15'; ctx.lineWidth = 2;
+    ctx.strokeRect(W / 2 - 40, lY - 25, 80, 50);
+  }
+
+  // Thin decorative gold divider with diamond
+  ctx.strokeStyle = 'rgba(250, 204, 21, 0.5)'; ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.moveTo(W / 2 - 50, lY + 95); ctx.lineTo(W / 2 + 50, lY + 95); ctx.stroke();
+  ctx.fillStyle = '#facc15';
+  ctx.beginPath();
+  ctx.arc(W / 2, lY + 95, 3.5, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Vertical Title: GODAVARI GHEE
+  ctx.save();
+  ctx.translate(W / 2, H * 0.53);
+  ctx.rotate(Math.PI / 2);
+  ctx.textAlign = 'center';
+
+  // Warm golden luster with crimson shadow
+  ctx.shadowColor = 'rgba(239, 68, 68, 0.5)';
+  ctx.shadowBlur = 10;
+  ctx.fillStyle = '#facc15';
+  ctx.font = '800 78px "Newsreader", serif';
+  ctx.letterSpacing = '0.10em';
+  ctx.fillText('GODAVARI GHEE', 0, 26);
+  ctx.restore();
+
+  // Bottom info
+  ctx.fillStyle = '#fef08a';
+  ctx.font = '700 22px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
+  ctx.fillText('SAI KRISHNA', W / 2, H - 232);
+
+  ctx.fillStyle = '#f87171';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.24em';
+  ctx.fillText('FMCG COMMERCIAL', W / 2, H - 202);
+
+  drawClassicBadge(ctx, (W - 140) / 2, H - 160, 140, 75, 'FILM', '#ffffff', '#dc2626', 24);
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+function generateGodavariCover(packshotImg, gheeLogoImg) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 800; canvas.height = 1560;
+  const ctx = canvas.getContext('2d');
+  const W = 800, H = 1560;
+
+  // Deep warm saffron-burgundy gradient
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#3d080e');
+  bg.addColorStop(0.35, '#280408');
+  bg.addColorStop(0.75, '#170204');
+  bg.addColorStop(1, '#0a0102');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle silk texture
+  ctx.fillStyle = 'rgba(250, 204, 21, 0.02)';
+  for (let y = 0; y < H; y += 4) ctx.fillRect(0, y, W, 1);
+  for (let x = 0; x < W; x += 4) ctx.fillRect(x, 0, 1, H);
+
+  drawAuthenticWear(ctx, W, H, true);
+
+  // Double Heritage Gold & Crimson Border
+  ctx.strokeStyle = 'rgba(250, 204, 21, 0.55)'; ctx.lineWidth = 1.8;
+  ctx.strokeRect(36, 36, W - 72, H - 72);
+
+  ctx.strokeStyle = 'rgba(220, 38, 38, 0.45)'; ctx.lineWidth = 1;
+  ctx.strokeRect(44, 44, W - 88, H - 88);
+
+  // Corner temple brackets
+  const bL = 22;
+  [[48, 48], [W - 48, 48], [48, H - 48], [W - 48, H - 48]].forEach(([cx, cy], idx) => {
+    ctx.strokeStyle = '#facc15'; ctx.lineWidth = 2;
+    const sx = idx % 2 === 0 ? 1 : -1;
+    const sy = idx < 2 ? 1 : -1;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy + sy * bL);
+    ctx.lineTo(cx, cy);
+    ctx.lineTo(cx + sx * bL, cy);
+    ctx.stroke();
+  });
+
+  // Top header
+  ctx.fillStyle = '#facc15';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.34em';
+  ctx.fillText('KNB GROUP EST. 1951 // BROADCAST COMMERCIAL', W / 2, 88);
+
+  // Sub-header
+  ctx.fillStyle = '#fef08a';
+  ctx.font = '700 16px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.30em';
+  ctx.fillText('GODAVARI GHEE • HERITAGE FMCG CAMPAIGN', W / 2, 122);
+
+  // Crimson & gold divider line
+  ctx.strokeStyle = 'rgba(250, 204, 21, 0.45)'; ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.moveTo(160, 146); ctx.lineTo(W - 160, 146); ctx.stroke();
+
+  // Hero Card: Tabletop Culinary Packshot
+  const cardW = 680, cardH = 580;
+  const cardX = (W - cardW) / 2;
+  const cardY = 270;
+
+  ctx.save();
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+  ctx.shadowBlur = 28;
+  ctx.shadowOffsetY = 14;
+
+  // Background of card: warm brass & gold glow
+  const cardBg = ctx.createLinearGradient(cardX, cardY, cardX, cardY + cardH);
+  cardBg.addColorStop(0, '#2d060a');
+  cardBg.addColorStop(1, '#150204');
+  ctx.fillStyle = cardBg;
+
+  ctx.beginPath();
+  const r = 16;
+  ctx.moveTo(cardX + r, cardY);
+  ctx.lineTo(cardX + cardW - r, cardY);
+  ctx.quadraticCurveTo(cardX + cardW, cardY, cardX + cardW, cardY + r);
+  ctx.lineTo(cardX + cardW, cardY + cardH - r);
+  ctx.quadraticCurveTo(cardX + cardW, cardY + cardH, cardX + cardW - r, cardY + cardH);
+  ctx.lineTo(cardX + r, cardY + cardH);
+  ctx.quadraticCurveTo(cardX, cardY + cardH, cardX, cardY + cardH - r);
+  ctx.lineTo(cardX, cardY + r);
+  ctx.quadraticCurveTo(cardX, cardY, cardX + r, cardY);
+  ctx.closePath();
+  ctx.fill();
+  ctx.clip();
+
+  // Draw the high-resolution packshot inside the card
+  if (packshotImg) {
+    // packshotImg is 2560x1440
+    // Center crop on the table with jars and logo
+    ctx.drawImage(packshotImg, 0, 0, 2560, 1440, cardX, cardY, cardW, cardH);
+  }
+  ctx.restore();
+
+  // Card ornate borders
+  ctx.strokeStyle = 'rgba(250, 204, 21, 0.6)'; ctx.lineWidth = 2;
+  ctx.strokeRect(cardX + 2, cardY + 2, cardW - 4, cardH - 4);
+
+  ctx.strokeStyle = 'rgba(220, 38, 38, 0.4)'; ctx.lineWidth = 1;
+  ctx.strokeRect(cardX + 8, cardY + 8, cardW - 16, cardH - 16);
+
+  // Telugu tagline under hero
+  const tagY = cardY + cardH + 50;
+  ctx.fillStyle = '#fef08a';
+  ctx.font = '700 24px "Inter Tight", serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.08em';
+  ctx.fillText('అమ్మ ప్రేమతో ప్రతి తరానికి', W / 2, tagY);
+
+  // Editorial Section
+  const subY = 1010;
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 34px "Newsreader", serif';
+  ctx.letterSpacing = '0.04em';
+  ctx.fillText('HERITAGE CULINARY TRADITION', W / 2, subY);
+
+  ctx.fillStyle = '#e2e8f0';
+  ctx.font = 'italic 19px "Newsreader", serif';
+  ctx.letterSpacing = '0.01em';
+  ctx.fillText('“Commercial brand film celebrating maternal warmth and pure dairy heritage.”', W / 2, subY + 44);
+
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.fillStyle = '#facc15'; ctx.letterSpacing = '0.24em';
+  ctx.fillText('TABLETOP CINEMATOGRAPHY • COLOR GRADE • BROADCAST AD', W / 2, subY + 82);
+
+  // Bottom specs & credits
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(80, H - 210); ctx.lineTo(W - 80, H - 210); ctx.stroke();
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#facc15'; ctx.font = '700 13px "Inter Tight", sans-serif'; ctx.letterSpacing = '0.20em';
+  ctx.fillText('COMMERCIAL DIRECTION & POST', 80, H - 165);
+  ctx.fillStyle = '#ffffff'; ctx.font = '700 16px "Inter Tight", sans-serif';
+  ctx.fillText('SAI KRISHNA BETHAMCHARLA', 80, H - 138);
+
+  drawClassicBadge(ctx, W - 80 - 270, H - 180, 270, 74, 'FMCG COMMERCIAL', '#ffffff', '#dc2626', 19);
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
 function generateGreenFieldSpine() {
   const canvas = document.createElement('canvas');
   canvas.width = 300; canvas.height = 1800;
@@ -4970,7 +5210,10 @@ async function init() {
     pranicGmcksImg,
     neobelvaEmblemImg,
     neobelvaLockupImg,
-    abacusLogoImg
+    abacusLogoImg,
+    gheeEndImg,
+    gheeLogoImg,
+    knbLogoImg
   ] = await Promise.all([
     loadImg('./assets/gmcks/ph-logo.png'),
     loadImg('./assets/gmcks/gmcks-pencil-portrait.jpg'),
@@ -4986,7 +5229,10 @@ async function init() {
     loadImg('./assets/pranichealing/gmcks.jpg'),
     loadImg('./assets/neobelva/neobelva-emblem.png'),
     loadImg('./assets/neobelva/neobelva-lockup.png'),
-    loadImg('./assets/abacus/abacus-logo.jpg')
+    loadImg('./assets/abacus/abacus-logo.jpg'),
+    loadImg('./assets/godavari/ghee-end.jpg'),
+    loadImg('./assets/godavari/godavari-logo.png'),
+    loadImg('./assets/godavari/knb-logo.png')
   ]);
 
   const gmcksFilm = FILMS.find(f => f.id === 'gmcks');
@@ -5053,6 +5299,12 @@ async function init() {
   if (virupakshaFilm) {
     virupakshaFilm.customSpineUrl = generateVirupakshaSpine();
     virupakshaFilm.customCoverUrl = generateVirupakshaCover();
+  }
+
+  const godavariFilm = FILMS.find(f => f.id === 'godavari');
+  if (godavariFilm) {
+    godavariFilm.customSpineUrl = generateGodavariSpine(gheeLogoImg, knbLogoImg);
+    godavariFilm.customCoverUrl = generateGodavariCover(gheeEndImg, gheeLogoImg);
   }
 
   const abacusFilm = FILMS.find(f => f.id === 'door');

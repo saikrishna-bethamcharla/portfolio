@@ -943,7 +943,10 @@ const FILMS = [
     minutes: '18 MIN CHRONICLE',
     synopsis: 'Multi-shot neural video direction maintaining persistent character facial continuity, virtual camera blocking, and cinematic grade.',
     credit: 'Generative AI Direction — Sai Krishna Bethamcharla',
-    liveUrl: 'https://www.youtube.com/@saikrishna_bethamcharla'
+    liveUrl: 'https://www.youtube.com/@saikrishna_bethamcharla',
+    customTextures: true,
+    customSpineUrl: null,
+    customCoverUrl: null
   },
   {
     id: 'noon',
@@ -956,7 +959,10 @@ const FILMS = [
     minutes: 'THEATRICAL TEASER',
     synopsis: 'Theatrical cinematic trailer exploring desert isolation and debt settlement, rendered with multi-stage neural visual continuity.',
     credit: 'Cinematic Direction — Sai Krishna Bethamcharla',
-    liveUrl: 'https://www.youtube.com/@saikrishna_bethamcharla'
+    liveUrl: 'https://www.youtube.com/@saikrishna_bethamcharla',
+    customTextures: true,
+    customSpineUrl: null,
+    customCoverUrl: null
   },
 
   // ── MOTION & POST-PRODUCTION ─────────────────────────────────────
@@ -987,7 +993,10 @@ const FILMS = [
     minutes: '3 MIN SHOWCASE',
     synopsis: 'High-energy beat-synced editorial assembly with narrative color grading and kinetic typography for luxury architectural development.',
     credit: 'Editorial Assembly — Sai Krishna Bethamcharla',
-    liveUrl: 'https://www.youtube.com/@saikrishna_bethamcharla'
+    liveUrl: 'https://www.youtube.com/@saikrishna_bethamcharla',
+    customTextures: true,
+    customSpineUrl: null,
+    customCoverUrl: null
   },
   {
     id: 'storm',
@@ -1000,7 +1009,10 @@ const FILMS = [
     minutes: '5 MIN CAMPAIGN',
     synopsis: 'Cinematic brand commercial for Green Field School International featuring hand-drawn motion accents and spatial sound design.',
     credit: 'Motion Design — Sai Krishna Bethamcharla',
-    liveUrl: 'https://www.youtube.com/@saikrishna_bethamcharla'
+    liveUrl: 'https://www.youtube.com/@saikrishna_bethamcharla',
+    customTextures: true,
+    customSpineUrl: null,
+    customCoverUrl: null
   },
 
   // ── BRAND SYSTEMS ────────────────────────────────────────────────
@@ -1015,7 +1027,10 @@ const FILMS = [
     minutes: '24 ASSET SUITE',
     synopsis: 'Comprehensive luxury brand identity, high-end packaging design, product cinematography, and e-commerce architecture.',
     credit: 'Creative Direction — Sai Krishna Bethamcharla',
-    liveUrl: '#'
+    liveUrl: '#',
+    customTextures: true,
+    customSpineUrl: null,
+    customCoverUrl: null
   },
   {
     id: 'war',
@@ -1028,7 +1043,10 @@ const FILMS = [
     minutes: '12 BRAND ASSETS',
     synopsis: 'Holistic visual identity, content strategy, and patient booking portal for Virupaksha Niramayata Living Sanctuary.',
     credit: 'Brand Architecture — Sai Krishna Bethamcharla',
-    liveUrl: '#'
+    liveUrl: '#',
+    customTextures: true,
+    customSpineUrl: null,
+    customCoverUrl: null
   },
   {
     id: 'door',
@@ -1041,7 +1059,10 @@ const FILMS = [
     minutes: '30 CAMPUS ASSETS',
     synopsis: 'Architectural brand deployment, institutional visual guidelines, signage typography, and digital exhibition showcase.',
     credit: 'Spatial Design — Sai Krishna Bethamcharla',
-    liveUrl: '#'
+    liveUrl: '#',
+    customTextures: true,
+    customSpineUrl: null,
+    customCoverUrl: null
   }
 ];
 
@@ -3135,6 +3156,1058 @@ function generatePranicHealingCover(phLogoImg, mandalaImg, gmcksImg) {
   return canvas.toDataURL('image/webp', 0.95);
 }
 
+
+// ============================================================================
+// 1. ODYSSEY NARRATIVE (Book 4 - Sci-Fi Cinema)
+// ============================================================================
+function generateOdysseySpine() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 300; canvas.height = 1800;
+  const ctx = canvas.getContext('2d');
+  const W = 300, H = 1800;
+
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#0a0d1e');
+  bg.addColorStop(0.5, '#050711');
+  bg.addColorStop(1, '#020308');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // 3D cylindrical shadow
+  const edgeL = ctx.createLinearGradient(0, 0, 36, 0);
+  edgeL.addColorStop(0, 'rgba(0, 0, 0, 0.75)'); edgeL.addColorStop(1, 'transparent');
+  ctx.fillStyle = edgeL; ctx.fillRect(0, 0, 36, H);
+  const edgeR = ctx.createLinearGradient(W - 36, 0, W, 0);
+  edgeR.addColorStop(0, 'transparent'); edgeR.addColorStop(1, 'rgba(0, 0, 0, 0.75)');
+  ctx.fillStyle = edgeR; ctx.fillRect(W - 36, 0, 36, H);
+
+  drawCornerSpineWear(ctx, W, H);
+
+  // Top Singularity Glyph
+  const gY = 160;
+  const glow = ctx.createRadialGradient(W / 2, gY, 5, W / 2, gY, 70);
+  glow.addColorStop(0, 'rgba(147, 197, 253, 0.6)'); glow.addColorStop(1, 'transparent');
+  ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(W / 2, gY, 70, 0, Math.PI * 2); ctx.fill();
+
+  ctx.strokeStyle = '#60a5fa'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.arc(W / 2, gY, 44, 0, Math.PI * 2); ctx.stroke();
+  ctx.strokeStyle = '#c084fc'; ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.arc(W / 2, gY, 56, 0, Math.PI * 2); ctx.stroke();
+
+  ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(W / 2, gY, 6, 0, Math.PI * 2); ctx.fill();
+
+  // Vertical Title
+  ctx.save();
+  ctx.translate(W / 2, H * 0.53);
+  ctx.rotate(Math.PI / 2);
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 80px "Newsreader", serif';
+  ctx.letterSpacing = '0.12em';
+  ctx.fillText('ODYSSEY NARRATIVE', 0, 26);
+  ctx.restore();
+
+  // Bottom info & badge
+  ctx.fillStyle = '#93c5fd';
+  ctx.font = '700 22px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
+  ctx.fillText('SAI KRISHNA', W / 2, H - 228);
+
+  ctx.fillStyle = '#60a5fa';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.24em';
+  ctx.fillText('SCI-FI CINEMA', W / 2, H - 198);
+
+  drawClassicBadge(ctx, (W - 140) / 2, H - 155, 140, 75, 'VHS', '#ffffff', '#60a5fa', 24);
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+function generateOdysseyCover() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 800; canvas.height = 1560;
+  const ctx = canvas.getContext('2d');
+  const W = 800, H = 1560;
+
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#090e21');
+  bg.addColorStop(0.4, '#050814');
+  bg.addColorStop(0.75, '#03040b');
+  bg.addColorStop(1, '#010206');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Starfield speckles
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+  for (let i = 0; i < 220; i++) {
+    ctx.fillRect(Math.random() * W, Math.random() * H, Math.random() * 2, Math.random() * 2);
+  }
+
+  drawAuthenticWear(ctx, W, H, true);
+
+  // Top header
+  ctx.fillStyle = '#93c5fd';
+  ctx.font = '600 16px "Newsreader", Georgia, serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
+  ctx.fillText('A FILM BY SAI KRISHNA', W / 2, 85);
+
+  // Title
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 90px "Newsreader", serif';
+  ctx.letterSpacing = '0.06em';
+  ctx.fillText('ODYSSEY', W / 2, 195);
+  ctx.fillText('NARRATIVE', W / 2, 290);
+
+  ctx.strokeStyle = 'rgba(96, 165, 250, 0.45)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(140, 320); ctx.lineTo(W - 140, 320); ctx.stroke();
+
+  // Hero: Cosmic Planetary Monolith & Rings
+  const cX = W / 2, cY = 740;
+  const neb = ctx.createRadialGradient(cX, cY, 30, cX, cY, 320);
+  neb.addColorStop(0, 'rgba(192, 132, 252, 0.45)');
+  neb.addColorStop(0.5, 'rgba(59, 130, 246, 0.3)');
+  neb.addColorStop(1, 'transparent');
+  ctx.fillStyle = neb; ctx.beginPath(); ctx.arc(cX, cY, 320, 0, Math.PI * 2); ctx.fill();
+
+  // Tilted celestial ring ellipse
+  ctx.save();
+  ctx.translate(cX, cY);
+  ctx.rotate(-0.38);
+  ctx.strokeStyle = 'rgba(224, 231, 255, 0.7)'; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.ellipse(0, 0, 340, 75, 0, 0, Math.PI * 2); ctx.stroke();
+  ctx.strokeStyle = 'rgba(147, 197, 253, 0.35)'; ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.ellipse(0, 0, 360, 95, 0, 0, Math.PI * 2); ctx.stroke();
+
+  // Floating Neural Monolith Slab
+  ctx.fillStyle = '#020308';
+  ctx.fillRect(-65, -165, 130, 330);
+  ctx.strokeStyle = '#93c5fd'; ctx.lineWidth = 1.8;
+  ctx.strokeRect(-65, -165, 130, 330);
+
+  // Central glowing core in monolith
+  const cGlow = ctx.createRadialGradient(0, 0, 5, 0, 0, 60);
+  cGlow.addColorStop(0, '#ffffff'); cGlow.addColorStop(0.4, '#60a5fa'); cGlow.addColorStop(1, 'transparent');
+  ctx.fillStyle = cGlow; ctx.beginPath(); ctx.arc(0, 0, 60, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+
+  // Editorial
+  const subY = 1120;
+  ctx.fillStyle = '#e0e7ff';
+  ctx.font = 'italic 20px "Newsreader", serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.01em';
+  ctx.fillText('“A multi-shot neural video chronicle exploring persistent deep time.”', W / 2, subY);
+
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.fillStyle = '#93c5fd'; ctx.letterSpacing = '0.24em';
+  ctx.fillText('MULTI-SHOT NEURAL CONTINUITY • 18 MINUTES • 2025', W / 2, subY + 36);
+
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(80, H - 200); ctx.lineTo(W - 80, H - 200); ctx.stroke();
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#93c5fd'; ctx.font = '700 13px "Inter Tight", sans-serif'; ctx.letterSpacing = '0.20em';
+  ctx.fillText('GENERATIVE DIRECTION', 80, H - 160);
+  ctx.fillStyle = '#ffffff'; ctx.font = '700 16px "Inter Tight", sans-serif';
+  ctx.fillText('SAI KRISHNA BETHAMCHARLA', 80, H - 134);
+
+  drawClassicBadge(ctx, W - 80 - 240, H - 172, 240, 74, 'SCI-FI CINEMA', '#ffffff', '#60a5fa', 23);
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+// ============================================================================
+// 2. NOON IN ASHES (Book 5 - Western Cinema)
+// ============================================================================
+function generateNoonSpine() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 300; canvas.height = 1800;
+  const ctx = canvas.getContext('2d');
+  const W = 300, H = 1800;
+
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#c7ab83');
+  bg.addColorStop(0.5, '#b49568');
+  bg.addColorStop(1, '#9e7d50');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  drawCornerSpineWear(ctx, W, H);
+
+  // Blazing Sun Glyph
+  const gY = 160;
+  ctx.fillStyle = '#8b2500';
+  ctx.beginPath(); ctx.arc(W / 2, gY, 42, 0, Math.PI * 2); ctx.fill();
+
+  ctx.strokeStyle = '#4a1505'; ctx.lineWidth = 2.4;
+  for (let a = 0; a < Math.PI * 2; a += Math.PI / 8) {
+    ctx.beginPath();
+    ctx.moveTo(W / 2 + Math.cos(a) * 48, gY + Math.sin(a) * 48);
+    ctx.lineTo(W / 2 + Math.cos(a) * 64, gY + Math.sin(a) * 64);
+    ctx.stroke();
+  }
+
+  // Vertical Title
+  ctx.save();
+  ctx.translate(W / 2, H * 0.53);
+  ctx.rotate(Math.PI / 2);
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#23140a';
+  ctx.font = '700 80px "Newsreader", serif';
+  ctx.letterSpacing = '0.12em';
+  ctx.fillText('NOON IN ASHES', 0, 26);
+  ctx.restore();
+
+  // Bottom info
+  ctx.fillStyle = '#4a1505';
+  ctx.font = '700 22px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
+  ctx.fillText('SAI KRISHNA', W / 2, H - 228);
+
+  ctx.fillStyle = '#8b2500';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.24em';
+  ctx.fillText('WESTERN CINEMA', W / 2, H - 198);
+
+  drawClassicBadge(ctx, (W - 140) / 2, H - 155, 140, 75, 'VHS', '#23140a', '#8b2500', 24);
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+function generateNoonCover() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 800; canvas.height = 1560;
+  const ctx = canvas.getContext('2d');
+  const W = 800, H = 1560;
+
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#d9c29d');
+  bg.addColorStop(0.35, '#caa97e');
+  bg.addColorStop(0.7, '#b79162');
+  bg.addColorStop(1, '#9e7849');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  drawAuthenticWear(ctx, W, H, false);
+
+  // Top header
+  ctx.fillStyle = '#4a2810';
+  ctx.font = '600 16px "Newsreader", Georgia, serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
+  ctx.fillText('A FILM BY SAI KRISHNA', W / 2, 85);
+
+  // Title
+  ctx.fillStyle = '#231206';
+  ctx.font = '700 92px "Newsreader", serif';
+  ctx.letterSpacing = '0.04em';
+  ctx.fillText('NOON IN', W / 2, 195);
+  ctx.fillText('ASHES', W / 2, 290);
+
+  ctx.strokeStyle = 'rgba(139, 37, 0, 0.45)';
+  ctx.lineWidth = 1.4;
+  ctx.beginPath(); ctx.moveTo(140, 320); ctx.lineTo(W - 140, 320); ctx.stroke();
+
+  // Hero: Blazing Western Sun & Desert Canyon Mesa
+  const cX = W / 2, cY = 730;
+
+  // Blazing Solar Disc
+  const sun = ctx.createRadialGradient(cX, cY - 20, 30, cX, cY - 20, 220);
+  sun.addColorStop(0, '#fff4cc');
+  sun.addColorStop(0.3, '#f97316');
+  sun.addColorStop(0.7, '#b91c1c');
+  sun.addColorStop(1, 'transparent');
+  ctx.fillStyle = sun;
+  ctx.beginPath(); ctx.arc(cX, cY - 20, 220, 0, Math.PI * 2); ctx.fill();
+
+  // Desert Canyon Mesa Silhouettes
+  ctx.fillStyle = '#1c0e06';
+  ctx.beginPath();
+  ctx.moveTo(80, cY + 160);
+  ctx.lineTo(210, cY + 40);
+  ctx.lineTo(310, cY + 40);
+  ctx.lineTo(380, cY + 90);
+  ctx.lineTo(470, cY + 30);
+  ctx.lineTo(580, cY + 30);
+  ctx.lineTo(720, cY + 160);
+  ctx.lineTo(720, cY + 280);
+  ctx.lineTo(80, cY + 280);
+  ctx.closePath();
+  ctx.fill();
+
+  // Editorial
+  const subY = 1120;
+  ctx.fillStyle = '#2c1607';
+  ctx.font = 'italic 20px "Newsreader", serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.01em';
+  ctx.fillText('“A theatrical chronicle of desert isolation and debt settlement.”', W / 2, subY);
+
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.fillStyle = '#8b2500'; ctx.letterSpacing = '0.24em';
+  ctx.fillText('THEATRICAL TEASER • 2026 • 35MM CINEMATIC EMULATION', W / 2, subY + 36);
+
+  ctx.strokeStyle = 'rgba(74, 40, 16, 0.25)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(80, H - 200); ctx.lineTo(W - 80, H - 200); ctx.stroke();
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#8b2500'; ctx.font = '700 13px "Inter Tight", sans-serif'; ctx.letterSpacing = '0.20em';
+  ctx.fillText('CINEMATIC DIRECTION', 80, H - 160);
+  ctx.fillStyle = '#231206'; ctx.font = '700 16px "Inter Tight", sans-serif';
+  ctx.fillText('SAI KRISHNA BETHAMCHARLA', 80, H - 134);
+
+  drawClassicBadge(ctx, W - 80 - 250, H - 172, 250, 74, 'WESTERN CINEMA', '#231206', '#8b2500', 21);
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+// ============================================================================
+// 3. NEO BELVA COMMERCIAL (Book 7 - Motion & Post)
+// ============================================================================
+function generateNeoBelvaSpine() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 300; canvas.height = 1800;
+  const ctx = canvas.getContext('2d');
+  const W = 300, H = 1800;
+
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#15161a');
+  bg.addColorStop(0.5, '#0d0e11');
+  bg.addColorStop(1, '#070709');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  drawCornerSpineWear(ctx, W, H);
+
+  // Gold Geometric Skyscraper Glyph
+  const gY = 160;
+  ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 2.4;
+  ctx.strokeRect(W / 2 - 28, gY - 45, 56, 90);
+  ctx.beginPath();
+  ctx.moveTo(W / 2 - 28, gY - 45); ctx.lineTo(W / 2, gY - 65); ctx.lineTo(W / 2 + 28, gY - 45);
+  ctx.stroke();
+
+  // Vertical Title
+  ctx.save();
+  ctx.translate(W / 2, H * 0.53);
+  ctx.rotate(Math.PI / 2);
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 80px "Newsreader", serif';
+  ctx.letterSpacing = '0.12em';
+  ctx.fillText('NEO BELVA', 0, 26);
+  ctx.restore();
+
+  // Bottom info
+  ctx.fillStyle = '#d4af37';
+  ctx.font = '700 22px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
+  ctx.fillText('SAI KRISHNA', W / 2, H - 228);
+
+  ctx.fillStyle = '#9ca3af';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.24em';
+  ctx.fillText('COMMERCIAL REEL', W / 2, H - 198);
+
+  drawClassicBadge(ctx, (W - 140) / 2, H - 155, 140, 75, 'REEL', '#ffffff', '#d4af37', 24);
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+function generateNeoBelvaCover() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 800; canvas.height = 1560;
+  const ctx = canvas.getContext('2d');
+  const W = 800, H = 1560;
+
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#16181f');
+  bg.addColorStop(0.4, '#0f1015');
+  bg.addColorStop(0.75, '#0a0a0d');
+  bg.addColorStop(1, '#050507');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  drawAuthenticWear(ctx, W, H, true);
+
+  // Top header
+  ctx.fillStyle = '#d4af37';
+  ctx.font = '600 14px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.32em';
+  ctx.fillText('ARCHITECTURAL CINEMATOGRAPHY // LUXURY REALTY', W / 2, 85);
+
+  // Title
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 94px "Newsreader", serif';
+  ctx.letterSpacing = '0.04em';
+  ctx.fillText('NEO BELVA', W / 2, 195);
+
+  ctx.fillStyle = '#d4af37';
+  ctx.font = '700 24px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.32em';
+  ctx.fillText('COMMERCIAL REEL', W / 2, 245);
+
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.45)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(140, 275); ctx.lineTo(W - 140, 275); ctx.stroke();
+
+  // Hero: Towering Skyscraper with Golden Illuminated Facet Lines
+  const cX = W / 2, cY = 700;
+  const aW = 280, aH = 580;
+
+  ctx.save();
+  ctx.translate(cX, cY);
+
+  // Background aura
+  const gGlow = ctx.createRadialGradient(0, 0, 40, 0, 0, 300);
+  gGlow.addColorStop(0, 'rgba(212, 175, 55, 0.3)');
+  gGlow.addColorStop(1, 'transparent');
+  ctx.fillStyle = gGlow; ctx.fillRect(-300, -300, 600, 600);
+
+  // Angular skyscraper building
+  ctx.fillStyle = '#0a0c10';
+  ctx.beginPath();
+  ctx.moveTo(0, -aH / 2);
+  ctx.lineTo(aW / 2, aH / 2);
+  ctx.lineTo(-aW / 2, aH / 2);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 2.4;
+  ctx.stroke();
+
+  // Internal glowing gold architectural grid lines
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.6)'; ctx.lineWidth = 1.2;
+  for (let l = -aH / 2 + 60; l < aH / 2; l += 45) {
+    const wAt = ((l + aH / 2) / aH) * aW;
+    ctx.beginPath(); ctx.moveTo(-wAt / 2, l); ctx.lineTo(wAt / 2, l); ctx.stroke();
+  }
+  ctx.restore();
+
+  // Editorial
+  const subY = 1110;
+  ctx.fillStyle = '#e2e8f0';
+  ctx.font = 'italic 19px "Newsreader", serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.01em';
+  ctx.fillText('“High-energy beat-synced assembly for luxury architectural development.”', W / 2, subY);
+
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.fillStyle = '#d4af37'; ctx.letterSpacing = '0.24em';
+  ctx.fillText('3 MINUTES • NARRATIVE GRADING • SPATIAL SOUND DESIGN', W / 2, subY + 36);
+
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(80, H - 200); ctx.lineTo(W - 80, H - 200); ctx.stroke();
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#d4af37'; ctx.font = '700 13px "Inter Tight", sans-serif'; ctx.letterSpacing = '0.20em';
+  ctx.fillText('EDITORIAL ASSEMBLY', 80, H - 160);
+  ctx.fillStyle = '#ffffff'; ctx.font = '700 16px "Inter Tight", sans-serif';
+  ctx.fillText('SAI KRISHNA BETHAMCHARLA', 80, H - 134);
+
+  drawClassicBadge(ctx, W - 80 - 250, H - 172, 250, 74, 'COMMERCIAL REEL', '#ffffff', '#d4af37', 20);
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+// ============================================================================
+// 4. GREEN FIELD INTERNATIONAL (Book 8 - Motion & Post)
+// ============================================================================
+function generateGreenFieldSpine() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 300; canvas.height = 1800;
+  const ctx = canvas.getContext('2d');
+  const W = 300, H = 1800;
+
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#0c2214');
+  bg.addColorStop(0.5, '#07150c');
+  bg.addColorStop(1, '#030a06');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  drawCornerSpineWear(ctx, W, H);
+
+  // School Shield Crest Glyph
+  const gY = 160;
+  ctx.strokeStyle = '#e5c07b'; ctx.lineWidth = 2.4;
+  ctx.beginPath();
+  ctx.moveTo(W / 2 - 32, gY - 40);
+  ctx.lineTo(W / 2 + 32, gY - 40);
+  ctx.lineTo(W / 2 + 32, gY + 10);
+  ctx.quadraticCurveTo(W / 2, gY + 45, W / 2, gY + 55);
+  ctx.quadraticCurveTo(W / 2, gY + 45, W / 2 - 32, gY + 10);
+  ctx.closePath();
+  ctx.stroke();
+
+  // Vertical Title
+  ctx.save();
+  ctx.translate(W / 2, H * 0.53);
+  ctx.rotate(Math.PI / 2);
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 78px "Newsreader", serif';
+  ctx.letterSpacing = '0.10em';
+  ctx.fillText('GREEN FIELD', 0, 26);
+  ctx.restore();
+
+  // Bottom info
+  ctx.fillStyle = '#e5c07b';
+  ctx.font = '700 22px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
+  ctx.fillText('SAI KRISHNA', W / 2, H - 228);
+
+  ctx.fillStyle = '#86efac';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.24em';
+  ctx.fillText('COMMERCIAL FILM', W / 2, H - 198);
+
+  drawClassicBadge(ctx, (W - 140) / 2, H - 155, 140, 75, 'FILM', '#ffffff', '#e5c07b', 24);
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+function generateGreenFieldCover() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 800; canvas.height = 1560;
+  const ctx = canvas.getContext('2d');
+  const W = 800, H = 1560;
+
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#0e2918');
+  bg.addColorStop(0.4, '#091c10');
+  bg.addColorStop(0.75, '#051109');
+  bg.addColorStop(1, '#020704');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  drawAuthenticWear(ctx, W, H, true);
+
+  // Top header
+  ctx.fillStyle = '#e5c07b';
+  ctx.font = '600 14px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
+  ctx.fillText('GREEN FIELD SCHOOL // ANTHEM CAMPAIGN', W / 2, 85);
+
+  // Title
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 90px "Newsreader", serif';
+  ctx.letterSpacing = '0.04em';
+  ctx.fillText('GREEN FIELD', W / 2, 195);
+
+  ctx.fillStyle = '#e5c07b';
+  ctx.font = '700 24px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.32em';
+  ctx.fillText('INTERNATIONAL', W / 2, 245);
+
+  ctx.strokeStyle = 'rgba(229, 192, 123, 0.45)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(140, 275); ctx.lineTo(W - 140, 275); ctx.stroke();
+
+  // Hero: Ornate Gold Heraldic Shield with Tree of Knowledge
+  const cX = W / 2, cY = 690;
+  const sW = 260, sH = 320;
+
+  ctx.save();
+  ctx.translate(cX, cY);
+
+  const aura = ctx.createRadialGradient(0, 0, 30, 0, 0, 280);
+  aura.addColorStop(0, 'rgba(229, 192, 123, 0.35)');
+  aura.addColorStop(1, 'transparent');
+  ctx.fillStyle = aura; ctx.beginPath(); ctx.arc(0, 0, 280, 0, Math.PI * 2); ctx.fill();
+
+  // Shield Path
+  ctx.beginPath();
+  ctx.moveTo(-sW / 2, -sH / 2);
+  ctx.lineTo(sW / 2, -sH / 2);
+  ctx.lineTo(sW / 2, sH / 6);
+  ctx.quadraticCurveTo(0, sH / 2 + 30, 0, sH / 2 + 50);
+  ctx.quadraticCurveTo(0, sH / 2 + 30, -sW / 2, sH / 6);
+  ctx.closePath();
+  ctx.fillStyle = '#06130b';
+  ctx.fill();
+
+  ctx.strokeStyle = '#e5c07b'; ctx.lineWidth = 3.5;
+  ctx.stroke();
+
+  // Tree of Knowledge branches
+  ctx.strokeStyle = '#fef08a'; ctx.lineWidth = 2.4;
+  ctx.beginPath();
+  ctx.moveTo(0, sH / 4); ctx.lineTo(0, -sH / 6);
+  ctx.lineTo(-45, -sH / 3);
+  ctx.moveTo(0, -sH / 6); ctx.lineTo(45, -sH / 3);
+  ctx.moveTo(0, -sH / 10); ctx.lineTo(-30, -sH / 5);
+  ctx.moveTo(0, -sH / 10); ctx.lineTo(30, -sH / 5);
+  ctx.stroke();
+  ctx.restore();
+
+  // Editorial
+  const subY = 1110;
+  ctx.fillStyle = '#dcfce7';
+  ctx.font = 'italic 19px "Newsreader", serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.01em';
+  ctx.fillText('“A cinematic brand commercial celebrating institutional heritage and youth.”', W / 2, subY);
+
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.fillStyle = '#e5c07b'; ctx.letterSpacing = '0.24em';
+  ctx.fillText('HAND-DRAWN MOTION ACCENTS • SPATIAL SOUND • 2024', W / 2, subY + 36);
+
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(80, H - 200); ctx.lineTo(W - 80, H - 200); ctx.stroke();
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#e5c07b'; ctx.font = '700 13px "Inter Tight", sans-serif'; ctx.letterSpacing = '0.20em';
+  ctx.fillText('MOTION DIRECTION', 80, H - 160);
+  ctx.fillStyle = '#ffffff'; ctx.font = '700 16px "Inter Tight", sans-serif';
+  ctx.fillText('SAI KRISHNA BETHAMCHARLA', 80, H - 134);
+
+  drawClassicBadge(ctx, W - 80 - 250, H - 172, 250, 74, 'COMMERCIAL FILM', '#ffffff', '#e5c07b', 21);
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+// ============================================================================
+// 5. AURA ORGANICS LUXURY (Book 9 - Brand Systems)
+// ============================================================================
+function generateAuraSpine() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 300; canvas.height = 1800;
+  const ctx = canvas.getContext('2d');
+  const W = 300, H = 1800;
+
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#c2876c');
+  bg.addColorStop(0.5, '#ab735a');
+  bg.addColorStop(1, '#945e47');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  drawCornerSpineWear(ctx, W, H);
+
+  // Botanical Leaf Glyph
+  const gY = 160;
+  ctx.strokeStyle = '#fdfaf5'; ctx.lineWidth = 2.4;
+  ctx.beginPath();
+  ctx.ellipse(W / 2, gY, 18, 45, Math.PI / 4, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Vertical Title
+  ctx.save();
+  ctx.translate(W / 2, H * 0.53);
+  ctx.rotate(Math.PI / 2);
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#fdfaf5';
+  ctx.font = '700 80px "Newsreader", serif';
+  ctx.letterSpacing = '0.12em';
+  ctx.fillText('AURA ORGANICS', 0, 26);
+  ctx.restore();
+
+  ctx.fillStyle = '#fdfaf5';
+  ctx.font = '700 22px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
+  ctx.fillText('SAI KRISHNA', W / 2, H - 228);
+
+  ctx.fillStyle = '#fbd5c6';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.24em';
+  ctx.fillText('LUXURY PACKAGING', W / 2, H - 198);
+
+  drawClassicBadge(ctx, (W - 140) / 2, H - 155, 140, 75, 'BRAND', '#fdfaf5', '#fdfaf5', 24);
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+function generateAuraCover() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 800; canvas.height = 1560;
+  const ctx = canvas.getContext('2d');
+  const W = 800, H = 1560;
+
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#cb9076');
+  bg.addColorStop(0.35, '#b97a61');
+  bg.addColorStop(0.7, '#a5684f');
+  bg.addColorStop(1, '#8f533b');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  drawAuthenticWear(ctx, W, H, false);
+
+  ctx.fillStyle = '#fdfaf5';
+  ctx.font = '600 14px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.32em';
+  ctx.fillText('HAUTE BOTANICALS & SUSTAINABLE LUXURY', W / 2, 85);
+
+  ctx.fillStyle = '#fdfaf5';
+  ctx.font = '700 92px "Newsreader", serif';
+  ctx.letterSpacing = '0.04em';
+  ctx.fillText('AURA', W / 2, 195);
+  ctx.fillText('ORGANICS', W / 2, 290);
+
+  ctx.strokeStyle = 'rgba(253, 250, 245, 0.45)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(140, 320); ctx.lineTo(W - 140, 320); ctx.stroke();
+
+  // Hero: Minimalist Intaglio Botanical Branch & Glass Flacon
+  const cX = W / 2, cY = 720;
+  ctx.save();
+  ctx.translate(cX, cY);
+
+  const aura = ctx.createRadialGradient(0, 0, 30, 0, 0, 260);
+  aura.addColorStop(0, 'rgba(253, 250, 245, 0.35)');
+  aura.addColorStop(1, 'transparent');
+  ctx.fillStyle = aura; ctx.beginPath(); ctx.arc(0, 0, 260, 0, Math.PI * 2); ctx.fill();
+
+  // Botanical Branch
+  ctx.strokeStyle = '#fdfaf5'; ctx.lineWidth = 2.4;
+  ctx.beginPath();
+  ctx.moveTo(0, 180);
+  ctx.quadraticCurveTo(-40, 20, 0, -180);
+  ctx.stroke();
+
+  // Leaves
+  [-120, -50, 20, 90].forEach((ly, idx) => {
+    const dir = idx % 2 === 0 ? 1 : -1;
+    ctx.beginPath();
+    ctx.ellipse(dir * 38, ly, 28, 14, dir * 0.45, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(253, 250, 245, 0.85)';
+    ctx.fill();
+    ctx.stroke();
+  });
+  ctx.restore();
+
+  const subY = 1110;
+  ctx.fillStyle = '#fdfaf5';
+  ctx.font = 'italic 19px "Newsreader", serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.01em';
+  ctx.fillText('“Comprehensive luxury brand identity and bespoke bottle cinematography.”', W / 2, subY);
+
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.fillStyle = '#ffe4d6'; ctx.letterSpacing = '0.24em';
+  ctx.fillText('24 ASSET SUITE • SUSTAINABLE PACKAGING • 2023', W / 2, subY + 36);
+
+  ctx.strokeStyle = 'rgba(253, 250, 245, 0.25)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(80, H - 200); ctx.lineTo(W - 80, H - 200); ctx.stroke();
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#fdfaf5'; ctx.font = '700 13px "Inter Tight", sans-serif'; ctx.letterSpacing = '0.20em';
+  ctx.fillText('CREATIVE DIRECTION', 80, H - 160);
+  ctx.fillStyle = '#ffffff'; ctx.font = '700 16px "Inter Tight", sans-serif';
+  ctx.fillText('SAI KRISHNA BETHAMCHARLA', 80, H - 134);
+
+  drawClassicBadge(ctx, W - 80 - 260, H - 172, 260, 74, 'LUXURY PACKAGING', '#fdfaf5', '#fdfaf5', 20);
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+// ============================================================================
+// 6. DR. RASHMI KATARI / VIRUPAKSHA (Book 10 - Brand Systems)
+// ============================================================================
+function generateVirupakshaSpine() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 300; canvas.height = 1800;
+  const ctx = canvas.getContext('2d');
+  const W = 300, H = 1800;
+
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#1c2821');
+  bg.addColorStop(0.5, '#131b16');
+  bg.addColorStop(1, '#0b100d');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  drawCornerSpineWear(ctx, W, H);
+
+  // Zen Stones Glyph
+  const gY = 160;
+  ctx.fillStyle = '#86efac';
+  ctx.beginPath(); ctx.ellipse(W / 2, gY + 24, 38, 14, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(W / 2, gY, 28, 12, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(W / 2, gY - 22, 18, 10, 0, 0, Math.PI * 2); ctx.fill();
+
+  // Vertical Title
+  ctx.save();
+  ctx.translate(W / 2, H * 0.53);
+  ctx.rotate(Math.PI / 2);
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 78px "Newsreader", serif';
+  ctx.letterSpacing = '0.12em';
+  ctx.fillText('VIRUPAKSHA', 0, 26);
+  ctx.restore();
+
+  ctx.fillStyle = '#86efac';
+  ctx.font = '700 22px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
+  ctx.fillText('SAI KRISHNA', W / 2, H - 228);
+
+  ctx.fillStyle = '#bbf7d0';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.24em';
+  ctx.fillText('SANCTUARY BRAND', W / 2, H - 198);
+
+  drawClassicBadge(ctx, (W - 140) / 2, H - 155, 140, 75, 'BRAND', '#ffffff', '#86efac', 24);
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+function generateVirupakshaCover() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 800; canvas.height = 1560;
+  const ctx = canvas.getContext('2d');
+  const W = 800, H = 1560;
+
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#22322a');
+  bg.addColorStop(0.4, '#17231d');
+  bg.addColorStop(0.75, '#0e1713');
+  bg.addColorStop(1, '#060b08');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  drawAuthenticWear(ctx, W, H, true);
+
+  ctx.fillStyle = '#86efac';
+  ctx.font = '600 14px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
+  ctx.fillText('NIRAMAYATA LIVING SANCTUARY // AYURVEDA', W / 2, 85);
+
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 90px "Newsreader", serif';
+  ctx.letterSpacing = '0.04em';
+  ctx.fillText('VIRUPAKSHA', W / 2, 195);
+
+  ctx.fillStyle = '#86efac';
+  ctx.font = '700 24px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.30em';
+  ctx.fillText('DR. RASHMI KATARI', W / 2, 245);
+
+  ctx.strokeStyle = 'rgba(134, 239, 172, 0.4)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(140, 275); ctx.lineTo(W - 140, 275); ctx.stroke();
+
+  // Hero: Zen Balance River Stones inside Sacred Lotus Enso
+  const cX = W / 2, cY = 700;
+  ctx.save();
+  ctx.translate(cX, cY);
+
+  const aura = ctx.createRadialGradient(0, 0, 30, 0, 0, 270);
+  aura.addColorStop(0, 'rgba(134, 239, 172, 0.35)');
+  aura.addColorStop(1, 'transparent');
+  ctx.fillStyle = aura; ctx.beginPath(); ctx.arc(0, 0, 270, 0, Math.PI * 2); ctx.fill();
+
+  // Sacred circular enso ring
+  ctx.strokeStyle = '#86efac'; ctx.lineWidth = 3.5;
+  ctx.beginPath(); ctx.arc(0, 0, 210, 0.3, Math.PI * 2 - 0.2); ctx.stroke();
+
+  // Smooth River Stones
+  const drawStone = (y, rx, ry, col) => {
+    ctx.fillStyle = col;
+    ctx.beginPath(); ctx.ellipse(0, y, rx, ry, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#86efac'; ctx.lineWidth = 2; ctx.stroke();
+  };
+
+  drawStone(100, 110, 42, '#0c1410');
+  drawStone(35, 85, 34, '#14201a');
+  drawStone(-25, 65, 28, '#1b2b23');
+  drawStone(-80, 45, 22, '#23372c');
+  drawStone(-125, 28, 16, '#2e483a');
+  ctx.restore();
+
+  const subY = 1110;
+  ctx.fillStyle = '#e2e8f0';
+  ctx.font = 'italic 19px "Newsreader", serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.01em';
+  ctx.fillText('“Holistic visual identity and patient booking portal for living sanctuary.”', W / 2, subY);
+
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.fillStyle = '#86efac'; ctx.letterSpacing = '0.24em';
+  ctx.fillText('12 BRAND ASSETS • HEALING ARCHITECTURE • 2024', W / 2, subY + 36);
+
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(80, H - 200); ctx.lineTo(W - 80, H - 200); ctx.stroke();
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#86efac'; ctx.font = '700 13px "Inter Tight", sans-serif'; ctx.letterSpacing = '0.20em';
+  ctx.fillText('BRAND ARCHITECTURE', 80, H - 160);
+  ctx.fillStyle = '#ffffff'; ctx.font = '700 16px "Inter Tight", sans-serif';
+  ctx.fillText('SAI KRISHNA BETHAMCHARLA', 80, H - 134);
+
+  drawClassicBadge(ctx, W - 80 - 250, H - 172, 250, 74, 'SANCTUARY BRAND', '#ffffff', '#86efac', 20);
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+// ============================================================================
+// 7. ABACUS CAMPUS IDENTITY (Book 11 - Brand Systems)
+// ============================================================================
+function generateAbacusSpine() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 300; canvas.height = 1800;
+  const ctx = canvas.getContext('2d');
+  const W = 300, H = 1800;
+
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#162334');
+  bg.addColorStop(0.5, '#0e1622');
+  bg.addColorStop(1, '#070b12');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  drawCornerSpineWear(ctx, W, H);
+
+  // Blueprint Isometric Cube Glyph
+  const gY = 160;
+  ctx.strokeStyle = '#ff7a45'; ctx.lineWidth = 2.4;
+  const r = 36;
+  ctx.beginPath();
+  for (let i = 0; i < 6; i++) {
+    const ang = (i * Math.PI) / 3 - Math.PI / 6;
+    const px = W / 2 + Math.cos(ang) * r, py = gY + Math.sin(ang) * r;
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.closePath(); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(W / 2, gY); ctx.lineTo(W / 2, gY + r); ctx.stroke();
+
+  // Vertical Title
+  ctx.save();
+  ctx.translate(W / 2, H * 0.53);
+  ctx.rotate(Math.PI / 2);
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 78px "Newsreader", serif';
+  ctx.letterSpacing = '0.10em';
+  ctx.fillText('ABACUS CAMPUS', 0, 26);
+  ctx.restore();
+
+  ctx.fillStyle = '#ff7a45';
+  ctx.font = '700 22px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
+  ctx.fillText('SAI KRISHNA', W / 2, H - 228);
+
+  ctx.fillStyle = '#93c5fd';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.24em';
+  ctx.fillText('SPATIAL BRANDING', W / 2, H - 198);
+
+  drawClassicBadge(ctx, (W - 140) / 2, H - 155, 140, 75, 'BRAND', '#ffffff', '#ff7a45', 24);
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+function generateAbacusCover() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 800; canvas.height = 1560;
+  const ctx = canvas.getContext('2d');
+  const W = 800, H = 1560;
+
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#17273a');
+  bg.addColorStop(0.4, '#101a27');
+  bg.addColorStop(0.75, '#091019');
+  bg.addColorStop(1, '#04070c');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Technical blueprint grid lines
+  ctx.strokeStyle = 'rgba(147, 197, 253, 0.08)'; ctx.lineWidth = 1;
+  for (let x = 40; x < W; x += 40) {
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+  }
+  for (let y = 40; y < H; y += 40) {
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  }
+
+  drawAuthenticWear(ctx, W, H, true);
+
+  ctx.fillStyle = '#ff7a45';
+  ctx.font = '700 14px "Inter Tight", monospace, sans-serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.32em';
+  ctx.fillText('SPATIAL BRANDING & WAYFINDING TYPOGRAPHY', W / 2, 85);
+
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 90px "Newsreader", serif';
+  ctx.letterSpacing = '0.04em';
+  ctx.fillText('ABACUS', W / 2, 195);
+
+  ctx.fillStyle = '#ff7a45';
+  ctx.font = '700 24px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.32em';
+  ctx.fillText('CAMPUS IDENTITY', W / 2, 245);
+
+  ctx.strokeStyle = 'rgba(255, 122, 69, 0.45)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(140, 275); ctx.lineTo(W - 140, 275); ctx.stroke();
+
+  // Hero: Axonometric Isometric Structural Grid Frame
+  const cX = W / 2, cY = 700;
+  ctx.save();
+  ctx.translate(cX, cY);
+
+  const aura = ctx.createRadialGradient(0, 0, 40, 0, 0, 280);
+  aura.addColorStop(0, 'rgba(255, 122, 69, 0.35)');
+  aura.addColorStop(1, 'transparent');
+  ctx.fillStyle = aura; ctx.beginPath(); ctx.arc(0, 0, 280, 0, Math.PI * 2); ctx.fill();
+
+  // Isometric Building Blocks
+  ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2.4;
+  ctx.fillStyle = '#080d14';
+
+  const drawIsoBox = (bx, by, bw, bh, bdepth) => {
+    ctx.beginPath();
+    ctx.moveTo(bx, by);
+    ctx.lineTo(bx + bw, by - bw * 0.5);
+    ctx.lineTo(bx + bw, by - bw * 0.5 - bh);
+    ctx.lineTo(bx, by - bh);
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(bx, by);
+    ctx.lineTo(bx - bdepth, by - bdepth * 0.5);
+    ctx.lineTo(bx - bdepth, by - bdepth * 0.5 - bh);
+    ctx.lineTo(bx, by - bh);
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(bx, by - bh);
+    ctx.lineTo(bx + bw, by - bw * 0.5 - bh);
+    ctx.lineTo(bx + bw - bdepth, by - bw * 0.5 - bh - bdepth * 0.5);
+    ctx.lineTo(bx - bdepth, by - bdepth * 0.5 - bh);
+    ctx.closePath();
+    ctx.fillStyle = '#ff7a45';
+    ctx.fill(); ctx.stroke();
+  };
+
+  drawIsoBox(0, 120, 130, 210, 130);
+  drawIsoBox(-90, 40, 80, 150, 80);
+  drawIsoBox(90, 40, 80, 150, 80);
+  ctx.restore();
+
+  const subY = 1110;
+  ctx.fillStyle = '#e2e8f0';
+  ctx.font = 'italic 19px "Newsreader", serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.01em';
+  ctx.fillText('“Architectural brand deployment, signage typography, and spatial showcase.”', W / 2, subY);
+
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.fillStyle = '#ff7a45'; ctx.letterSpacing = '0.24em';
+  ctx.fillText('30 CAMPUS ASSETS • SPATIAL WAYFINDING • 2025', W / 2, subY + 36);
+
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(80, H - 200); ctx.lineTo(W - 80, H - 200); ctx.stroke();
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#ff7a45'; ctx.font = '700 13px "Inter Tight", sans-serif'; ctx.letterSpacing = '0.20em';
+  ctx.fillText('SPATIAL DESIGN', 80, H - 160);
+  ctx.fillStyle = '#ffffff'; ctx.font = '700 16px "Inter Tight", sans-serif';
+  ctx.fillText('SAI KRISHNA BETHAMCHARLA', 80, H - 134);
+
+  drawClassicBadge(ctx, W - 80 - 260, H - 172, 260, 74, 'SPATIAL BRANDING', '#ffffff', '#ff7a45', 20);
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+function drawCornerSpineWear(ctx, W, H) {
+  const drawCorner = (cx, cy, r) => {
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+    g.addColorStop(0, 'rgba(235, 220, 198, 0.90)');
+    g.addColorStop(0.5, 'rgba(215, 200, 178, 0.45)');
+    g.addColorStop(1, 'transparent');
+    ctx.fillStyle = g;
+    ctx.fillRect(cx < W / 2 ? 0 : W - r, cy < H / 2 ? 0 : H - r, r, r);
+  };
+  drawCorner(0, 0, 80);
+  drawCorner(W, 0, 80);
+  drawCorner(0, H, 80);
+  drawCorner(W, H, 80);
+}
+
+
 // BUILD THE 36 TAPES
 // ═══════════════════════════════════════════════════════════════════
 function buildShelf() {
@@ -3733,6 +4806,48 @@ async function init() {
   if (summerFilm) {
     summerFilm.customSpineUrl = generateDoorSpine();
     summerFilm.customCoverUrl = generateDoorCover();
+  }
+
+  const odysseyFilm = FILMS.find(f => f.id === 'green');
+  if (odysseyFilm) {
+    odysseyFilm.customSpineUrl = generateOdysseySpine();
+    odysseyFilm.customCoverUrl = generateOdysseyCover();
+  }
+
+  const noonFilm = FILMS.find(f => f.id === 'noon');
+  if (noonFilm) {
+    noonFilm.customSpineUrl = generateNoonSpine();
+    noonFilm.customCoverUrl = generateNoonCover();
+  }
+
+  const neoBelvaFilm = FILMS.find(f => f.id === 'birds');
+  if (neoBelvaFilm) {
+    neoBelvaFilm.customSpineUrl = generateNeoBelvaSpine();
+    neoBelvaFilm.customCoverUrl = generateNeoBelvaCover();
+  }
+
+  const greenFieldFilm = FILMS.find(f => f.id === 'storm');
+  if (greenFieldFilm) {
+    greenFieldFilm.customSpineUrl = generateGreenFieldSpine();
+    greenFieldFilm.customCoverUrl = generateGreenFieldCover();
+  }
+
+  const auraFilm = FILMS.find(f => f.id === 'tide');
+  if (auraFilm) {
+    auraFilm.customSpineUrl = generateAuraSpine();
+    auraFilm.customCoverUrl = generateAuraCover();
+  }
+
+  const virupakshaFilm = FILMS.find(f => f.id === 'war');
+  if (virupakshaFilm) {
+    virupakshaFilm.customSpineUrl = generateVirupakshaSpine();
+    virupakshaFilm.customCoverUrl = generateVirupakshaCover();
+  }
+
+  const abacusFilm = FILMS.find(f => f.id === 'door');
+  if (abacusFilm) {
+    abacusFilm.customSpineUrl = generateAbacusSpine();
+    abacusFilm.customCoverUrl = generateAbacusCover();
   }
 
   const urlParams = new URLSearchParams(window.location.search);

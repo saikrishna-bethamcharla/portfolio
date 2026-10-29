@@ -38,8 +38,11 @@ html, body {
 }
 
 @media (pointer: fine) {
-  html, body, button, a {
-    cursor: none;
+  html, body {
+    cursor: default;
+  }
+  button, a, .tab-btn, .arr, .tape, .tape .face, #play-ring, [role="button"] {
+    cursor: pointer !important;
   }
 }
 
@@ -390,23 +393,9 @@ html, body {
 }
 
 /* ── 8. CUSTOM CURSOR ───────────────────────────────────────────── */
-#cursor {
-  position: fixed;
-  width: 58px;
-  height: 58px;
-  margin: -29px 0 0 -29px;
-  z-index: 100;
-  pointer-events: none;
-  display: none;
-}
+#cursor { display: none !important; }
 
-@media (pointer: fine) {
-  #cursor {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
+
 
 #cur-ring {
   position: absolute;
@@ -1089,9 +1078,9 @@ const cursor      = document.getElementById('cursor');
 // STATE
 // ═══════════════════════════════════════════════════════════════════
 // Starts on Vasudha Pharma Systems (index 0 in the middle copy: s = 0 + 12 = 12)
-let s = 0 + N;
+let active = 3;
+let s = active + N;
 let T = s;
-let active = 0;
 let hover = -1;
 let mx = window.innerWidth / 2, my = window.innerHeight / 2;
 let cx = mx, cy = my;

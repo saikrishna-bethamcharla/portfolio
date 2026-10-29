@@ -1,0 +1,2747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Works — Sai Krishna Bethamcharla</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Noto+Sans+JP:wght@500;700&family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --paper: #000000;
+  --sheet: #0a0a0d;
+  --ink: #ffffff;
+  --muted: #8e8e93;
+  --cobalt: #dc2626; /* Crimson Red matching Apple Hero glow */
+  --rule: rgba(255, 255, 255, 0.14);
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --H: min(46vh, 31vw);
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--paper);
+  color: var(--ink);
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "Inter Tight", "Noto Sans JP", system-ui, sans-serif;
+}
+
+@media (pointer: fine) {
+  html, body, button, a {
+    cursor: none;
+  }
+}
+
+/* ── LABEL SYSTEM ───────────────────────────────────────────────── */
+.lbl {
+  font-family: "Inter Tight", "Noto Sans JP", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 10.5px;
+  line-height: 1;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 23px;
+  padding: 0 10px;
+  border: 1px solid var(--rule);
+  background: rgba(18, 18, 22, 0.6);
+  backdrop-filter: blur(8px);
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: 0;
+  white-space: nowrap;
+}
+
+/* ── TACTILE ARCHIVAL GRAIN OVERLAY ────────────────────────────── */
+#grain {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: .14;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='paperGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.85 0 0 0 0 0.85 0 0 0 0 0.85 0 0 0 0.35 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23paperGrain)'/%3E%3C/svg%3E");
+}
+
+/* ── 1. TOP BAR ─────────────────────────────────────────────────── */
+#topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 84px;
+  padding: 0 32px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  z-index: 50;
+}
+
+#topbar-left {
+  justify-self: start;
+}
+
+#topbar-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+#logo-cjk {
+  font-family: "Inter Tight", "Noto Sans JP", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .22em;
+  color: #ffffff;
+}
+
+#logo-en {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 600;
+  font-size: 9px;
+  letter-spacing: .38em;
+  padding-left: .38em;
+  color: var(--cobalt);
+}
+
+#topbar-right {
+  justify-self: end;
+  color: var(--muted);
+}
+
+/* ── 2. PROJECT CATEGORY TABS ───────────────────────────────────── */
+#tabs {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  z-index: 50;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+}
+
+#tab-indicator {
+  position: absolute;
+  top: 0;
+  height: 23px;
+  background: var(--cobalt);
+  transition: width .6s var(--ease), transform .6s var(--ease);
+  z-index: 0;
+  pointer-events: none;
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+}
+
+.tab-btn {
+  position: relative;
+  z-index: 1;
+  height: 23px;
+  padding: 0 12px;
+  border: 1px solid var(--rule);
+  margin-left: -1px;
+  background: transparent;
+  color: var(--muted);
+  transition: color .45s var(--ease), border-color .3s ease;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.tab-btn:first-child {
+  margin-left: 0;
+}
+
+.tab-btn:hover {
+  color: #ffffff;
+}
+
+.tab-btn.active {
+  color: #ffffff;
+  font-weight: 700;
+  border-color: rgba(220, 38, 38, 0.6);
+}
+
+/* ── 3. THE SHELF (3D STAGE) ────────────────────────────────────── */
+#shelf-section {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
+  perspective: 2200px;
+  perspective-origin: 50% 50%;
+  touch-action: pan-y;
+  z-index: 10;
+}
+
+/* Ambient Red Glow behind shelf stage */
+#shelf-section::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(85vw, 1100px);
+  height: min(60vh, 550px);
+  background: radial-gradient(ellipse 65% 50% at 50% 50%, rgba(220, 38, 38, 0.22) 0%, rgba(180, 10, 10, 0.08) 45%, transparent 75%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-style: preserve-3d;
+  width: 0;
+  height: 0;
+  z-index: 1;
+}
+
+.tape {
+  position: absolute;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.face {
+  position: absolute;
+  top: calc(-1 * var(--H) / 2);
+  height: var(--H);
+  border-radius: 2px;
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.face::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #000000;
+  opacity: var(--shade, 0);
+  pointer-events: none;
+  transition: opacity .1s linear;
+}
+
+.sp {
+  width: var(--ws);
+  left: calc(-1 * var(--ws) / 2);
+  transform: translateZ(calc(var(--d) / 2));
+  background-repeat: no-repeat;
+}
+
+.cv {
+  width: var(--d);
+  left: calc(-1 * var(--d) / 2);
+  transform: rotateY(90deg) translateZ(calc(var(--ws) / 2));
+  background-repeat: no-repeat;
+  box-shadow: 0 35px 70px -25px rgba(0, 0, 0, 0.95), 0 0 40px rgba(220, 38, 38, 0.15);
+}
+
+/* ── 4. PLAY RING ───────────────────────────────────────────────── */
+#play-ring {
+  position: fixed;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--cobalt);
+  background: rgba(18, 18, 22, 0.85);
+  backdrop-filter: blur(12px);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 25;
+  transform-origin: center center;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 0 25px rgba(220, 38, 38, 0.35);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#play-ring:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 35px rgba(220, 38, 38, 0.6);
+  border-color: #ef4444;
+}
+
+#play-ring svg {
+  margin-left: 2px;
+}
+
+/* ── 5. CAPTION ─────────────────────────────────────────────────── */
+#caption {
+  position: fixed;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.cap-mask {
+  position: relative;
+  overflow: hidden;
+  width: min(92vw, 760px);
+  text-align: center;
+}
+
+#cap-title .cap-mask {
+  font-family: "Newsreader", Georgia, serif;
+  font-weight: 400;
+  font-size: 31px;
+  line-height: 1.12;
+  letter-spacing: -.01em;
+  color: #ffffff;
+  min-height: 36px;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
+}
+
+#cap-sub .cap-mask {
+  color: var(--cobalt);
+  font-weight: 600;
+  letter-spacing: .12em;
+  min-height: 14px;
+}
+
+#cap-year .cap-mask {
+  font-family: "Inter Tight", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--muted);
+  min-height: 14px;
+}
+
+/* ── 6. ARROWS ──────────────────────────────────────────────────── */
+.arrow-btn {
+  position: fixed;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 20, 24, 0.5);
+  border: 1px solid var(--rule);
+  color: #ffffff;
+  z-index: 25;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.arrow-btn:hover {
+  border-color: var(--cobalt);
+  background: rgba(220, 38, 38, 0.15);
+}
+
+#arr-left {
+  left: 24px;
+}
+
+#arr-right {
+  right: 24px;
+}
+
+/* ── 7. FOOTER ──────────────────────────────────────────────────── */
+#footer {
+  position: fixed;
+  bottom: 26px;
+  left: 32px;
+  right: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 50;
+}
+
+#footer a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+#footer a:hover {
+  color: #ffffff;
+}
+
+#footer-links {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+/* ── 8. CUSTOM CURSOR ───────────────────────────────────────────── */
+#cursor {
+  position: fixed;
+  width: 58px;
+  height: 58px;
+  margin: -29px 0 0 -29px;
+  z-index: 100;
+  pointer-events: none;
+  display: none;
+}
+
+@media (pointer: fine) {
+  #cursor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+#cur-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  background: transparent;
+  transform: scale(1);
+  transition: transform .5s var(--ease), background .4s var(--ease), border-color .4s var(--ease);
+}
+
+#cur-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+  transform: scale(1);
+  transition: transform .4s var(--ease);
+}
+
+#cur-label {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #ffffff;
+  font-family: "Inter Tight", "Noto Sans JP", sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 1.25;
+  letter-spacing: .1em;
+  transform: scale(0);
+  transition: transform .45s var(--ease);
+}
+
+/* Cursor states */
+#cursor.spine #cur-ring {
+  transform: scale(.72);
+}
+
+#cursor.btn #cur-ring {
+  transform: scale(.55);
+}
+
+#cursor.btn #cur-dot {
+  transform: scale(0);
+}
+
+#cursor.open #cur-ring {
+  transform: scale(1.75);
+  background: var(--cobalt);
+  border-color: var(--cobalt);
+  box-shadow: 0 0 30px rgba(220, 38, 38, 0.6);
+}
+
+#cursor.open #cur-dot {
+  transform: scale(0);
+}
+
+#cursor.open #cur-label {
+  transform: scale(1);
+}
+
+/* ── 9. DETAIL DIALOG ───────────────────────────────────────────── */
+#detail {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: var(--sheet);
+  visibility: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4vw;
+  padding: 110px 6vw 56px 7vw;
+  overflow: hidden;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.9);
+}
+
+#detail-close {
+  position: absolute;
+  top: 32px;
+  left: 6vw;
+  cursor: pointer;
+  z-index: 2;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+#detail-close:hover {
+  border-color: var(--cobalt);
+  background: rgba(220, 38, 38, 0.2);
+}
+
+#detail-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+#detail-logo-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+#detail-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+  max-width: 520px;
+  z-index: 1;
+}
+
+#detail-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.dl-mask {
+  overflow: hidden;
+}
+
+#dl-sub {
+  color: var(--cobalt);
+}
+
+#dl-title {
+  font-family: "Newsreader", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(44px, 5.4vw, 84px);
+  line-height: 1;
+  letter-spacing: -.025em;
+  color: var(--ink);
+}
+
+#dl-meta {
+  color: var(--muted);
+}
+
+#dl-synopsis {
+  font-family: "Newsreader", Georgia, serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.5;
+  max-width: 42ch;
+  color: #d1d1d6;
+}
+
+#dl-credit {
+  font-family: "Newsreader", Georgia, serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+#dl-watch {
+  height: 44px;
+  padding: 0 20px;
+  border: 1px solid var(--cobalt);
+  background: rgba(220, 38, 38, 0.12);
+  color: #ffffff;
+  margin-top: 10px;
+  align-self: flex-start;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+#dl-watch:hover {
+  background: var(--cobalt);
+  box-shadow: 0 0 25px rgba(220, 38, 38, 0.5);
+}
+
+#detail-poster {
+  height: min(100%, 78vh);
+  aspect-ratio: 474 / 900;
+  display: block;
+  filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.8));
+}
+
+/* ── REDUCED MOTION ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+  }
+}
+
+/* ── RESPONSIVE (≤ 767px) ───────────────────────────────────────── */
+@media (max-width: 767px) {
+  :root {
+    --H: min(60vw, 40svh);
+  }
+
+  #topbar {
+    height: 64px;
+    padding: 0 16px;
+  }
+
+  #logo-cjk {
+    font-size: 11px;
+  }
+
+  #logo-en {
+    font-size: 7.5px;
+  }
+
+  #topbar-right {
+    display: none;
+  }
+
+  .tab-btn {
+    padding: 0 8px;
+    font-size: 9px;
+  }
+
+  #cap-title .cap-mask {
+    font-size: 24px;
+  }
+
+  #arr-left {
+    left: 8px;
+  }
+
+  #arr-right {
+    right: 8px;
+  }
+
+  #footer {
+    left: 16px;
+    right: 16px;
+    bottom: 18px;
+  }
+
+  #footer .lbl {
+    font-size: 9px;
+  }
+
+  #detail {
+    grid-template-columns: 1fr;
+    padding: 84px 22px 40px;
+    gap: 24px;
+    overflow-y: auto;
+  }
+
+  #detail-poster {
+    height: 46svh;
+    width: auto;
+  }
+
+  #dl-title {
+    font-size: 42px;
+  }
+
+  #dl-synopsis {
+    font-size: 16px;
+  }
+
+  #detail-close {
+    top: 16px;
+    left: 21px;
+  }
+
+  #detail-logo {
+    height: 64px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="grain" aria-hidden="true"></div>
+
+<!-- 1. TOP BAR -->
+<header id="topbar">
+  <div id="topbar-left">
+    <a href="/" class="lbl box" id="back-link">← BACK / 戻る</a>
+  </div>
+  <a href="#shelf" id="topbar-center">
+    <div id="logo-cjk">SAI KRISHNA</div>
+    <div id="logo-en">BETHAMCHARLA</div>
+  </a>
+  <div id="topbar-right" class="lbl">
+    WORKS 2022年〜2026年
+  </div>
+</header>
+
+<!-- 2. PROJECT CATEGORY TABS -->
+<nav id="tabs" aria-label="Project categories">
+  <div id="tab-indicator" aria-hidden="true"></div>
+  <button class="tab-btn lbl box" data-category="all">ALL / 全作品</button>
+  <button class="tab-btn lbl box" data-category="websites">WEBSITES</button>
+  <button class="tab-btn lbl box" data-category="cinematic">CINEMATIC VIDEOS</button>
+  <button class="tab-btn lbl box" data-category="motion">MOTION & POST</button>
+  <button class="tab-btn lbl box" data-category="branding">BRAND SYSTEMS</button>
+</nav>
+
+<!-- 3. THE SHELF (3D STAGE) -->
+<section id="shelf-section" aria-label="Filmography shelf">
+  <div id="stage"></div>
+</section>
+
+<!-- 4. PLAY RING -->
+<button id="play-ring" aria-label="Open project">
+  <svg width="12" height="14" viewBox="0 0 12 14" fill="none" aria-hidden="true">
+    <path d="M1 1L11 7L1 13V1Z" fill="currentColor"/>
+  </svg>
+</button>
+
+<!-- 5. CAPTION -->
+<div id="caption" aria-live="polite">
+  <div id="cap-title"><div class="cap-mask"><span></span></div></div>
+  <div id="cap-sub"><div class="cap-mask"><span></span></div></div>
+  <div id="cap-year"><div class="cap-mask"><span></span></div></div>
+</div>
+
+<!-- 6. ARROWS -->
+<button id="arr-left" class="arrow-btn" aria-label="Previous project">
+  <svg width="18" height="10" viewBox="0 0 18 10" fill="none" aria-hidden="true">
+    <path d="M5 1L1 5L5 9M1 5H17" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+<button id="arr-right" class="arrow-btn" aria-label="Next project">
+  <svg width="18" height="10" viewBox="0 0 18 10" fill="none" aria-hidden="true">
+    <path d="M13 1L17 5L13 9M17 5H1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<!-- 7. FOOTER -->
+<footer id="footer">
+  <span class="lbl">© 2026 SAI KRISHNA BETHAMCHARLA. ALL RIGHTS RESERVED.</span>
+  <div id="footer-links" class="lbl">
+    <a href="https://www.youtube.com/@saikrishna_bethamcharla" target="_blank" rel="noopener">YT</a>
+    <span>/</span>
+    <a href="https://linkedin.com/in/sai-krishna-bethamcharla" target="_blank" rel="noopener">LI</a>
+    <span>/</span>
+    <a href="https://github.com/saikrishna-bethamcharla" target="_blank" rel="noopener">GH</a>
+  </div>
+</footer>
+
+<!-- 8. DETAIL VIEW (DIALOG) -->
+<div id="detail" role="dialog" aria-modal="true" aria-label="Project detail">
+  <button id="detail-close" class="lbl box" aria-label="Close detail">CLOSE / 閉じる</button>
+  <div id="detail-logo">
+    <div id="detail-logo-inner">
+      <div id="logo-cjk" style="font-size: 13px;">SAI KRISHNA</div>
+      <div id="logo-en" style="font-size: 8px;">BETHAMCHARLA</div>
+    </div>
+  </div>
+
+  <div id="detail-left">
+    <div class="dl-mask"><div id="dl-sub" class="lbl"></div></div>
+    <div class="dl-mask"><div id="dl-title"></div></div>
+    <div class="dl-mask"><div id="dl-meta" class="lbl"></div></div>
+    <div class="dl-mask"><div id="dl-synopsis"></div></div>
+    <div class="dl-mask"><div id="dl-credit"></div></div>
+    <div class="dl-mask">
+      <button id="dl-watch" class="lbl box">EXPLORE PROJECT / 映画を見る</button>
+    </div>
+  </div>
+
+  <div id="detail-right">
+    <svg id="detail-poster" viewBox="0 0 474 900" aria-hidden="true">
+      <defs>
+        <filter id="ink-filter" x="-50%" y="-25%" width="200%" height="150%" color-interpolation-filters="sRGB">
+          <feTurbulence type="fractalNoise" baseFrequency=".011" numOctaves="3" seed="7" result="turb"/>
+          <feDisplacementMap in="SourceGraphic" in2="turb" scale="120" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <mask id="ink-mask" maskUnits="userSpaceOnUse" x="-200" y="-200" width="874" height="1300">
+          <g filter="url(#ink-filter)" id="blobs"></g>
+        </mask>
+        <clipPath id="poster-clip"><rect width="474" height="900"/></clipPath>
+      </defs>
+      <g clip-path="url(#poster-clip)">
+        <image id="poster-img" preserveAspectRatio="none" mask="url(#ink-mask)" width="474" height="900"/>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<!-- 9. CUSTOM CURSOR -->
+<div id="cursor" aria-hidden="true">
+  <div id="cur-ring"></div>
+  <div id="cur-dot"></div>
+  <div id="cur-label"><span>OPEN</span><span>開く</span></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// MEDIA & ASSET SHEETS SPEC
+// ═══════════════════════════════════════════════════════════════════
+const SHEET = {
+  covers: [
+    'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261029_010644_837e04ca-2418-45c1-b8e0-0233265c4cd5.png&w=1744&q=85',
+    1744,
+    2336
+  ],
+  spines: [
+    'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261029_010738_a3e47ead-18f2-4974-9468-06d16a25edc5.png&w=2688&q=85',
+    2688,
+    1152
+  ],
+  fix: [
+    'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261029_010831_3ebb874b-93dc-433e-87ed-6299aba720f0.png&w=1520&q=85',
+    1520,
+    2688
+  ],
+  fix2: [
+    'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20261029_092020_f96bc094-db7b-46de-9298-074a24e0a3b8.png&w=1520&q=85',
+    1520,
+    2688
+  ]
+};
+
+// Crop boxes [sheet, x, y, w, h]
+const CROP = {
+  'spine-valley':   ['spines', 266, 31, 189, 1089],
+  'cover-valley':   ['covers', 497, 72, 344, 659],
+
+  'spine-bluehour': ['spines', 492, 31, 189, 1089],
+  'cover-bluehour': ['covers', 914, 72, 342, 659],
+
+  'spine-river':    ['fix', 197, 54, 324, 2566],
+  'cover-river':    ['covers', 1332, 72, 344, 659],
+
+  'spine-summer':   ['spines', 937, 31, 188, 1089],
+  'cover-summer':   ['covers', 74, 813, 344, 676],
+
+  'spine-green':    ['spines', 1157, 31, 185, 1090],
+  'cover-green':    ['covers', 497, 815, 344, 674],
+
+  'spine-noon':     ['spines', 44, 32, 184, 1088],
+  'cover-noon':     ['covers', 74, 72, 347, 659],
+
+  'spine-observer': ['fix2', 371, 15, 349, 2655],
+  'cover-observer': ['covers', 915, 815, 342, 675],
+
+  'spine-birds':    ['spines', 1573, 31, 183, 1089],
+  'cover-birds':    ['covers', 1331, 815, 345, 675],
+
+  'spine-storm':    ['fix2', 808, 15, 347, 2656],
+  'cover-storm':    ['covers', 74, 1571, 345, 681],
+
+  'spine-tide':     ['spines', 2012, 31, 188, 1089],
+  'cover-tide':     ['covers', 496, 1577, 343, 678],
+
+  'spine-war':      ['spines', 2236, 31, 189, 1089],
+  'cover-war':      ['covers', 913, 1579, 343, 676],
+
+  'spine-door':     ['spines', 2462, 31, 188, 1089],
+  'cover-door':     ['covers', 1331, 1579, 344, 677]
+};
+
+// Preload the four sheets immediately
+Object.values(SHEET).forEach(([url]) => {
+  const img = new Image();
+  img.src = url;
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// DATA: SAI KRISHNA'S SELECTED WORKS (Categorized)
+// ═══════════════════════════════════════════════════════════════════
+const FILMS = [
+  // ── WEBSITES ─────────────────────────────────────────────────────
+  {
+    id: 'valley',
+    category: 'websites',
+    title: 'Vasudha Pharma Systems',
+    romaji: 'VASUDHA PHARMA',
+    kanji: '国際医薬品',
+    year: '2023',
+    genre: 'ENTERPRISE CRM',
+    minutes: '80+ EXPORT MARKETS',
+    synopsis: 'Engineered automated Zoho CRM architecture scaling Vasudha Pharma Ingredients across 80+ export markets globally.',
+    credit: 'System Architecture — Sai Krishna Bethamcharla. 監督作品',
+    liveUrl: 'https://saikrishna-bethamcharla.github.io/vasudhapharma/',
+    customTextures: true,
+    customSpineUrl: null,
+    customCoverUrl: null
+  },
+  {
+    id: 'bluehour',
+    category: 'websites',
+    title: 'Zai Labs AI Platform',
+    romaji: 'ZAI LABS',
+    kanji: '臨床試験',
+    year: '2024',
+    genre: 'CLINICAL AI',
+    minutes: '12 CORE ENGINES',
+    synopsis: 'Digital operations and AI platform supporting clinical trial management infrastructure across Asia-Pacific.',
+    credit: 'Technical Lead — Sai Krishna Bethamcharla. 監督作品',
+    liveUrl: 'https://zailabs.co.in/'
+  },
+  {
+    id: 'river',
+    category: 'websites',
+    title: 'Pranic Healing Portal',
+    romaji: 'PRANIC HEALING',
+    kanji: '生命エネルギー',
+    year: '2022',
+    genre: 'WEB ARCHITECTURE',
+    minutes: '36 REGIONAL HUBS',
+    synopsis: 'End-to-end digital transformation and patient education platform connecting healing practitioners across India.',
+    credit: 'Digital Lead — Sai Krishna Bethamcharla. 監督作品',
+    liveUrl: '#'
+  },
+
+  // ── CINEMATIC VIDEOS ─────────────────────────────────────────────
+  {
+    id: 'summer',
+    category: 'cinematic',
+    title: 'The Door at 11:47',
+    romaji: 'THE DOOR AT 11:47',
+    kanji: '扉の時刻',
+    year: '2024',
+    genre: 'AI SHORT FILM',
+    minutes: '14 MIN TRAILER',
+    synopsis: 'An original cinematic short exploring liminal time, directed and generated with Seedance 2.0, Kling 3.0, and DaVinci Resolve.',
+    credit: 'Written and Directed by Sai Krishna Bethamcharla. 監督作品',
+    liveUrl: 'https://youtu.be/r9kHcvYWZ4c'
+  },
+  {
+    id: 'green',
+    category: 'cinematic',
+    title: 'Odyssey Narrative',
+    romaji: 'ODYSSEY',
+    kanji: '宇宙の旅',
+    year: '2025',
+    genre: 'SCI-FI CINEMA',
+    minutes: '18 MIN CHRONICLE',
+    synopsis: 'Multi-shot neural video direction maintaining persistent character facial continuity, virtual camera blocking, and cinematic grade.',
+    credit: 'Generative AI Direction — Sai Krishna Bethamcharla. 監督作品',
+    liveUrl: 'https://www.youtube.com/@saikrishna_bethamcharla'
+  },
+  {
+    id: 'noon',
+    category: 'cinematic',
+    title: 'Noon in Ashes',
+    romaji: 'HAI NO SHOGO',
+    kanji: '灰の正午',
+    year: '2026',
+    genre: 'WESTERN CINEMA',
+    minutes: 'THEATRICAL TEASER',
+    synopsis: 'Theatrical cinematic trailer exploring desert isolation and debt settlement, rendered with multi-stage neural visual continuity.',
+    credit: 'Cinematic Direction — Sai Krishna Bethamcharla. 監督作品',
+    liveUrl: 'https://www.youtube.com/@saikrishna_bethamcharla'
+  },
+
+  // ── MOTION & POST-PRODUCTION ─────────────────────────────────────
+  {
+    id: 'gmcks',
+    category: 'motion',
+    title: 'GMCKS Documentary',
+    romaji: 'GMCKS LIFE',
+    kanji: '生命伝記',
+    year: '2023',
+    genre: 'DOCUMENTARY',
+    minutes: '42 MIN FILM',
+    synopsis: 'Pioneered signature pencil-sketch visual documentary aesthetic for archival footage restoration and spiritual history narrative.',
+    credit: 'Directed & Post-Produced by Sai Krishna Bethamcharla. 監督作品',
+    liveUrl: 'https://youtu.be/yajmIsC6Pno',
+    customTextures: true,
+    customSpineUrl: null,
+    customCoverUrl: null
+  },
+  {
+    id: 'birds',
+    category: 'motion',
+    title: 'Neo Belva Commercial',
+    romaji: 'NEO BELVA',
+    kanji: '映像広告',
+    year: '2025',
+    genre: 'COMMERCIAL REEL',
+    minutes: '3 MIN SHOWCASE',
+    synopsis: 'High-energy beat-synced editorial assembly with narrative color grading and kinetic typography for luxury architectural development.',
+    credit: 'Editorial Assembly — Sai Krishna Bethamcharla. 監督作品',
+    liveUrl: 'https://www.youtube.com/@saikrishna_bethamcharla'
+  },
+  {
+    id: 'storm',
+    category: 'motion',
+    title: 'Green Field International',
+    romaji: 'GREEN FIELD',
+    kanji: '国際学校',
+    year: '2024',
+    genre: 'COMMERCIAL FILM',
+    minutes: '5 MIN CAMPAIGN',
+    synopsis: 'Cinematic brand commercial for Green Field School International featuring hand-drawn motion accents and spatial sound design.',
+    credit: 'Motion Design — Sai Krishna Bethamcharla. 監督作品',
+    liveUrl: 'https://www.youtube.com/@saikrishna_bethamcharla'
+  },
+
+  // ── BRAND SYSTEMS ────────────────────────────────────────────────
+  {
+    id: 'tide',
+    category: 'branding',
+    title: 'Aura Organics Luxury',
+    romaji: 'AURA ORGANICS',
+    kanji: '天然化粧品',
+    year: '2023',
+    genre: 'LUXURY PACKAGING',
+    minutes: '24 ASSET SUITE',
+    synopsis: 'Comprehensive luxury brand identity, high-end packaging design, product cinematography, and e-commerce architecture.',
+    credit: 'Creative Direction — Sai Krishna Bethamcharla. 監督作品',
+    liveUrl: '#'
+  },
+  {
+    id: 'war',
+    category: 'branding',
+    title: 'Dr. Rashmi Katari',
+    romaji: 'VIRUPAKSHA',
+    kanji: '健康聖域',
+    year: '2024',
+    genre: 'SANCTUARY BRAND',
+    minutes: '12 BRAND ASSETS',
+    synopsis: 'Holistic visual identity, content strategy, and patient booking portal for Virupaksha Niramayata Living Sanctuary.',
+    credit: 'Brand Architecture — Sai Krishna Bethamcharla. 監督作品',
+    liveUrl: '#'
+  },
+  {
+    id: 'door',
+    category: 'branding',
+    title: 'Abacus Campus Identity',
+    romaji: 'ABACUS CAMPUS',
+    kanji: '教育ブランド',
+    year: '2025',
+    genre: 'SPATIAL BRANDING',
+    minutes: '30 CAMPUS ASSETS',
+    synopsis: 'Architectural brand deployment, institutional visual guidelines, signage typography, and digital exhibition showcase.',
+    credit: 'Spatial Design — Sai Krishna Bethamcharla. 監督作品',
+    liveUrl: '#'
+  }
+];
+
+const N = FILMS.length; // 12
+const COPIES = 3;
+const TOTAL = COPIES * N; // 36
+
+// ═══════════════════════════════════════════════════════════════════
+// DOM REFS
+// ═══════════════════════════════════════════════════════════════════
+const stage       = document.getElementById('stage');
+const shelfSec    = document.getElementById('shelf-section');
+const tabsNav     = document.getElementById('tabs');
+const tabInd      = document.getElementById('tab-indicator');
+const tabBtns     = Array.from(document.querySelectorAll('.tab-btn'));
+const playRing    = document.getElementById('play-ring');
+const capTitle    = document.getElementById('cap-title');
+const capSub      = document.getElementById('cap-sub');
+const capYear     = document.getElementById('cap-year');
+const arrLeft     = document.getElementById('arr-left');
+const arrRight    = document.getElementById('arr-right');
+const detail      = document.getElementById('detail');
+const detClose    = document.getElementById('detail-close');
+const dlSub       = document.getElementById('dl-sub');
+const dlTitle     = document.getElementById('dl-title');
+const dlMeta      = document.getElementById('dl-meta');
+const dlSyn       = document.getElementById('dl-synopsis');
+const dlCredit    = document.getElementById('dl-credit');
+const dlWatch     = document.getElementById('dl-watch');
+const posterImg   = document.getElementById('poster-img');
+const blobsEl     = document.getElementById('blobs');
+const cursor      = document.getElementById('cursor');
+
+// ═══════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════
+// Starts on Vasudha Pharma Systems (index 0 in the middle copy: s = 0 + 12 = 12)
+let s = 0 + N;
+let T = s;
+let active = 0;
+let hover = -1;
+let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+let cx = mx, cy = my;
+let tiltX = 0, tiltY = 0;
+let onCover = false;
+let isOpen = false;
+let isDragging = false;
+let dragStartX = 0;
+let dragStartT = 0;
+let hasDragged = false;
+let wheelTimer = null;
+let lastTime = performance.now();
+
+const lifts = new Float32Array(TOTAL);
+const tapeEls = [];
+const spFaces = [];
+const cvFaces = [];
+
+let H = 0, ws = 0, d = 0, gap = 0, W = window.innerWidth, SH = window.innerHeight;
+
+// ═══════════════════════════════════════════════════════════════════
+// GEOMETRY PROBE
+// ═══════════════════════════════════════════════════════════════════
+function measureDimensions() {
+  const probe = document.createElement('div');
+  probe.style.cssText = 'position:fixed;height:var(--H);width:0;visibility:hidden;pointer-events:none;';
+  document.body.appendChild(probe);
+  H = probe.getBoundingClientRect().height;
+  document.body.removeChild(probe);
+
+  W = window.innerWidth;
+  SH = window.innerHeight;
+
+  ws  = H * 142 / 840;
+  d   = H * 474 / 900;
+  gap = H * 0.03;
+
+  stage.style.setProperty('--ws', ws + 'px');
+  stage.style.setProperty('--d',  d + 'px');
+  stage.style.setProperty('--H',  H + 'px');
+
+  // Align sections from screen center using resolved H
+  shelfSec.style.top    = (SH / 2 - H / 2 - 40) + 'px';
+  shelfSec.style.height = (H + 80) + 'px';
+
+  tabsNav.style.top     = (SH / 2 - H / 2 - 86) + 'px';
+
+  const captionTop = SH / 2 + H / 2 + 30;
+  document.getElementById('caption').style.top = captionTop + 'px';
+
+  const arrowTop = SH / 2 + H / 2 + 40;
+  arrLeft.style.top  = arrowTop + 'px';
+  arrRight.style.top = arrowTop + 'px';
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CSS BACKGROUND CROPPING CALCULATOR
+// ═══════════════════════════════════════════════════════════════════
+function applySheetCrop(el, cropKey) {
+  const [sheetId, x, y, w, h] = CROP[cropKey];
+  const [url, W_s, H_s] = SHEET[sheetId];
+
+  const sizeX = (W_s / w) * 100;
+  const sizeY = (H_s / h) * 100;
+  const posX  = (x / (W_s - w)) * 100;
+  const posY  = (y / (H_s - h)) * 100;
+
+  el.style.backgroundImage    = `url("${url}")`;
+  el.style.backgroundSize     = `${sizeX}% ${sizeY}%`;
+  el.style.backgroundPosition = `${posX}% ${posY}%`;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PROCEDURAL ARTWORK GENERATORS FOR CUSTOM PROJECT BOOKS
+// ═══════════════════════════════════════════════════════════════════
+function drawGoldenLotus(ctx, cx, cy, radius, goldColor = '#d49b28') {
+  ctx.save();
+  ctx.translate(cx, cy);
+
+  // Outer aura ring
+  ctx.strokeStyle = 'rgba(212, 155, 40, 0.4)';
+  ctx.lineWidth = 1.4;
+  ctx.beginPath();
+  ctx.arc(0, 0, radius * 1.05, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Subtle radiating rays
+  ctx.strokeStyle = 'rgba(212, 155, 40, 0.22)';
+  ctx.lineWidth = 0.9;
+  for (let i = 0; i < 16; i++) {
+    const angle = (i / 16) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(Math.cos(angle) * radius * 0.75, Math.sin(angle) * radius * 0.75);
+    ctx.lineTo(Math.cos(angle) * radius * 1.15, Math.sin(angle) * radius * 1.15);
+    ctx.stroke();
+  }
+
+  // 12 Outer Lotus Petals
+  ctx.fillStyle = 'rgba(212, 155, 40, 0.22)';
+  ctx.strokeStyle = goldColor;
+  ctx.lineWidth = 1.6;
+
+  for (let p = 0; p < 8; p++) {
+    const angle = (p / 8) * Math.PI * 2;
+    ctx.save();
+    ctx.rotate(angle);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.quadraticCurveTo(radius * 0.35, -radius * 0.5, 0, -radius * 0.85);
+    ctx.quadraticCurveTo(-radius * 0.35, -radius * 0.5, 0, 0);
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Inner Lotus Petals
+  ctx.fillStyle = 'rgba(255, 235, 160, 0.45)';
+  for (let p = 0; p < 6; p++) {
+    const angle = (p / 6) * Math.PI * 2 + (Math.PI / 6);
+    ctx.save();
+    ctx.rotate(angle);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.quadraticCurveTo(radius * 0.2, -radius * 0.3, 0, -radius * 0.55);
+    ctx.quadraticCurveTo(-radius * 0.2, -radius * 0.3, 0, 0);
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Central Prana Jewel
+  ctx.fillStyle = '#fff4d0';
+  ctx.beginPath();
+  ctx.arc(0, 0, radius * 0.16, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawDetailedPencilSketch(ctx, cx, cy, radius) {
+  ctx.save();
+
+  // Graphite sketch lines - subtle background hatching
+  ctx.strokeStyle = 'rgba(40, 36, 32, 0.08)';
+  ctx.lineWidth = 1;
+  for (let x = cx - radius; x < cx + radius; x += 6) {
+    ctx.beginPath();
+    ctx.moveTo(x, cy - radius);
+    ctx.lineTo(x + radius * 0.5, cy + radius);
+    ctx.stroke();
+  }
+
+  // Cross hatching
+  ctx.strokeStyle = 'rgba(40, 36, 32, 0.05)';
+  for (let x = cx - radius; x < cx + radius; x += 8) {
+    ctx.beginPath();
+    ctx.moveTo(x, cy + radius);
+    ctx.lineTo(x + radius * 0.5, cy - radius);
+    ctx.stroke();
+  }
+
+  // Soft charcoal shading under chest & shoulders (pranic meditation robe)
+  ctx.fillStyle = 'rgba(32, 28, 24, 0.78)';
+  ctx.beginPath();
+  ctx.moveTo(cx - radius * 0.75, cy + radius * 0.88);
+  ctx.quadraticCurveTo(cx - radius * 0.45, cy + radius * 0.25, cx, cy + radius * 0.35);
+  ctx.quadraticCurveTo(cx + radius * 0.45, cy + radius * 0.25, cx + radius * 0.75, cy + radius * 0.88);
+  ctx.lineTo(cx + radius * 0.8, cy + radius);
+  ctx.lineTo(cx - radius * 0.8, cy + radius);
+  ctx.closePath();
+  ctx.fill();
+
+  // Robe pencil sketch folds and directional hatch lines
+  ctx.strokeStyle = 'rgba(20, 18, 16, 0.85)';
+  ctx.lineWidth = 1.5;
+  for (let i = -5; i <= 5; i++) {
+    const rx = cx + i * (radius * 0.12);
+    ctx.beginPath();
+    ctx.moveTo(rx, cy + radius * 0.4);
+    ctx.quadraticCurveTo(rx + (i > 0 ? 15 : -15), cy + radius * 0.65, rx + (i > 0 ? 30 : -30), cy + radius * 0.95);
+    ctx.stroke();
+  }
+
+  // Neck and collar (Nehru style meditation collar)
+  ctx.fillStyle = '#dfd6c4';
+  ctx.beginPath();
+  ctx.ellipse(cx, cy + radius * 0.28, radius * 0.18, radius * 0.1, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = '#25201a';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Head & Face Silhouette (contemplative GMCKS portrait)
+  const headCY = cy - radius * 0.1;
+  const headR = radius * 0.38;
+
+  ctx.fillStyle = '#ebe4d5';
+  ctx.beginPath();
+  ctx.ellipse(cx, headCY, headR * 0.82, headR * 0.96, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Face contour pencil cross-hatching (shading on cheekbones and jaw)
+  ctx.strokeStyle = 'rgba(35, 30, 25, 0.25)';
+  ctx.lineWidth = 0.8;
+  for (let a = -4; a <= 4; a++) {
+    ctx.beginPath();
+    ctx.moveTo(cx - headR * 0.7, headCY + a * 12);
+    ctx.lineTo(cx - headR * 0.2, headCY + a * 12 + 25);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(cx + headR * 0.7, headCY + a * 12);
+    ctx.lineTo(cx + headR * 0.2, headCY + a * 12 + 25);
+    ctx.stroke();
+  }
+
+  // Hair contour with pencil graphite strokes
+  ctx.fillStyle = 'rgba(30, 26, 22, 0.88)';
+  ctx.beginPath();
+  ctx.arc(cx, headCY - headR * 0.15, headR * 0.86, Math.PI * 0.8, Math.PI * 2.2);
+  ctx.quadraticCurveTo(cx + headR * 0.85, headCY - headR * 0.8, cx, headCY - headR * 0.95);
+  ctx.quadraticCurveTo(cx - headR * 0.85, headCY - headR * 0.8, cx - headR * 0.82, headCY + headR * 0.1);
+  ctx.fill();
+
+  // Eyeglasses (signature thin vintage metal wire rims)
+  ctx.strokeStyle = 'rgba(25, 22, 18, 0.9)';
+  ctx.lineWidth = 2.2;
+  const glassY = headCY - headR * 0.08;
+  const glassR = headR * 0.24;
+  // Left lens
+  ctx.beginPath();
+  ctx.ellipse(cx - headR * 0.38, glassY, glassR, glassR * 0.85, 0, 0, Math.PI * 2);
+  ctx.stroke();
+  // Right lens
+  ctx.beginPath();
+  ctx.ellipse(cx + headR * 0.38, glassY, glassR, glassR * 0.85, 0, 0, Math.PI * 2);
+  ctx.stroke();
+  // Bridge & temples
+  ctx.beginPath();
+  ctx.moveTo(cx - headR * 0.15, glassY - 2);
+  ctx.lineTo(cx + headR * 0.15, glassY - 2);
+  ctx.moveTo(cx - headR * 0.62, glassY);
+  ctx.lineTo(cx - headR * 0.8, glassY - 6);
+  ctx.moveTo(cx + headR * 0.62, glassY);
+  ctx.lineTo(cx + headR * 0.8, glassY - 6);
+  ctx.stroke();
+
+  // Eyebrows & Eyes (contemplative, serene expression)
+  ctx.strokeStyle = 'rgba(30, 26, 22, 0.85)';
+  ctx.lineWidth = 2;
+  // Brow lines
+  ctx.beginPath();
+  ctx.moveTo(cx - headR * 0.58, glassY - glassR * 0.85);
+  ctx.quadraticCurveTo(cx - headR * 0.38, glassY - glassR * 1.05, cx - headR * 0.18, glassY - glassR * 0.75);
+  ctx.moveTo(cx + headR * 0.58, glassY - glassR * 0.85);
+  ctx.quadraticCurveTo(cx + headR * 0.38, glassY - glassR * 1.05, cx + headR * 0.18, glassY - glassR * 0.75);
+  ctx.stroke();
+
+  // Gentle eyes through glasses
+  ctx.fillStyle = '#221c17';
+  ctx.beginPath();
+  ctx.arc(cx - headR * 0.38, glassY, 4, 0, Math.PI * 2);
+  ctx.arc(cx + headR * 0.38, glassY, 4, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Gentle smile & lips
+  ctx.strokeStyle = 'rgba(40, 32, 26, 0.85)';
+  ctx.lineWidth = 1.8;
+  const mouthY = headCY + headR * 0.42;
+  ctx.beginPath();
+  ctx.moveTo(cx - headR * 0.24, mouthY);
+  ctx.quadraticCurveTo(cx, mouthY + 7, cx + headR * 0.24, mouthY);
+  ctx.stroke();
+
+  // Nose contour lines
+  ctx.strokeStyle = 'rgba(50, 42, 35, 0.65)';
+  ctx.lineWidth = 1.4;
+  ctx.beginPath();
+  ctx.moveTo(cx - 2, glassY + 2);
+  ctx.lineTo(cx - 3, headCY + headR * 0.22);
+  ctx.quadraticCurveTo(cx + 8, headCY + headR * 0.24, cx + 12, headCY + headR * 0.2);
+  ctx.stroke();
+
+  // Chin stippling & graphite shading
+  ctx.strokeStyle = 'rgba(40, 32, 26, 0.3)';
+  ctx.lineWidth = 0.8;
+  for (let i = 0; i < 20; i++) {
+    const sx = cx + (Math.random() - 0.5) * headR * 0.5;
+    const sy = mouthY + 12 + Math.random() * 18;
+    ctx.beginPath();
+    ctx.moveTo(sx, sy);
+    ctx.lineTo(sx + 8, sy + 6);
+    ctx.stroke();
+  }
+
+  // Radiating Prana Energy Light Lines (delicate golden-graphite rays)
+  ctx.strokeStyle = 'rgba(215, 165, 55, 0.45)';
+  ctx.lineWidth = 1.2;
+  for (let r = 0; r < 24; r++) {
+    const angle = (r / 24) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(angle) * (headR * 1.1), headCY + Math.sin(angle) * (headR * 1.1));
+    ctx.lineTo(cx + Math.cos(angle) * (radius * 0.88), headCY + Math.sin(angle) * (radius * 0.88));
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
+function drawCardboardCreases(ctx, W, H) {
+  ctx.save();
+  // Corner fold scratch top-right
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  ctx.moveTo(W - 45, 0);
+  ctx.lineTo(W, 45);
+  ctx.stroke();
+  ctx.strokeStyle = 'rgba(0, 0, 0, 0.25)';
+  ctx.lineWidth = 0.8;
+  ctx.beginPath();
+  ctx.moveTo(W - 43, 0);
+  ctx.lineTo(W, 43);
+  ctx.stroke();
+
+  // Bottom left distress
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(0, H - 35);
+  ctx.lineTo(35, H);
+  ctx.stroke();
+
+  // Subtle spine crease line on left edge
+  const crease = ctx.createLinearGradient(0, 0, 18, 0);
+  crease.addColorStop(0, 'rgba(0, 0, 0, 0.35)');
+  crease.addColorStop(0.3, 'rgba(255, 255, 255, 0.15)');
+  crease.addColorStop(1, 'transparent');
+  ctx.fillStyle = crease;
+  ctx.fillRect(0, 0, 18, H);
+
+  ctx.restore();
+}
+
+function generateGmcksSpine(phLogoImg) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 300;
+  canvas.height = 1800;
+  const ctx = canvas.getContext('2d');
+  const W = 300, H = 1800;
+
+  // 1. Base aged cardboard paper
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#e8e3d8');
+  bg.addColorStop(0.5, '#ded7ca');
+  bg.addColorStop(1, '#d5cebf');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle 3D curvature shadows along left and right edges of spine
+  const edgeL = ctx.createLinearGradient(0, 0, 32, 0);
+  edgeL.addColorStop(0, 'rgba(0, 0, 0, 0.45)');
+  edgeL.addColorStop(1, 'transparent');
+  ctx.fillStyle = edgeL;
+  ctx.fillRect(0, 0, 32, H);
+
+  const edgeR = ctx.createLinearGradient(W - 32, 0, W, 0);
+  edgeR.addColorStop(0, 'transparent');
+  edgeR.addColorStop(1, 'rgba(0, 0, 0, 0.45)');
+  ctx.fillStyle = edgeR;
+  ctx.fillRect(W - 32, 0, 32, H);
+
+  // Paper grain / cardboard fiber flecks
+  ctx.fillStyle = 'rgba(60, 50, 40, 0.04)';
+  for (let i = 0; i < 400; i++) {
+    const rx = Math.random() * W;
+    const ry = Math.random() * H;
+    const rw = Math.random() * 4 + 1;
+    const rh = Math.random() * 2 + 1;
+    ctx.fillRect(rx, ry, rw, rh);
+  }
+
+  // Realistic corner wear / scuffs at top and bottom
+  const topWear = ctx.createRadialGradient(W / 2, 0, 0, W / 2, 0, 120);
+  topWear.addColorStop(0, 'rgba(255, 255, 255, 0.35)');
+  topWear.addColorStop(0.7, 'rgba(200, 190, 175, 0.15)');
+  topWear.addColorStop(1, 'transparent');
+  ctx.fillStyle = topWear;
+  ctx.fillRect(0, 0, W, 140);
+
+  const botWear = ctx.createRadialGradient(W / 2, H, 0, W / 2, H, 120);
+  botWear.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+  botWear.addColorStop(0.7, 'rgba(190, 180, 165, 0.15)');
+  botWear.addColorStop(1, 'transparent');
+  ctx.fillStyle = botWear;
+  ctx.fillRect(0, H - 140, W, 140);
+
+  // 2. TOP SECTION: Weathered Inset Frame for Exact PH Logo
+  const frameX = 26, frameY = 38, frameW = W - 52, frameH = 340;
+  
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(frameX, frameY, frameW, frameH);
+
+  ctx.strokeStyle = '#1b3b82'; // Archival indigo line
+  ctx.lineWidth = 1.8;
+  ctx.strokeRect(frameX, frameY, frameW, frameH);
+  ctx.strokeStyle = 'rgba(27, 59, 130, 0.4)';
+  ctx.lineWidth = 0.8;
+  ctx.strokeRect(frameX + 4, frameY + 4, frameW - 8, frameH - 8);
+
+  // Draw the exact PH Logo uploaded by the user
+  if (phLogoImg && phLogoImg.complete && phLogoImg.naturalWidth) {
+    const logoSize = frameW * 0.82;
+    const logoX = frameX + (frameW - logoSize) / 2;
+    const logoY = frameY + (frameH - logoSize) / 2 - 10;
+    ctx.drawImage(phLogoImg, logoX, logoY, logoSize, logoSize);
+  } else {
+    drawGoldenLotus(ctx, W / 2, frameY + frameH * 0.44, frameW * 0.42, '#d49b28');
+  }
+
+  // Label below logo inside frame
+  ctx.fillStyle = '#1b3b82';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.22em';
+  ctx.fillText('PRANIC HEALING', W / 2, frameY + frameH - 24);
+
+  // Divider line under frame
+  ctx.strokeStyle = 'rgba(27, 59, 130, 0.5)';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  ctx.moveTo(frameX, frameY + frameH + 20);
+  ctx.lineTo(frameX + frameW, frameY + frameH + 20);
+  ctx.stroke();
+
+  // 3. MIDDLE SECTION: Vertical Title "GMCKS DOCUMENTARY"
+  ctx.save();
+  ctx.translate(W / 2, H * 0.53);
+  ctx.rotate(Math.PI / 2); // Reads top-to-bottom matching user reference
+  ctx.textAlign = 'center';
+  
+  ctx.fillStyle = '#141416';
+  ctx.font = '700 82px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.letterSpacing = '0.08em';
+  ctx.fillText('GMCKS DOCUMENTARY', 0, 26);
+  ctx.restore();
+
+  // 4. BOTTOM SECTION: SAI KRISHNA + Boxed [ DOC ] Badge
+  ctx.strokeStyle = 'rgba(0, 0, 0, 0.2)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(36, H - 280);
+  ctx.lineTo(W - 36, H - 280);
+  ctx.stroke();
+
+  // Director name
+  ctx.fillStyle = '#22201e';
+  ctx.font = '700 24px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.3em';
+  ctx.fillText('SAI KRISHNA', W / 2, H - 225);
+
+  // Subtitle
+  ctx.fillStyle = '#6b6357';
+  ctx.font = '600 14px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.2em';
+  ctx.fillText('DIRECTOR & VFX', W / 2, H - 195);
+
+  // Boxed [ DOC ] badge
+  const badgeW = 140, badgeH = 75;
+  const badgeX = (W - badgeW) / 2, badgeY = H - 150;
+  
+  ctx.strokeStyle = '#141416';
+  ctx.lineWidth = 2.4;
+  ctx.strokeRect(badgeX, badgeY, badgeW, badgeH);
+
+  ctx.strokeStyle = 'rgba(20, 20, 22, 0.4)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(badgeX + 3.5, badgeY + 3.5, badgeW - 7, badgeH - 7);
+
+  ctx.fillStyle = '#141416';
+  ctx.font = '700 42px "Newsreader", Georgia, serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.12em';
+  ctx.fillText('DOC', W / 2, badgeY + badgeH * 0.72);
+
+  // Micro-text at very bottom
+  ctx.fillStyle = '#7a7266';
+  ctx.font = '600 14px "Inter Tight", sans-serif';
+  ctx.fillText('2023 • 42 MIN', W / 2, H - 38);
+
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+function generateGmcksCover(portraitImg) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 800;
+  canvas.height = 1560;
+  const ctx = canvas.getContext('2d');
+  const W = 800, H = 1560;
+
+  // 1. Aged warm archival paper background
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#f0eae0');
+  bg.addColorStop(0.4, '#e7e0d3');
+  bg.addColorStop(1, '#ded5c5');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Vignette & cardboard edge distress
+  const vig = ctx.createRadialGradient(W / 2, H * 0.5, H * 0.2, W / 2, H * 0.5, H * 0.7);
+  vig.addColorStop(0, 'transparent');
+  vig.addColorStop(0.85, 'rgba(40, 32, 22, 0.12)');
+  vig.addColorStop(1, 'rgba(30, 22, 12, 0.35)');
+  ctx.fillStyle = vig;
+  ctx.fillRect(0, 0, W, H);
+
+  // Fine paper fibers and subtle pencil grain
+  ctx.fillStyle = 'rgba(40, 30, 20, 0.035)';
+  for (let i = 0; i < 900; i++) {
+    const rx = Math.random() * W;
+    const ry = Math.random() * H;
+    ctx.fillRect(rx, ry, Math.random() * 3 + 1, Math.random() * 2 + 1);
+  }
+
+  // 2. Top Header & Metadata
+  ctx.fillStyle = '#5c5448';
+  ctx.font = '600 17px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.32em';
+  ctx.fillText('PRANIC HEALING FOUNDATION PRESENTS', W / 2, 75);
+
+  ctx.strokeStyle = 'rgba(92, 84, 72, 0.4)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(70, 95);
+  ctx.lineTo(W - 70, 95);
+  ctx.stroke();
+
+  ctx.fillStyle = '#1e1c19';
+  ctx.font = '600 15px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.24em';
+  ctx.fillText('A FILM BY SAI KRISHNA BETHAMCHARLA', W / 2, 128);
+
+  // 3. Main Monumental Title
+  ctx.fillStyle = '#121215';
+  ctx.font = '700 115px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.letterSpacing = '-0.02em';
+  ctx.fillText('GMCKS', W / 2, 260);
+
+  // Subtitle
+  ctx.fillStyle = '#8a5c18'; // Golden amber accent
+  ctx.font = '600 24px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.3em';
+  ctx.fillText('THE ARCHIVAL DOCUMENTARY', W / 2, 310);
+
+  // Decorative thin double rules
+  ctx.strokeStyle = 'rgba(138, 92, 24, 0.4)';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  ctx.moveTo(180, 335);
+  ctx.lineTo(W - 180, 335);
+  ctx.stroke();
+
+  // 4. Central Visual: Authentic Hand-Drawn Pencil-Sketch Portrait
+  const pCX = W / 2;
+  const pCY = 710;
+  const pRX = 280;
+  const pRY = 325;
+
+  // Radiating golden aura behind cameo
+  drawGoldenLotus(ctx, pCX, pCY - 40, pRX * 1.08, 'rgba(195, 145, 45, 0.45)');
+
+  // Cameo clipping mask
+  ctx.save();
+  ctx.beginPath();
+  ctx.ellipse(pCX, pCY, pRX, pRY, 0, 0, Math.PI * 2);
+  ctx.clip();
+
+  // Draw authentic GMCKS pencil-sketch portrait image
+  if (portraitImg && portraitImg.complete && portraitImg.naturalWidth) {
+    const sW = portraitImg.naturalWidth;
+    const sH = portraitImg.naturalHeight;
+    // Draw portrait with warm blend
+    ctx.drawImage(portraitImg, 0, 0, sW, sH, pCX - pRX, pCY - pRY, pRX * 2, pRY * 2);
+  } else {
+    // Fallback pencil sketch
+    drawDetailedPencilSketch(ctx, pCX, pCY, pRX * 0.9);
+  }
+  ctx.restore();
+
+  // Oval border for sketch frame
+  ctx.strokeStyle = '#1e1c19';
+  ctx.lineWidth = 2.4;
+  ctx.beginPath();
+  ctx.ellipse(pCX, pCY, pRX, pRY, 0, 0, Math.PI * 2);
+  ctx.stroke();
+
+  ctx.strokeStyle = 'rgba(195, 145, 45, 0.65)';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  ctx.ellipse(pCX, pCY, pRX + 4, pRY + 4, 0, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Hand-drawn artist signature mark & note
+  ctx.fillStyle = '#655e52';
+  ctx.font = 'italic 16px "Newsreader", Georgia, serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('Signature Hand-Drawn Pencil-Sketch Aesthetic • Archival Restoration', W / 2, 1075);
+
+  // 5. Narrative Quote Box
+  const qBoxY = 1125;
+  ctx.fillStyle = '#22201d';
+  ctx.font = 'italic 21px "Newsreader", Georgia, serif';
+  ctx.letterSpacing = '0.01em';
+  ctx.fillText('“A life dedicated to transforming modern energy healing.”', W / 2, qBoxY);
+
+  ctx.font = '600 13px "Inter Tight", sans-serif';
+  ctx.fillStyle = '#7a7062';
+  ctx.letterSpacing = '0.22em';
+  ctx.fillText('ORIGINAL SCORE & COLOR TIMING BY SAI KRISHNA', W / 2, qBoxY + 36);
+
+  // 6. Bottom Banner & Badge
+  const bLineY = H - 180;
+  ctx.strokeStyle = 'rgba(30, 28, 25, 0.35)';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  ctx.moveTo(60, bLineY);
+  ctx.lineTo(W - 60, bLineY);
+  ctx.stroke();
+
+  // Left bottom info
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#22201d';
+  ctx.font = '700 20px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.12em';
+  ctx.fillText('DOCUMENTARY SPECIAL', 65, bLineY + 50);
+
+  ctx.fillStyle = '#6e6557';
+  ctx.font = '500 15px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.08em';
+  ctx.fillText('42 MINUTES • ARCHIVAL RESTORATION • 2023', 65, bLineY + 80);
+
+  // Right bottom: Vintage Boxed [ DOC ] Badge
+  const badgeW = 150, badgeH = 80;
+  const badgeX = W - 65 - badgeW, badgeY = bLineY + 25;
+
+  ctx.strokeStyle = '#141416';
+  ctx.lineWidth = 2.4;
+  ctx.strokeRect(badgeX, badgeY, badgeW, badgeH);
+
+  ctx.strokeStyle = 'rgba(20, 20, 22, 0.4)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(badgeX + 4, badgeY + 4, badgeW - 8, badgeH - 8);
+
+  ctx.fillStyle = '#141416';
+  ctx.font = '700 42px "Newsreader", Georgia, serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.12em';
+  ctx.fillText('DOC', badgeX + badgeW / 2, badgeY + badgeH * 0.72);
+
+  // Corner fold scratch & crease
+  drawCardboardCreases(ctx, W, H);
+
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+function generateVasudhaSpine(vLogoImg) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 300;
+  canvas.height = 1800;
+  const ctx = canvas.getContext('2d');
+  const W = 300, H = 1800;
+
+  // 1. Base aged cardboard paper
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#f2ece0');
+  bg.addColorStop(0.5, '#e5ddcf');
+  bg.addColorStop(1, '#dbd2c2');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle 3D curvature shadows along left and right edges
+  const edgeL = ctx.createLinearGradient(0, 0, 32, 0);
+  edgeL.addColorStop(0, 'rgba(0, 0, 0, 0.45)');
+  edgeL.addColorStop(1, 'transparent');
+  ctx.fillStyle = edgeL;
+  ctx.fillRect(0, 0, 32, H);
+
+  const edgeR = ctx.createLinearGradient(W - 32, 0, W, 0);
+  edgeR.addColorStop(0, 'transparent');
+  edgeR.addColorStop(1, 'rgba(0, 0, 0, 0.45)');
+  ctx.fillStyle = edgeR;
+  ctx.fillRect(W - 32, 0, 32, H);
+
+  // Cardboard fiber flecks
+  ctx.fillStyle = 'rgba(50, 40, 30, 0.04)';
+  for (let i = 0; i < 400; i++) {
+    const rx = Math.random() * W;
+    const ry = Math.random() * H;
+    ctx.fillRect(rx, ry, Math.random() * 4 + 1, Math.random() * 2 + 1);
+  }
+
+  // Corner wear / scuffs
+  const topWear = ctx.createRadialGradient(W / 2, 0, 0, W / 2, 0, 120);
+  topWear.addColorStop(0, 'rgba(255, 255, 255, 0.35)');
+  topWear.addColorStop(0.7, 'rgba(210, 200, 185, 0.15)');
+  topWear.addColorStop(1, 'transparent');
+  ctx.fillStyle = topWear;
+  ctx.fillRect(0, 0, W, 140);
+
+  const botWear = ctx.createRadialGradient(W / 2, H, 0, W / 2, H, 120);
+  botWear.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+  botWear.addColorStop(0.7, 'rgba(200, 190, 175, 0.15)');
+  botWear.addColorStop(1, 'transparent');
+  ctx.fillStyle = botWear;
+  ctx.fillRect(0, H - 140, W, 140);
+
+  // 2. TOP SECTION: Inset White Frame for exact red V Logo
+  const frameX = 26, frameY = 38, frameW = W - 52, frameH = 340;
+  
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(frameX, frameY, frameW, frameH);
+
+  ctx.strokeStyle = '#d62828'; // Vasudha Brand Red
+  ctx.lineWidth = 2;
+  ctx.strokeRect(frameX, frameY, frameW, frameH);
+  ctx.strokeStyle = 'rgba(214, 40, 40, 0.35)';
+  ctx.lineWidth = 0.8;
+  ctx.strokeRect(frameX + 4, frameY + 4, frameW - 8, frameH - 8);
+
+  // Draw the exact V Logo uploaded by user
+  if (vLogoImg && vLogoImg.complete && vLogoImg.naturalWidth) {
+    const logoSize = frameW * 0.76;
+    const logoX = frameX + (frameW - logoSize) / 2;
+    const logoY = frameY + (frameH - logoSize) / 2 - 12;
+    ctx.drawImage(vLogoImg, logoX, logoY, logoSize, logoSize);
+  }
+
+  // Label below logo inside frame
+  ctx.fillStyle = '#d62828';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.24em';
+  ctx.fillText('VASUDHA PHARMA', W / 2, frameY + frameH - 24);
+
+  // Divider line under frame
+  ctx.strokeStyle = 'rgba(214, 40, 40, 0.5)';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  ctx.moveTo(frameX, frameY + frameH + 20);
+  ctx.lineTo(frameX + frameW, frameY + frameH + 20);
+  ctx.stroke();
+
+  // 3. MIDDLE SECTION: Vertical Title "VASUDHA PHARMA"
+  ctx.save();
+  ctx.translate(W / 2, H * 0.53);
+  ctx.rotate(Math.PI / 2); // Reads top-to-bottom
+  ctx.textAlign = 'center';
+  
+  ctx.fillStyle = '#141416';
+  ctx.font = '700 84px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.letterSpacing = '0.08em';
+  ctx.fillText('VASUDHA PHARMA', 0, 26);
+  ctx.restore();
+
+  // 4. BOTTOM SECTION: SAI KRISHNA + Boxed [ WEB ] Badge
+  ctx.strokeStyle = 'rgba(0, 0, 0, 0.2)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(36, H - 280);
+  ctx.lineTo(W - 36, H - 280);
+  ctx.stroke();
+
+  // Architect name
+  ctx.fillStyle = '#22201e';
+  ctx.font = '700 24px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.28em';
+  ctx.fillText('SAI KRISHNA', W / 2, H - 225);
+
+  // Subtitle
+  ctx.fillStyle = '#6b6357';
+  ctx.font = '600 14px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.2em';
+  ctx.fillText('CRM & WEB SYSTEMS', W / 2, H - 195);
+
+  // Boxed [ WEB ] badge (as requested: "mention the package as WEB means website")
+  const badgeW = 140, badgeH = 75;
+  const badgeX = (W - badgeW) / 2, badgeY = H - 150;
+  
+  ctx.strokeStyle = '#141416';
+  ctx.lineWidth = 2.4;
+  ctx.strokeRect(badgeX, badgeY, badgeW, badgeH);
+
+  ctx.strokeStyle = 'rgba(20, 20, 22, 0.4)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(badgeX + 3.5, badgeY + 3.5, badgeW - 7, badgeH - 7);
+
+  ctx.fillStyle = '#141416';
+  ctx.font = '700 42px "Newsreader", Georgia, serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.12em';
+  ctx.fillText('WEB', W / 2, badgeY + badgeH * 0.72);
+
+  // Micro-text at very bottom
+  ctx.fillStyle = '#7a7266';
+  ctx.font = '600 14px "Inter Tight", sans-serif';
+  ctx.fillText('2023 • 80+ MARKETS', W / 2, H - 38);
+
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+function generateVasudhaCover(vLogoImg, chairmanImg, siteImg, cleanroomImg) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 800;
+  canvas.height = 1560;
+  const ctx = canvas.getContext('2d');
+  const W = 800, H = 1560;
+
+  // 1. Aged warm archival paper background
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, '#f5f1e8');
+  bg.addColorStop(0.4, '#ebe3d5');
+  bg.addColorStop(1, '#dfd6c5');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Vignette & edge distress
+  const vig = ctx.createRadialGradient(W / 2, H * 0.5, H * 0.2, W / 2, H * 0.5, H * 0.7);
+  vig.addColorStop(0, 'transparent');
+  vig.addColorStop(0.85, 'rgba(40, 32, 22, 0.12)');
+  vig.addColorStop(1, 'rgba(30, 22, 12, 0.35)');
+  ctx.fillStyle = vig;
+  ctx.fillRect(0, 0, W, H);
+
+  // Paper fibers
+  ctx.fillStyle = 'rgba(40, 30, 20, 0.035)';
+  for (let i = 0; i < 900; i++) {
+    const rx = Math.random() * W;
+    const ry = Math.random() * H;
+    ctx.fillRect(rx, ry, Math.random() * 3 + 1, Math.random() * 2 + 1);
+  }
+
+  // 2. Top Header & Metadata
+  ctx.fillStyle = '#5c5448';
+  ctx.font = '600 16px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.3em';
+  ctx.fillText('VASUDHA PHARMA INGREDIENTS LIMITED', W / 2, 75);
+
+  ctx.strokeStyle = 'rgba(214, 40, 40, 0.4)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(70, 95);
+  ctx.lineTo(W - 70, 95);
+  ctx.stroke();
+
+  // Central red accent dot on the rule
+  ctx.fillStyle = '#d62828';
+  ctx.beginPath();
+  ctx.arc(W / 2, 95, 4, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = '#1e1c19';
+  ctx.font = '600 14px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.24em';
+  ctx.fillText('ENTERPRISE DIGITAL ARCHITECTURE BY SAI KRISHNA', W / 2, 128);
+
+  // 3. Main Monumental Title
+  ctx.fillStyle = '#121215';
+  ctx.font = '700 110px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.letterSpacing = '-0.02em';
+  ctx.fillText('VASUDHA', W / 2, 255);
+
+  // Subtitle
+  ctx.fillStyle = '#d62828'; // Vasudha Brand Red
+  ctx.font = '700 24px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.32em';
+  ctx.fillText('PHARMA SYSTEMS', W / 2, 305);
+
+  // Decorative thin double rules
+  ctx.strokeStyle = 'rgba(214, 40, 40, 0.35)';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  ctx.moveTo(160, 330);
+  ctx.lineTo(W - 160, 330);
+  ctx.stroke();
+
+  // Technical meta line
+  ctx.fillStyle = '#6e6557';
+  ctx.font = '600 13px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.22em';
+  ctx.fillText('AUTOMATED ZOHO CRM • WEB SUITE • 80+ GLOBAL EXPORT MARKETS', W / 2, 355);
+
+  // 4. Central Visual Composition
+  // Archival window framing the Chairman & Facility
+  const fX = 90, fY = 385, fW = W - 180, fH = 740;
+
+  // Background card for central frame
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(fX, fY, fW, fH);
+
+  // Top facility backdrop inside the frame (cleanroom or site)
+  if (cleanroomImg && cleanroomImg.complete && cleanroomImg.naturalWidth) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(fX, fY, fW, 260);
+    ctx.clip();
+    ctx.drawImage(cleanroomImg, 0, 0, cleanroomImg.naturalWidth, cleanroomImg.naturalHeight, fX, fY, fW, 260);
+    // Gradient overlay blending to white
+    const blendGrad = ctx.createLinearGradient(0, fY + 140, 0, fY + 260);
+    blendGrad.addColorStop(0, 'rgba(255, 255, 255, 0)');
+    blendGrad.addColorStop(1, 'rgba(255, 255, 255, 1)');
+    ctx.fillStyle = blendGrad;
+    ctx.fillRect(fX, fY, fW, 260);
+    ctx.restore();
+  }
+
+  // Double decorative border around frame
+  ctx.strokeStyle = '#d62828';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(fX, fY, fW, fH);
+
+  ctx.strokeStyle = 'rgba(20, 20, 25, 0.2)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(fX + 5, fY + 5, fW - 10, fH - 10);
+
+  // Center Cameo for Chairman Portrait
+  const pCX = W / 2;
+  const pCY = fY + 410;
+  const pRX = 195;
+  const pRY = 240;
+
+  // Aura behind Chairman cameo
+  const aura = ctx.createRadialGradient(pCX, pCY, pRX * 0.7, pCX, pCY, pRX * 1.15);
+  aura.addColorStop(0, 'rgba(214, 40, 40, 0.12)');
+  aura.addColorStop(1, 'transparent');
+  ctx.fillStyle = aura;
+  ctx.fillRect(pCX - pRX * 1.2, pCY - pRY * 1.2, pRX * 2.4, pRY * 2.4);
+
+  // Cameo clipping mask
+  ctx.save();
+  ctx.beginPath();
+  ctx.ellipse(pCX, pCY, pRX, pRY, 0, 0, Math.PI * 2);
+  ctx.clip();
+
+  if (chairmanImg && chairmanImg.complete && chairmanImg.naturalWidth) {
+    const sW = chairmanImg.naturalWidth;
+    const sH = chairmanImg.naturalHeight;
+    ctx.drawImage(chairmanImg, 0, 0, sW, sH, pCX - pRX, pCY - pRY, pRX * 2, pRY * 2);
+  }
+  ctx.restore();
+
+  // Cameo red and white frame rings
+  ctx.strokeStyle = '#d62828';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.ellipse(pCX, pCY, pRX, pRY, 0, 0, Math.PI * 2);
+  ctx.stroke();
+
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.ellipse(pCX, pCY, pRX - 3.5, pRY - 3.5, 0, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Chairman Nameplate below portrait
+  const plaqueW = 460, plaqueH = 46;
+  const plaqueX = (W - plaqueW) / 2, plaqueY = pCY + pRY + 18;
+
+  ctx.fillStyle = '#141418';
+  ctx.fillRect(plaqueX, plaqueY, plaqueW, plaqueH);
+  ctx.strokeStyle = '#d62828';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(plaqueX, plaqueY, plaqueW, plaqueH);
+
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.16em';
+  ctx.fillText('M.V. RAMA RAJU — CHAIRMAN & MANAGING DIRECTOR', W / 2, plaqueY + 28);
+
+  // Small V Logo badge at top of the frame
+  if (vLogoImg && vLogoImg.complete && vLogoImg.naturalWidth) {
+    const miniSize = 64;
+    ctx.drawImage(vLogoImg, W / 2 - miniSize / 2, fY + 16, miniSize, miniSize);
+  }
+
+  // 5. Lower Content & Callouts
+  const calloutY = fY + fH + 42;
+
+  ctx.fillStyle = '#22201e';
+  ctx.font = '700 15px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.22em';
+  ctx.fillText('GLOBAL API • ARCHIVAL CRM SUITE • REGULATORY COMPLIANCE', W / 2, calloutY);
+
+  ctx.fillStyle = '#554d42';
+  ctx.font = '400 18px "Newsreader", Georgia, serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('“Powering global active pharmaceutical ingredient supply chains across 80+ export markets.”', W / 2, calloutY + 36);
+
+  // Divider line
+  ctx.strokeStyle = 'rgba(40, 35, 30, 0.25)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(80, calloutY + 70);
+  ctx.lineTo(W - 80, calloutY + 70);
+  ctx.stroke();
+
+  // 6. Bottom Technical Badging
+  const bY = calloutY + 105;
+
+  // Left: Serial & Barcode
+  ctx.fillStyle = '#3a342c';
+  ctx.font = '600 13px "Inter Tight", sans-serif';
+  ctx.textAlign = 'left';
+  ctx.letterSpacing = '0.15em';
+  ctx.fillText('PROJECT ID: VPI-2023-SYS', 85, bY + 15);
+  ctx.fillText('PROD: SAI KRISHNA BETHAMCHARLA', 85, bY + 36);
+
+  // Decorative barcode bars
+  ctx.fillStyle = '#22201c';
+  const barX = 85, barY = bY + 50;
+  const barWidths = [3, 1, 4, 2, 1, 3, 2, 5, 2, 1, 4, 2, 3, 1, 2, 4, 1, 3, 2, 4, 1, 3];
+  let curBX = barX;
+  barWidths.forEach((w, idx) => {
+    if (idx % 2 === 0) ctx.fillRect(curBX, barY, w, 28);
+    curBX += w + 2;
+  });
+
+  // Right: Boxed [ WEB ] Badge (Requested by user)
+  const bW = 120, bH = 68;
+  const bX = W - 85 - bW, bYBadge = bY + 8;
+  
+  ctx.strokeStyle = '#141416';
+  ctx.lineWidth = 2.4;
+  ctx.strokeRect(bX, bYBadge, bW, bH);
+
+  ctx.strokeStyle = 'rgba(20, 20, 22, 0.4)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(bX + 3.5, bYBadge + 3.5, bW - 7, bH - 7);
+
+  ctx.fillStyle = '#141416';
+  ctx.font = '700 38px "Newsreader", Georgia, serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.12em';
+  ctx.fillText('WEB', bX + bW / 2, bYBadge + bH * 0.72);
+
+  // Vintage cardboard corner wear & crease
+  drawCardboardCreases(ctx, W, H);
+
+  return canvas.toDataURL('image/webp', 0.95);
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// BUILD THE 36 TAPES
+// ═══════════════════════════════════════════════════════════════════
+function buildShelf() {
+  stage.innerHTML = '';
+  tapeEls.length = 0;
+  spFaces.length = 0;
+  cvFaces.length = 0;
+
+  for (let v = 0; v < TOTAL; v++) {
+    const fi = v % N;
+    const film = FILMS[fi];
+
+    const tape = document.createElement('div');
+    tape.className = 'tape';
+    tape.dataset.v = v;
+
+    // Spine Face (.sp)
+    const sp = document.createElement('div');
+    sp.className = 'face sp';
+    if (film.customTextures && film.customSpineUrl) {
+      sp.style.backgroundImage    = `url("${film.customSpineUrl}")`;
+      sp.style.backgroundSize     = '100% 100%';
+      sp.style.backgroundPosition = 'center';
+    } else {
+      applySheetCrop(sp, `spine-${film.id}`);
+    }
+
+    // Cover Face (.cv)
+    const cv = document.createElement('div');
+    cv.className = 'face cv';
+    if (film.customTextures && film.customCoverUrl) {
+      cv.style.backgroundImage    = `url("${film.customCoverUrl}")`;
+      cv.style.backgroundSize     = '100% 100%';
+      cv.style.backgroundPosition = 'center';
+    } else {
+      applySheetCrop(cv, `cover-${film.id}`);
+    }
+
+    tape.appendChild(sp);
+    tape.appendChild(cv);
+    stage.appendChild(tape);
+
+    tapeEls.push(tape);
+    spFaces.push(sp);
+    cvFaces.push(cv);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MATHEMATICAL FORMULAS
+// ═══════════════════════════════════════════════════════════════════
+function smoothstep(x) {
+  if (x <= 0) return 0;
+  if (x >= 1) return 1;
+  return x * x * (3 - 2 * x);
+}
+
+function B(r) {
+  if (Math.abs(r) < 1) {
+    return (r + Math.sin(Math.PI * r) / Math.PI) / 2;
+  }
+  return r > 0 ? 0.5 : -0.5;
+}
+
+function F(r) {
+  return r * (ws + gap) + (d - ws + 1.6 * gap) * B(r);
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// RENDER LOOP (Single requestAnimationFrame)
+// ═══════════════════════════════════════════════════════════════════
+function render(now) {
+  const dt = Math.min((now - lastTime) / 1000, 0.05);
+  lastTime = now;
+
+  // Spring physics
+  const k = isDragging ? 18 : 5.2;
+  const springFactor = 1 - Math.exp(-k * dt);
+  s += (T - s) * springFactor;
+  if (Math.abs(T - s) < 1e-4) s = T;
+
+  // Normalising loops beyond ±4
+  if (Math.abs(s) > 4 * N) {
+    const shift = Math.sign(s) * N;
+    s -= shift;
+    T -= shift;
+  }
+
+  // Active film index
+  const curActive = ((Math.round(s) % N) + N) % N;
+  if (curActive !== active) {
+    const dir = T >= s ? 1 : -1;
+    setActiveFilm(curActive, dir);
+  }
+
+  // Smooth custom cursor lerp
+  cx += (mx - cx) * (1 - Math.exp(-16 * dt));
+  cy += (my - cy) * (1 - Math.exp(-16 * dt));
+
+  // Tilt calculations
+  const shelfCY = SH / 2;
+  const settled = Math.abs(T - s) < 0.3;
+  let targetTiltY = 0;
+  let targetTiltX = 0;
+
+  if (!isOpen && settled && Math.abs(cx - W / 2) < 0.55 * d && Math.abs(cy - shelfCY) < 0.55 * H) {
+    onCover = true;
+    targetTiltY = ((cx - W / 2) / (0.55 * d)) * 9;
+    targetTiltX = -((cy - shelfCY) / (H / 2)) * 6;
+  } else {
+    onCover = false;
+    targetTiltY = ((cx - W / 2) / W) * 5;
+    targetTiltX = 0;
+  }
+
+  tiltY += (targetTiltY - tiltY) * (1 - Math.exp(-7 * dt));
+  tiltX += (targetTiltX - tiltX) * (1 - Math.exp(-7 * dt));
+
+  // Render all 36 tapes
+  const halfW = W / 2;
+  for (let v = 0; v < TOTAL; v++) {
+    let r = (v - s) % TOTAL;
+    while (r > TOTAL / 2)  r -= TOTAL;
+    while (r < -TOTAL / 2) r += TOTAL;
+
+    const x = F(r);
+
+    // Culling
+    if (Math.abs(x) > halfW + 1.5 * d) {
+      tapeEls[v].style.visibility = 'hidden';
+      continue;
+    }
+    tapeEls[v].style.visibility = '';
+
+    // Lift tracking
+    const targetLift = (hover === v && Math.abs(r) > 0.5) ? 1 : 0;
+    lifts[v] += (targetLift - lifts[v]) * (1 - Math.exp(-12 * dt));
+    const lift = lifts[v];
+
+    // Turning openness
+    const o = smoothstep(Math.max(0, 1 - Math.abs(r)));
+
+    const rotZ   = -4.5 * o;
+    const rotX   = tiltX * o;
+    const rotY   = -90 * o + tiltY * o;
+    const transZ = o * 0.2 * H;
+    const transY = -o * 0.025 * H - lift * 0.045 * H;
+    const zIndex = Math.round(100 - Math.abs(r) * 4);
+
+    tapeEls[v].style.transform = `translate3d(${x}px, ${transY}px, ${transZ}px) rotateZ(${rotZ}deg) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    tapeEls[v].style.zIndex    = zIndex;
+
+    // Shading
+    spFaces[v].style.setProperty('--shade', (o * 0.55).toFixed(3));
+    cvFaces[v].style.setProperty('--shade', ((1 - o) * 0.5).toFixed(3));
+  }
+
+  // Play ring position & scale
+  const ringScale = isOpen ? 0 : smoothstep(Math.max(0, 1 - Math.abs(T - s) * 3));
+  const ringLeft  = W / 2 - 0.5 * d - 6;
+  const ringTop   = SH / 2 + 0.36 * H;
+  playRing.style.left      = ringLeft + 'px';
+  playRing.style.top       = ringTop  + 'px';
+  playRing.style.transform = `scale(${ringScale})`;
+
+  // Cursor updates
+  cursor.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
+  if (!isOpen) {
+    if (onCover) {
+      cursor.className = 'open';
+    } else if (hover >= 0 && Math.abs((hover - s) % TOTAL) > 0.5) {
+      cursor.className = 'spine';
+    } else if (cursor.classList.contains('btn')) {
+      // keep btn
+    } else {
+      cursor.className = '';
+    }
+  } else {
+    cursor.className = cursor.classList.contains('btn') ? 'btn' : '';
+  }
+
+  requestAnimationFrame(render);
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CAPTION SWAP ANIMATION
+// ═══════════════════════════════════════════════════════════════════
+function setActiveFilm(fi, dir) {
+  active = fi;
+  const film = FILMS[fi];
+
+  swapCaptionLine(capTitle, film.title, dir, '');
+  swapCaptionLine(capSub, `${film.romaji} / ${film.kanji}`, dir, 'color: var(--cobalt);');
+  swapCaptionLine(capYear, `${film.year} • ${film.genre}`, dir, '');
+
+  updateCategoryTabs(film.category);
+}
+
+function swapCaptionLine(container, text, dir, inlineStyle) {
+  const mask = container.querySelector('.cap-mask');
+  const incoming = document.createElement('span');
+  incoming.textContent = text;
+  incoming.style.cssText = `display:block;${inlineStyle}`;
+
+  const oldSpans = Array.from(mask.children);
+  mask.appendChild(incoming);
+
+  oldSpans.forEach(old => {
+    old.style.position = 'absolute';
+    old.style.left  = '0';
+    old.style.right = '0';
+    old.style.top   = '0';
+  });
+
+  const ease = 'cubic-bezier(.2,.8,.2,1)';
+
+  incoming.animate(
+    [{ transform: `translateY(${dir * 105}%)`, offset: 0 }, { transform: 'translateY(0)', offset: 1 }],
+    { duration: 650, easing: ease, fill: 'both' }
+  );
+
+  oldSpans.forEach(old => {
+    const out = old.animate(
+      [{ transform: 'translateY(0)', offset: 0 }, { transform: `translateY(${-dir * 105}%)`, offset: 1 }],
+      { duration: 650, easing: ease, fill: 'both' }
+    );
+    out.onfinish = () => old.remove();
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CATEGORY TABS INDICATOR
+// ═══════════════════════════════════════════════════════════════════
+function updateCategoryTabs(cat) {
+  tabBtns.forEach(b => b.classList.remove('active'));
+  const target = tabBtns.find(b => b.dataset.category === cat);
+  if (target) {
+    target.classList.add('active');
+    tabInd.style.width     = target.offsetWidth + 'px';
+    tabInd.style.transform = `translateX(${target.offsetLeft}px)`;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// DETAIL OPEN & CLOSE (Paper sheet expansion & Ink reveal)
+// ═══════════════════════════════════════════════════════════════════
+const INK_BLOBS = [
+  { cx: 150, cy: 330, delay: 0 },
+  { cx: 340, cy: 600, delay: 120 },
+  { cx: 250, cy: 120, delay: 220 },
+  { cx: 90,  cy: 760, delay: 300 },
+  { cx: 400, cy: 250, delay: 360 },
+  { cx: 260, cy: 860, delay: 420 },
+  { cx: 230, cy: 470, delay: 180 }
+];
+
+function openDetail() {
+  if (isOpen) return;
+  isOpen = true;
+
+  T = Math.round(T);
+  s = T;
+
+  const film = FILMS[active];
+
+  dlSub.textContent    = `${film.romaji} / ${film.kanji}`;
+  dlTitle.textContent  = film.title;
+  dlMeta.textContent   = `${film.year} / ${film.genre} / ${film.minutes}`;
+  dlSyn.textContent    = film.synopsis;
+  dlCredit.textContent = film.credit || 'Directed & Engineered by Sai Krishna Bethamcharla. 監督作品';
+
+  if (film.liveUrl && film.liveUrl !== '#') {
+    dlWatch.textContent = 'EXPLORE PROJECT / 映画を見る';
+    dlWatch.onclick = () => window.open(film.liveUrl, '_blank', 'noopener,noreferrer');
+  } else {
+    dlWatch.textContent = 'INTERNAL ARCHIVE / 資料保管';
+    dlWatch.onclick = null;
+  }
+
+  // Detail poster SVG mapping:
+  if (film.customTextures && film.customCoverUrl) {
+    posterImg.setAttribute('href', film.customCoverUrl);
+    posterImg.setAttribute('x', '0');
+    posterImg.setAttribute('y', '0');
+    posterImg.setAttribute('width', '474');
+    posterImg.setAttribute('height', '900');
+  } else {
+    const [sheetId, cropX, cropY, cropW, cropH] = CROP[`cover-${film.id}`];
+    const [url, sheetW, sheetH] = SHEET[sheetId];
+
+    const imgX = -cropX * 474 / cropW;
+    const imgY = -cropY * 900 / cropH;
+    const imgW = sheetW * 474 / cropW;
+    const imgH = sheetH * 900 / cropH;
+
+    posterImg.setAttribute('href', url);
+    posterImg.setAttribute('x', imgX);
+    posterImg.setAttribute('y', imgY);
+    posterImg.setAttribute('width', imgW);
+    posterImg.setAttribute('height', imgH);
+  }
+
+  // Initialize ink blobs
+  blobsEl.innerHTML = '';
+  INK_BLOBS.forEach(b => {
+    const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    c.setAttribute('cx', b.cx);
+    c.setAttribute('cy', b.cy);
+    c.setAttribute('r', '0');
+    c.setAttribute('fill', '#FFFFFF');
+    blobsEl.appendChild(c);
+  });
+
+  // Screen rect of active cover face
+  const activeCvEl = cvFaces[active + N];
+  const rect = activeCvEl.getBoundingClientRect();
+  const top    = rect.top;
+  const right  = window.innerWidth - rect.right;
+  const bottom = window.innerHeight - rect.bottom;
+  const left   = rect.left;
+
+  detail.style.visibility = 'visible';
+  detail.style.transformOrigin = `${rect.left + rect.width / 2}px ${rect.top + rect.height / 2}px`;
+
+  // 1. Paper grows out of cover
+  const easeSheet = 'cubic-bezier(.76, 0, .18, 1)';
+  detail.animate(
+    [
+      { clipPath: `inset(${top}px ${right}px ${bottom}px ${left}px round 3px)`, transform: 'rotate(-4.5deg)', offset: 0 },
+      { clipPath: 'inset(0 0 0 0 round 0)', transform: 'rotate(0deg)', offset: 1 }
+    ],
+    { duration: 1050, easing: easeSheet, fill: 'both' }
+  );
+
+  // 2. Text lines rise from masks
+  const lines = detail.querySelectorAll('.dl-mask > *');
+  lines.forEach((line, idx) => {
+    line.animate(
+      [
+        { transform: 'translateY(110%)', offset: 0 },
+        { transform: 'translateY(0)',    offset: 1 }
+      ],
+      {
+        duration: 900,
+        delay: 620 + idx * 75,
+        easing: 'cubic-bezier(.2, .8, .2, 1)',
+        fill: 'both'
+      }
+    );
+  });
+
+  // 3. Ink poster bleeds in
+  const blobNodes = blobsEl.querySelectorAll('circle');
+  const inkStart = performance.now() + 520;
+
+  function animateBlobs(now) {
+    if (!isOpen) return;
+    const elapsed = now - inkStart;
+    let allFinished = true;
+
+    blobNodes.forEach((c, i) => {
+      const t = Math.max(0, elapsed - INK_BLOBS[i].delay);
+      const p = Math.min(1, t / 1250);
+      const easeP = 1 - Math.pow(1 - p, 3);
+      const radius = 720 * easeP;
+      c.setAttribute('r', radius);
+      if (p < 1) allFinished = false;
+    });
+
+    if (!allFinished && elapsed < 2400) {
+      requestAnimationFrame(animateBlobs);
+    }
+  }
+
+  requestAnimationFrame(animateBlobs);
+}
+
+function closeDetail() {
+  if (!isOpen) return;
+
+  const activeCvEl = cvFaces[active + N];
+  const rect = activeCvEl.getBoundingClientRect();
+  const top    = rect.top;
+  const right  = window.innerWidth - rect.right;
+  const bottom = window.innerHeight - rect.bottom;
+  const left   = rect.left;
+
+  const easeSheet = 'cubic-bezier(.76, 0, .18, 1)';
+  const anim = detail.animate(
+    [
+      { clipPath: 'inset(0 0 0 0 round 0)', transform: 'rotate(0deg)', offset: 0 },
+      { clipPath: `inset(${top}px ${right}px ${bottom}px ${left}px round 3px)`, transform: 'rotate(-4.5deg)', offset: 1 }
+    ],
+    { duration: 850, easing: easeSheet, fill: 'both' }
+  );
+
+  anim.onfinish = () => {
+    detail.style.visibility = 'hidden';
+    detail.getAnimations().forEach(a => a.cancel());
+    isOpen = false;
+  };
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// USER INPUTS & EVENT LISTENERS
+// ═══════════════════════════════════════════════════════════════════
+// Back button handler
+document.getElementById('back-link').addEventListener('click', (e) => {
+  if (window.parent && window.parent !== window) {
+    e.preventDefault();
+    window.parent.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+});
+
+// Play ring & close button
+playRing.addEventListener('click', openDetail);
+detClose.addEventListener('click', closeDetail);
+
+// Stage Pointer Drag & Click
+stage.addEventListener('pointerdown', e => {
+  dragStartX = e.clientX;
+  dragStartT = T;
+  isDragging = false;
+  hasDragged = false;
+
+  const onPointerMove = em => {
+    const dx = em.clientX - dragStartX;
+    if (!hasDragged && Math.abs(dx) > 5) {
+      isDragging = true;
+      hasDragged = true;
+    }
+    if (isDragging) {
+      T = dragStartT - dx / (ws + gap);
+    }
+  };
+
+  const onPointerUp = eu => {
+    if (isDragging) {
+      T = Math.round(T);
+    } else {
+      const tape = eu.target.closest('.tape');
+      if (tape) {
+        const v = parseInt(tape.dataset.v);
+        let r = (v - s) % TOTAL;
+        while (r > TOTAL / 2)  r -= TOTAL;
+        while (r < -TOTAL / 2) r += TOTAL;
+
+        if (Math.abs(r) < 0.5) {
+          openDetail();
+        } else {
+          T = Math.round(T + r);
+        }
+      }
+    }
+    isDragging = false;
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerup',   onPointerUp);
+  };
+
+  window.addEventListener('pointermove', onPointerMove);
+  window.addEventListener('pointerup',   onPointerUp);
+});
+
+// Hover lift tracking
+stage.addEventListener('pointerenter', e => {
+  const tape = e.target.closest('.tape');
+  if (tape) {
+    hover = parseInt(tape.dataset.v);
+  }
+}, true);
+
+stage.addEventListener('pointerleave', e => {
+  if (e.target.closest && !e.target.closest('#stage')) {
+    hover = -1;
+  }
+}, true);
+
+// Navigation arrows
+arrLeft.addEventListener('click',  () => { T = Math.round(T) - 1; });
+arrRight.addEventListener('click', () => { T = Math.round(T) + 1; });
+
+// Wheel
+window.addEventListener('wheel', e => {
+  if (isOpen) return;
+  e.preventDefault();
+  const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+  T += (delta / (ws + gap)) * 0.5;
+
+  clearTimeout(wheelTimer);
+  wheelTimer = setTimeout(() => {
+    T = Math.round(T);
+  }, 160);
+}, { passive: false });
+
+// Keyboard
+window.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft')  { T = Math.round(T) - 1; }
+  if (e.key === 'ArrowRight') { T = Math.round(T) + 1; }
+  if (e.key === 'Enter' && !isOpen) { openDetail(); }
+  if (e.key === 'Escape' && isOpen) { closeDetail(); }
+});
+
+// Pointer coordinates for cursor & tilt
+window.addEventListener('pointermove', e => {
+  mx = e.clientX;
+  my = e.clientY;
+
+  const onInteractive = e.target.closest('button, a, .box') && !e.target.closest('#stage');
+  if (cursor) {
+    cursor.classList.toggle('btn', !!onInteractive);
+  }
+});
+
+// Category Tabs Navigation
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const cat = btn.dataset.category;
+    let targetIdx = 0; // "ALL" jumps to 0
+    if (cat !== 'all') {
+      const idx = FILMS.findIndex(f => f.category === cat);
+      if (idx >= 0) targetIdx = idx;
+    }
+
+    T = Math.round(T);
+    const curMod = ((Math.round(T) % N) + N) % N;
+    let diff = targetIdx - curMod;
+    if (diff > N / 2)  diff -= N;
+    if (diff < -N / 2) diff += N;
+    T += diff;
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// INITIALIZATION & RESIZE
+// ═══════════════════════════════════════════════════════════════════
+async function init() {
+  const loadImg = (src) => new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+
+  const [
+    phLogoImg,
+    portraitImg,
+    vLogoImg,
+    chairmanImg,
+    siteImg,
+    cleanroomImg
+  ] = await Promise.all([
+    loadImg('./assets/gmcks/ph-logo.png'),
+    loadImg('./assets/gmcks/gmcks-pencil-portrait.jpg'),
+    loadImg('./assets/vasudha/v-logo.jpg'),
+    loadImg('./assets/vasudha/chairman.jpg'),
+    loadImg('./assets/vasudha/site.jpg'),
+    loadImg('./assets/vasudha/cleanroom.jpg')
+  ]);
+
+  const gmcksFilm = FILMS.find(f => f.id === 'gmcks');
+  if (gmcksFilm) {
+    gmcksFilm.customSpineUrl = generateGmcksSpine(phLogoImg);
+    gmcksFilm.customCoverUrl = generateGmcksCover(portraitImg);
+  }
+
+  const vasudhaFilm = FILMS.find(f => f.id === 'valley');
+  if (vasudhaFilm) {
+    vasudhaFilm.customSpineUrl = generateVasudhaSpine(vLogoImg);
+    vasudhaFilm.customCoverUrl = generateVasudhaCover(vLogoImg, chairmanImg, siteImg, cleanroomImg);
+  }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const bookParam = urlParams.get('book');
+  if (bookParam !== null && !isNaN(parseInt(bookParam))) {
+    active = (parseInt(bookParam) % N + N) % N;
+    s = active + N;
+    T = s;
+  }
+
+  measureDimensions();
+  buildShelf();
+
+  // Initial caption setup (GMCKS Documentary)
+  const film = FILMS[active];
+  capTitle.querySelector('span').textContent = film.title;
+  capSub.querySelector('span').textContent   = `${film.romaji} / ${film.kanji}`;
+  capYear.querySelector('span').textContent  = `${film.year} • ${film.genre}`;
+
+  // Initial active category tab
+  updateCategoryTabs(film.category);
+
+  requestAnimationFrame(render);
+}
+
+window.addEventListener('resize', () => {
+  measureDimensions();
+  buildShelf();
+});
+
+init();
+</script>
+</body>
+</html>

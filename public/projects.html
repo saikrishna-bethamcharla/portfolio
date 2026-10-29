@@ -884,14 +884,14 @@ const FILMS = [
   {
     id: 'valley',
     category: 'websites',
-    title: 'Vasudha Pharma Systems',
-    romaji: 'VASUDHA PHARMA',
+    title: 'Vasudha Pharma Chem Limited',
+    romaji: 'VASUDHA PHARMA CHEM',
     kanji: '国際医薬品',
     year: '2023',
-    genre: 'ENTERPRISE CRM',
+    genre: 'CORPORATE WEBSITE',
     minutes: '80+ EXPORT MARKETS',
-    synopsis: 'Engineered automated Zoho CRM architecture scaling Vasudha Pharma Ingredients across 80+ export markets globally.',
-    credit: 'System Architecture — Sai Krishna Bethamcharla. 監督作品',
+    synopsis: 'Designed and engineered the official enterprise corporate website and digital portal for Vasudha Pharma Chem Limited, scaling global product showcases across 80+ export markets.',
+    credit: 'Website Architecture — Sai Krishna Bethamcharla. 監督作品',
     liveUrl: 'https://saikrishna-bethamcharla.github.io/vasudhapharma/',
     customTextures: true,
     customSpineUrl: null,
@@ -1760,66 +1760,116 @@ function generateVasudhaSpine(vLogoImg) {
   const ctx = canvas.getContext('2d');
   const W = 300, H = 1800;
 
-  // 1. Base aged cardboard paper
+  // 1. Rich Deep Prussian / Pharmaceutical Indigo Navy Base
   const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, '#f2ece0');
-  bg.addColorStop(0.5, '#e5ddcf');
-  bg.addColorStop(1, '#dbd2c2');
+  bg.addColorStop(0, '#163352');
+  bg.addColorStop(0.3, '#102740');
+  bg.addColorStop(0.7, '#0b1c2f');
+  bg.addColorStop(1, '#071320');
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
-  // Subtle 3D curvature shadows along left and right edges
-  const edgeL = ctx.createLinearGradient(0, 0, 32, 0);
-  edgeL.addColorStop(0, 'rgba(0, 0, 0, 0.45)');
-  edgeL.addColorStop(1, 'transparent');
-  ctx.fillStyle = edgeL;
-  ctx.fillRect(0, 0, 32, H);
-
-  const edgeR = ctx.createLinearGradient(W - 32, 0, W, 0);
-  edgeR.addColorStop(0, 'transparent');
-  edgeR.addColorStop(1, 'rgba(0, 0, 0, 0.45)');
-  ctx.fillStyle = edgeR;
-  ctx.fillRect(W - 32, 0, 32, H);
-
-  // Cardboard fiber flecks
-  ctx.fillStyle = 'rgba(50, 40, 30, 0.04)';
-  for (let i = 0; i < 400; i++) {
+  // Surface cloth texture / fiber flecks
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.035)';
+  for (let i = 0; i < 500; i++) {
     const rx = Math.random() * W;
     const ry = Math.random() * H;
-    ctx.fillRect(rx, ry, Math.random() * 4 + 1, Math.random() * 2 + 1);
+    ctx.fillRect(rx, ry, Math.random() * 3 + 1, Math.random() * 2 + 1);
   }
 
-  // Corner wear / scuffs
-  const topWear = ctx.createRadialGradient(W / 2, 0, 0, W / 2, 0, 120);
-  topWear.addColorStop(0, 'rgba(255, 255, 255, 0.35)');
-  topWear.addColorStop(0.7, 'rgba(210, 200, 185, 0.15)');
+  // 2. 3D Spine Curvature Shading (Left & Right Dark Shadow)
+  const edgeL = ctx.createLinearGradient(0, 0, 36, 0);
+  edgeL.addColorStop(0, 'rgba(0, 0, 0, 0.65)');
+  edgeL.addColorStop(1, 'transparent');
+  ctx.fillStyle = edgeL;
+  ctx.fillRect(0, 0, 36, H);
+
+  const edgeR = ctx.createLinearGradient(W - 36, 0, W, 0);
+  edgeR.addColorStop(0, 'transparent');
+  edgeR.addColorStop(1, 'rgba(0, 0, 0, 0.65)');
+  ctx.fillStyle = edgeR;
+  ctx.fillRect(W - 36, 0, 36, H);
+
+  // 3. HEAVY WORN-OUT EDGES & CREASES (Raw Cardboard showing through!)
+  // Left fold scuff line (where blue ink is worn raw)
+  ctx.strokeStyle = 'rgba(235, 222, 202, 0.4)';
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.moveTo(12, 0);
+  ctx.lineTo(12, H);
+  ctx.stroke();
+
+  // Right fold scuff line
+  ctx.strokeStyle = 'rgba(235, 222, 202, 0.4)';
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.moveTo(W - 12, 0);
+  ctx.lineTo(W - 12, H);
+  ctx.stroke();
+
+  // Top frayed corners exposing cardboard
+  const rawTopL = ctx.createRadialGradient(0, 0, 0, 0, 0, 70);
+  rawTopL.addColorStop(0, 'rgba(235, 222, 202, 0.85)');
+  rawTopL.addColorStop(0.5, 'rgba(215, 200, 178, 0.5)');
+  rawTopL.addColorStop(1, 'transparent');
+  ctx.fillStyle = rawTopL;
+  ctx.fillRect(0, 0, 80, 80);
+
+  const rawTopR = ctx.createRadialGradient(W, 0, 0, W, 0, 70);
+  rawTopR.addColorStop(0, 'rgba(235, 222, 202, 0.85)');
+  rawTopR.addColorStop(0.5, 'rgba(215, 200, 178, 0.5)');
+  rawTopR.addColorStop(1, 'transparent');
+  ctx.fillStyle = rawTopR;
+  ctx.fillRect(W - 80, 0, 80, 80);
+
+  // Top edge headcap wear
+  const topWear = ctx.createRadialGradient(W / 2, 0, 0, W / 2, 0, 110);
+  topWear.addColorStop(0, 'rgba(240, 230, 215, 0.45)');
+  topWear.addColorStop(0.7, 'rgba(215, 200, 180, 0.2)');
   topWear.addColorStop(1, 'transparent');
   ctx.fillStyle = topWear;
-  ctx.fillRect(0, 0, W, 140);
+  ctx.fillRect(0, 0, W, 120);
 
-  const botWear = ctx.createRadialGradient(W / 2, H, 0, W / 2, H, 120);
-  botWear.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
-  botWear.addColorStop(0.7, 'rgba(200, 190, 175, 0.15)');
+  // Bottom frayed corners exposing cardboard
+  const rawBotL = ctx.createRadialGradient(0, H, 0, 0, H, 70);
+  rawBotL.addColorStop(0, 'rgba(235, 222, 202, 0.9)');
+  rawBotL.addColorStop(0.5, 'rgba(215, 200, 178, 0.55)');
+  rawBotL.addColorStop(1, 'transparent');
+  ctx.fillStyle = rawBotL;
+  ctx.fillRect(0, H - 80, 80, 80);
+
+  const rawBotR = ctx.createRadialGradient(W, H, 0, W, H, 70);
+  rawBotR.addColorStop(0, 'rgba(235, 222, 202, 0.9)');
+  rawBotR.addColorStop(0.5, 'rgba(215, 200, 178, 0.55)');
+  rawBotR.addColorStop(1, 'transparent');
+  ctx.fillStyle = rawBotR;
+  ctx.fillRect(W - 80, H - 80, 80, 80);
+
+  const botWear = ctx.createRadialGradient(W / 2, H, 0, W / 2, H, 110);
+  botWear.addColorStop(0, 'rgba(240, 230, 215, 0.5)');
+  botWear.addColorStop(0.7, 'rgba(210, 195, 175, 0.25)');
   botWear.addColorStop(1, 'transparent');
   ctx.fillStyle = botWear;
-  ctx.fillRect(0, H - 140, W, 140);
+  ctx.fillRect(0, H - 120, W, 120);
 
-  // 2. TOP SECTION: Inset White Frame for exact red V Logo
+  // 4. TOP SECTION: Cream Inset Frame for the Red Hexagon V Logo
   const frameX = 26, frameY = 38, frameW = W - 52, frameH = 340;
   
-  ctx.fillStyle = '#ffffff';
+  // Mounted cream parchment plate
+  ctx.fillStyle = '#faf7f0';
   ctx.fillRect(frameX, frameY, frameW, frameH);
 
-  ctx.strokeStyle = '#d62828'; // Vasudha Brand Red
-  ctx.lineWidth = 2;
+  ctx.strokeStyle = '#d62828'; // Crimson accent border
+  ctx.lineWidth = 2.4;
   ctx.strokeRect(frameX, frameY, frameW, frameH);
-  ctx.strokeStyle = 'rgba(214, 40, 40, 0.35)';
-  ctx.lineWidth = 0.8;
-  ctx.strokeRect(frameX + 4, frameY + 4, frameW - 8, frameH - 8);
 
-  // Draw the exact V Logo uploaded by user
+  ctx.strokeStyle = 'rgba(16, 40, 68, 0.4)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(frameX + 4.5, frameY + 4.5, frameW - 9, frameH - 9);
+
+  // Draw the exact red V Logo
   if (vLogoImg && vLogoImg.complete && vLogoImg.naturalWidth) {
-    const logoSize = frameW * 0.76;
+    const logoSize = frameW * 0.78;
     const logoX = frameX + (frameW - logoSize) / 2;
     const logoY = frameY + (frameH - logoSize) / 2 - 12;
     ctx.drawImage(vLogoImg, logoX, logoY, logoSize, logoSize);
@@ -1829,72 +1879,72 @@ function generateVasudhaSpine(vLogoImg) {
   ctx.fillStyle = '#d62828';
   ctx.font = '700 13px "Inter Tight", sans-serif';
   ctx.textAlign = 'center';
-  ctx.letterSpacing = '0.24em';
+  ctx.letterSpacing = '0.22em';
   ctx.fillText('VASUDHA PHARMA', W / 2, frameY + frameH - 24);
 
-  // Divider line under frame
-  ctx.strokeStyle = 'rgba(214, 40, 40, 0.5)';
-  ctx.lineWidth = 1.2;
-  ctx.beginPath();
-  ctx.moveTo(frameX, frameY + frameH + 20);
-  ctx.lineTo(frameX + frameW, frameY + frameH + 20);
-  ctx.stroke();
-
-  // 3. MIDDLE SECTION: Vertical Title "VASUDHA PHARMA"
+  // 5. MIDDLE SECTION: Vertical Title "VASUDHA PHARMA"
   ctx.save();
   ctx.translate(W / 2, H * 0.53);
   ctx.rotate(Math.PI / 2); // Reads top-to-bottom
   ctx.textAlign = 'center';
   
-  ctx.fillStyle = '#141416';
-  ctx.font = '700 84px "Newsreader", "Times New Roman", Georgia, serif';
+  // Subtle dark drop-shadow for debossed foil effect
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+  ctx.font = '700 82px "Newsreader", "Times New Roman", Georgia, serif';
   ctx.letterSpacing = '0.08em';
+  ctx.fillText('VASUDHA PHARMA', 2, 28);
+
+  // Crisp warm-white embossed lettering
+  ctx.fillStyle = '#f8f4ed';
   ctx.fillText('VASUDHA PHARMA', 0, 26);
   ctx.restore();
 
-  // 4. BOTTOM SECTION: SAI KRISHNA + Boxed [ WEB ] Badge
-  ctx.strokeStyle = 'rgba(0, 0, 0, 0.2)';
+  // 6. BOTTOM SECTION: SAI KRISHNA + Boxed [ WEB ] Badge
+  ctx.strokeStyle = 'rgba(235, 222, 202, 0.3)';
   ctx.lineWidth = 1;
   ctx.beginPath();
   ctx.moveTo(36, H - 280);
   ctx.lineTo(W - 36, H - 280);
   ctx.stroke();
 
-  // Architect name
-  ctx.fillStyle = '#22201e';
+  // Architect label
+  ctx.fillStyle = '#f5f0e6';
   ctx.font = '700 24px "Inter Tight", sans-serif';
   ctx.textAlign = 'center';
   ctx.letterSpacing = '0.28em';
   ctx.fillText('SAI KRISHNA', W / 2, H - 225);
 
   // Subtitle
-  ctx.fillStyle = '#6b6357';
+  ctx.fillStyle = '#a8c2dc';
   ctx.font = '600 14px "Inter Tight", sans-serif';
-  ctx.letterSpacing = '0.2em';
-  ctx.fillText('CRM & WEB SYSTEMS', W / 2, H - 195);
+  ctx.letterSpacing = '0.22em';
+  ctx.fillText('WEBSITE ARCHITECTURE', W / 2, H - 195);
 
-  // Boxed [ WEB ] badge (as requested: "mention the package as WEB means website")
+  // Boxed [ WEB ] badge on mounted cream card
   const badgeW = 140, badgeH = 75;
   const badgeX = (W - badgeW) / 2, badgeY = H - 150;
   
-  ctx.strokeStyle = '#141416';
+  ctx.fillStyle = '#faf7f0';
+  ctx.fillRect(badgeX, badgeY, badgeW, badgeH);
+
+  ctx.strokeStyle = '#d62828';
   ctx.lineWidth = 2.4;
   ctx.strokeRect(badgeX, badgeY, badgeW, badgeH);
 
-  ctx.strokeStyle = 'rgba(20, 20, 22, 0.4)';
+  ctx.strokeStyle = 'rgba(16, 40, 68, 0.4)';
   ctx.lineWidth = 1;
   ctx.strokeRect(badgeX + 3.5, badgeY + 3.5, badgeW - 7, badgeH - 7);
 
-  ctx.fillStyle = '#141416';
+  ctx.fillStyle = '#102740';
   ctx.font = '700 42px "Newsreader", Georgia, serif';
   ctx.textAlign = 'center';
   ctx.letterSpacing = '0.12em';
   ctx.fillText('WEB', W / 2, badgeY + badgeH * 0.72);
 
   // Micro-text at very bottom
-  ctx.fillStyle = '#7a7266';
-  ctx.font = '600 14px "Inter Tight", sans-serif';
-  ctx.fillText('2023 • 80+ MARKETS', W / 2, H - 38);
+  ctx.fillStyle = '#9cb6ce';
+  ctx.font = '600 13px "Inter Tight", sans-serif';
+  ctx.fillText('2023 • CORPORATE WEB', W / 2, H - 38);
 
   return canvas.toDataURL('image/webp', 0.95);
 }
@@ -1906,39 +1956,56 @@ function generateVasudhaCover(vLogoImg, chairmanImg, siteImg, cleanroomImg) {
   const ctx = canvas.getContext('2d');
   const W = 800, H = 1560;
 
-  // 1. Aged warm archival paper background
+  // 1. Rich Deep Prussian / Pharmaceutical Navy Base
   const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, '#f5f1e8');
-  bg.addColorStop(0.4, '#ebe3d5');
-  bg.addColorStop(1, '#dfd6c5');
+  bg.addColorStop(0, '#153250');
+  bg.addColorStop(0.3, '#102740');
+  bg.addColorStop(0.7, '#0b1c2f');
+  bg.addColorStop(1, '#061320');
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
-  // Vignette & edge distress
-  const vig = ctx.createRadialGradient(W / 2, H * 0.5, H * 0.2, W / 2, H * 0.5, H * 0.7);
-  vig.addColorStop(0, 'transparent');
-  vig.addColorStop(0.85, 'rgba(40, 32, 22, 0.12)');
-  vig.addColorStop(1, 'rgba(30, 22, 12, 0.35)');
-  ctx.fillStyle = vig;
-  ctx.fillRect(0, 0, W, H);
-
-  // Paper fibers
-  ctx.fillStyle = 'rgba(40, 30, 20, 0.035)';
+  // Deep cloth texture / fibers
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
   for (let i = 0; i < 900; i++) {
     const rx = Math.random() * W;
     const ry = Math.random() * H;
     ctx.fillRect(rx, ry, Math.random() * 3 + 1, Math.random() * 2 + 1);
   }
 
-  // 2. Top Header & Metadata
-  ctx.fillStyle = '#5c5448';
+  // 2. HEAVY WORN CORNERS & EDGES (Cardboard fraying on dark blue cover)
+  const drawCornerWear = (cx, cy, r) => {
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+    g.addColorStop(0, 'rgba(235, 222, 202, 0.88)');
+    g.addColorStop(0.4, 'rgba(215, 200, 178, 0.55)');
+    g.addColorStop(0.8, 'rgba(180, 165, 145, 0.2)');
+    g.addColorStop(1, 'transparent');
+    ctx.fillStyle = g;
+    ctx.fillRect(cx < W / 2 ? 0 : W - r, cy < H / 2 ? 0 : H - r, r, r);
+  };
+
+  drawCornerWear(0, 0, 100);
+  drawCornerWear(W, 0, 100);
+  drawCornerWear(0, H, 100);
+  drawCornerWear(W, H, 100);
+
+  // Edge scuff along left spine fold
+  const leftFoldScuff = ctx.createLinearGradient(0, 0, 18, 0);
+  leftFoldScuff.addColorStop(0, 'rgba(235, 222, 202, 0.45)');
+  leftFoldScuff.addColorStop(0.5, 'rgba(215, 200, 178, 0.2)');
+  leftFoldScuff.addColorStop(1, 'transparent');
+  ctx.fillStyle = leftFoldScuff;
+  ctx.fillRect(0, 0, 18, H);
+
+  // 3. Top Header & Metadata
+  ctx.fillStyle = '#e8dfce';
   ctx.font = '600 16px "Inter Tight", sans-serif';
   ctx.textAlign = 'center';
-  ctx.letterSpacing = '0.3em';
-  ctx.fillText('VASUDHA PHARMA INGREDIENTS LIMITED', W / 2, 75);
+  ctx.letterSpacing = '0.32em';
+  ctx.fillText('VASUDHA PHARMA CHEM LIMITED', W / 2, 75);
 
-  ctx.strokeStyle = 'rgba(214, 40, 40, 0.4)';
-  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'rgba(214, 40, 40, 0.5)';
+  ctx.lineWidth = 1.2;
   ctx.beginPath();
   ctx.moveTo(70, 95);
   ctx.lineTo(W - 70, 95);
@@ -1947,70 +2014,74 @@ function generateVasudhaCover(vLogoImg, chairmanImg, siteImg, cleanroomImg) {
   // Central red accent dot on the rule
   ctx.fillStyle = '#d62828';
   ctx.beginPath();
-  ctx.arc(W / 2, 95, 4, 0, Math.PI * 2);
+  ctx.arc(W / 2, 95, 4.5, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.fillStyle = '#1e1c19';
+  ctx.fillStyle = '#a3c0db';
   ctx.font = '600 14px "Inter Tight", sans-serif';
   ctx.letterSpacing = '0.24em';
-  ctx.fillText('ENTERPRISE DIGITAL ARCHITECTURE BY SAI KRISHNA', W / 2, 128);
+  ctx.fillText('OFFICIAL CORPORATE WEBSITE • ARCHITECTURE BY SAI KRISHNA', W / 2, 128);
 
-  // 3. Main Monumental Title
-  ctx.fillStyle = '#121215';
-  ctx.font = '700 110px "Newsreader", "Times New Roman", Georgia, serif';
+  // 4. Main Monumental Title: VASUDHA / PHARMA CHEM LIMITED
+  // Drop-shadow for foil stamp look
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
+  ctx.font = '700 114px "Newsreader", "Times New Roman", Georgia, serif';
   ctx.letterSpacing = '-0.02em';
+  ctx.fillText('VASUDHA', W / 2 + 2, 257);
+
+  // Main white title
+  ctx.fillStyle = '#fdfbf7';
   ctx.fillText('VASUDHA', W / 2, 255);
 
-  // Subtitle
-  ctx.fillStyle = '#d62828'; // Vasudha Brand Red
-  ctx.font = '700 24px "Inter Tight", sans-serif';
+  // Subtitle: PHARMA CHEM LIMITED (Corrected as user requested)
+  ctx.fillStyle = '#e63946'; // Striking Brand Crimson
+  ctx.font = '700 26px "Inter Tight", sans-serif';
   ctx.letterSpacing = '0.32em';
-  ctx.fillText('PHARMA SYSTEMS', W / 2, 305);
+  ctx.fillText('PHARMA CHEM LIMITED', W / 2, 305);
 
   // Decorative thin double rules
-  ctx.strokeStyle = 'rgba(214, 40, 40, 0.35)';
+  ctx.strokeStyle = 'rgba(230, 57, 70, 0.4)';
   ctx.lineWidth = 1.2;
   ctx.beginPath();
-  ctx.moveTo(160, 330);
-  ctx.lineTo(W - 160, 330);
+  ctx.moveTo(140, 330);
+  ctx.lineTo(W - 140, 330);
   ctx.stroke();
 
   // Technical meta line
-  ctx.fillStyle = '#6e6557';
+  ctx.fillStyle = '#b8cadb';
   ctx.font = '600 13px "Inter Tight", sans-serif';
   ctx.letterSpacing = '0.22em';
-  ctx.fillText('AUTOMATED ZOHO CRM • WEB SUITE • 80+ GLOBAL EXPORT MARKETS', W / 2, 355);
+  ctx.fillText('OFFICIAL ENTERPRISE WEB PLATFORM • 80+ GLOBAL EXPORT MARKETS', W / 2, 355);
 
-  // 4. Central Visual Composition
-  // Archival window framing the Chairman & Facility
+  // 5. Central Visual Mounted Inset Card (Cream Parchment on Navy Box)
   const fX = 90, fY = 385, fW = W - 180, fH = 740;
 
-  // Background card for central frame
-  ctx.fillStyle = '#ffffff';
+  // Background cream card
+  ctx.fillStyle = '#fbf8f2';
   ctx.fillRect(fX, fY, fW, fH);
 
-  // Top facility backdrop inside the frame (cleanroom or site)
+  // Top facility backdrop inside the frame (cleanroom)
   if (cleanroomImg && cleanroomImg.complete && cleanroomImg.naturalWidth) {
     ctx.save();
     ctx.beginPath();
     ctx.rect(fX, fY, fW, 260);
     ctx.clip();
     ctx.drawImage(cleanroomImg, 0, 0, cleanroomImg.naturalWidth, cleanroomImg.naturalHeight, fX, fY, fW, 260);
-    // Gradient overlay blending to white
+    // Gradient overlay blending to cream
     const blendGrad = ctx.createLinearGradient(0, fY + 140, 0, fY + 260);
-    blendGrad.addColorStop(0, 'rgba(255, 255, 255, 0)');
-    blendGrad.addColorStop(1, 'rgba(255, 255, 255, 1)');
+    blendGrad.addColorStop(0, 'rgba(251, 248, 242, 0)');
+    blendGrad.addColorStop(1, 'rgba(251, 248, 242, 1)');
     ctx.fillStyle = blendGrad;
     ctx.fillRect(fX, fY, fW, 260);
     ctx.restore();
   }
 
-  // Double decorative border around frame
+  // Double decorative border around mounted frame
   ctx.strokeStyle = '#d62828';
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 2.4;
   ctx.strokeRect(fX, fY, fW, fH);
 
-  ctx.strokeStyle = 'rgba(20, 20, 25, 0.2)';
+  ctx.strokeStyle = 'rgba(16, 40, 68, 0.35)';
   ctx.lineWidth = 1;
   ctx.strokeRect(fX + 5, fY + 5, fW - 10, fH - 10);
 
@@ -2022,7 +2093,7 @@ function generateVasudhaCover(vLogoImg, chairmanImg, siteImg, cleanroomImg) {
 
   // Aura behind Chairman cameo
   const aura = ctx.createRadialGradient(pCX, pCY, pRX * 0.7, pCX, pCY, pRX * 1.15);
-  aura.addColorStop(0, 'rgba(214, 40, 40, 0.12)');
+  aura.addColorStop(0, 'rgba(214, 40, 40, 0.15)');
   aura.addColorStop(1, 'transparent');
   ctx.fillStyle = aura;
   ctx.fillRect(pCX - pRX * 1.2, pCY - pRY * 1.2, pRX * 2.4, pRY * 2.4);
@@ -2054,13 +2125,13 @@ function generateVasudhaCover(vLogoImg, chairmanImg, siteImg, cleanroomImg) {
   ctx.stroke();
 
   // Chairman Nameplate below portrait
-  const plaqueW = 460, plaqueH = 46;
+  const plaqueW = 480, plaqueH = 46;
   const plaqueX = (W - plaqueW) / 2, plaqueY = pCY + pRY + 18;
 
-  ctx.fillStyle = '#141418';
+  ctx.fillStyle = '#0f243a';
   ctx.fillRect(plaqueX, plaqueY, plaqueW, plaqueH);
   ctx.strokeStyle = '#d62828';
-  ctx.lineWidth = 1;
+  ctx.lineWidth = 1.2;
   ctx.strokeRect(plaqueX, plaqueY, plaqueW, plaqueH);
 
   ctx.fillStyle = '#ffffff';
@@ -2075,40 +2146,40 @@ function generateVasudhaCover(vLogoImg, chairmanImg, siteImg, cleanroomImg) {
     ctx.drawImage(vLogoImg, W / 2 - miniSize / 2, fY + 16, miniSize, miniSize);
   }
 
-  // 5. Lower Content & Callouts
+  // 6. Lower Content & Callouts
   const calloutY = fY + fH + 42;
 
-  ctx.fillStyle = '#22201e';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '700 15px "Inter Tight", sans-serif';
   ctx.letterSpacing = '0.22em';
-  ctx.fillText('GLOBAL API • ARCHIVAL CRM SUITE • REGULATORY COMPLIANCE', W / 2, calloutY);
+  ctx.fillText('OFFICIAL CORPORATE WEB PORTAL • GLOBAL REACH', W / 2, calloutY);
 
-  ctx.fillStyle = '#554d42';
+  ctx.fillStyle = '#c5d7e8';
   ctx.font = '400 18px "Newsreader", Georgia, serif';
   ctx.textAlign = 'center';
-  ctx.fillText('“Powering global active pharmaceutical ingredient supply chains across 80+ export markets.”', W / 2, calloutY + 36);
+  ctx.fillText('“Global Active Pharmaceutical Ingredient Leader Exporting to 80+ Countries.”', W / 2, calloutY + 36);
 
   // Divider line
-  ctx.strokeStyle = 'rgba(40, 35, 30, 0.25)';
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
   ctx.lineWidth = 1;
   ctx.beginPath();
   ctx.moveTo(80, calloutY + 70);
   ctx.lineTo(W - 80, calloutY + 70);
   ctx.stroke();
 
-  // 6. Bottom Technical Badging
+  // 7. Bottom Technical Badging
   const bY = calloutY + 105;
 
   // Left: Serial & Barcode
-  ctx.fillStyle = '#3a342c';
+  ctx.fillStyle = '#a3c0db';
   ctx.font = '600 13px "Inter Tight", sans-serif';
   ctx.textAlign = 'left';
   ctx.letterSpacing = '0.15em';
-  ctx.fillText('PROJECT ID: VPI-2023-SYS', 85, bY + 15);
-  ctx.fillText('PROD: SAI KRISHNA BETHAMCHARLA', 85, bY + 36);
+  ctx.fillText('CATALOG: VPCL-WEB-2023', 85, bY + 15);
+  ctx.fillText('ARCHITECT: SAI KRISHNA BETHAMCHARLA', 85, bY + 36);
 
-  // Decorative barcode bars
-  ctx.fillStyle = '#22201c';
+  // Decorative barcode bars in cream
+  ctx.fillStyle = '#e8dfce';
   const barX = 85, barY = bY + 50;
   const barWidths = [3, 1, 4, 2, 1, 3, 2, 5, 2, 1, 4, 2, 3, 1, 2, 4, 1, 3, 2, 4, 1, 3];
   let curBX = barX;
@@ -2117,25 +2188,28 @@ function generateVasudhaCover(vLogoImg, chairmanImg, siteImg, cleanroomImg) {
     curBX += w + 2;
   });
 
-  // Right: Boxed [ WEB ] Badge (Requested by user)
+  // Right: Boxed [ WEB ] Badge in mounted cream plate
   const bW = 120, bH = 68;
   const bX = W - 85 - bW, bYBadge = bY + 8;
   
-  ctx.strokeStyle = '#141416';
+  ctx.fillStyle = '#faf7f0';
+  ctx.fillRect(bX, bYBadge, bW, bH);
+
+  ctx.strokeStyle = '#d62828';
   ctx.lineWidth = 2.4;
   ctx.strokeRect(bX, bYBadge, bW, bH);
 
-  ctx.strokeStyle = 'rgba(20, 20, 22, 0.4)';
+  ctx.strokeStyle = 'rgba(16, 40, 68, 0.4)';
   ctx.lineWidth = 1;
   ctx.strokeRect(bX + 3.5, bYBadge + 3.5, bW - 7, bH - 7);
 
-  ctx.fillStyle = '#141416';
+  ctx.fillStyle = '#102740';
   ctx.font = '700 38px "Newsreader", Georgia, serif';
   ctx.textAlign = 'center';
   ctx.letterSpacing = '0.12em';
   ctx.fillText('WEB', bX + bW / 2, bYBadge + bH * 0.72);
 
-  // Vintage cardboard corner wear & crease
+  // Cardboard creases across corners
   drawCardboardCreases(ctx, W, H);
 
   return canvas.toDataURL('image/webp', 0.95);

@@ -317,68 +317,102 @@ export function MainframeContact() {
 
           {/* 3. Action pill buttons */}
           <div
-            className="flex flex-wrap gap-y-1"
+            className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-1"
             style={{
               opacity: pillsVisible ? 1 : 0,
               transform: pillsVisible ? 'translateY(0)' : 'translateY(8px)',
               transition: 'opacity 0.4s ease, transform 0.4s ease',
             }}
           >
-            {/* 4 White pill buttons */}
-            {pillActions.map((action) => (
+            {/* 4 Refined Action Pill Buttons */}
+            {pillActions.map((action, idx) => (
               <a
                 key={action.label}
                 href={action.href}
-                className="inline-flex items-center justify-center bg-white text-black border border-black/10 rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] mx-[0.2em] mb-[0.4em] whitespace-nowrap hover:bg-black hover:text-white transition-colors duration-200 cursor-pointer no-underline"
+                className={`inline-flex items-center gap-1.5 h-9 sm:h-10 px-4 sm:px-5 rounded-full text-[13px] sm:text-[14px] font-medium tracking-tight transition-all duration-200 cursor-pointer no-underline group shadow-[0_4px_20px_rgba(0,0,0,0.35)] hover:-translate-y-0.5 active:translate-y-0 ${
+                  idx === 0
+                    ? 'bg-white text-black hover:bg-zinc-200 hover:shadow-[0_0_25px_rgba(255,255,255,0.3)]'
+                    : 'bg-white/[0.08] hover:bg-white text-white hover:text-black border border-white/20 hover:border-white backdrop-blur-md hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]'
+                }`}
               >
-                {action.label}
+                <span>{action.label}</span>
+                <span className="text-[11px] opacity-45 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200">
+                  ↗
+                </span>
               </a>
             ))}
 
-            {/* 1 Outline pill button */}
+            {/* Direct Inbox Copy Pill */}
             <button
               type="button"
               onClick={handleCopyEmail}
-              className="inline-flex items-center justify-center text-white bg-transparent border border-white/80 rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] mx-[0.2em] mb-[0.4em] whitespace-nowrap gap-2 sm:gap-3 hover:bg-white hover:text-black transition-colors duration-200 cursor-pointer group"
+              className={`inline-flex items-center gap-2 sm:gap-2.5 h-9 sm:h-10 px-4 sm:px-5 rounded-full text-[13px] sm:text-[14px] font-medium tracking-tight transition-all duration-200 cursor-pointer group shadow-[0_4px_20px_rgba(0,0,0,0.35)] hover:-translate-y-0.5 active:translate-y-0 backdrop-blur-md ${
+                copied
+                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/60 shadow-[0_0_20px_rgba(16,185,129,0.35)]'
+                  : 'bg-white/[0.06] hover:bg-white/12 text-white border border-white/20 hover:border-red-500/60 hover:shadow-[0_0_20px_rgba(220,38,38,0.25)]'
+              }`}
               title="Click to copy direct email"
             >
-              <span>
-                Direct inbox:{' '}
-                <span className="underline underline-offset-1">
-                  {copied ? 'Copied to clipboard! ✓' : 'saikrishnabethamcharla@gmail.com'}
-                </span>
-              </span>
-              {/* 12x12 copy icon */}
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="shrink-0 transition-transform group-hover:scale-110"
+              <span
+                className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                  copied ? 'bg-emerald-400' : 'bg-red-500 animate-pulse'
+                }`}
                 aria-hidden="true"
-              >
-                <rect
-                  x="3.5"
-                  y="1"
-                  width="7.5"
-                  height="7.5"
-                  rx="1"
-                  stroke="currentColor"
-                  strokeWidth="1.1"
+              />
+              <span className="text-white/60 font-mono text-[11.5px] uppercase tracking-wider">
+                Direct:
+              </span>
+              <span className="underline underline-offset-2 decoration-white/30 group-hover:decoration-white transition-colors">
+                {copied ? 'Copied to clipboard! ✓' : 'saikrishnabethamcharla@gmail.com'}
+              </span>
+              {/* Copy / Check Icon */}
+              {copied ? (
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
                   fill="none"
-                />
-                <rect
-                  x="1"
-                  y="3.5"
-                  width="7.5"
-                  height="7.5"
-                  rx="1"
                   stroke="currentColor"
-                  strokeWidth="1.1"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="shrink-0 text-emerald-400"
+                  aria-hidden="true"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              ) : (
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
                   fill="none"
-                />
-              </svg>
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="shrink-0 text-white/50 group-hover:text-white transition-colors group-hover:scale-110"
+                  aria-hidden="true"
+                >
+                  <rect
+                    x="3.5"
+                    y="1"
+                    width="7.5"
+                    height="7.5"
+                    rx="1"
+                    stroke="currentColor"
+                    strokeWidth="1.1"
+                    fill="none"
+                  />
+                  <rect
+                    x="1"
+                    y="3.5"
+                    width="7.5"
+                    height="7.5"
+                    rx="1"
+                    stroke="currentColor"
+                    strokeWidth="1.1"
+                    fill="none"
+                  />
+                </svg>
+              )}
             </button>
           </div>
         </div>

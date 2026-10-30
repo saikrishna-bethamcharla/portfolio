@@ -283,6 +283,38 @@ export const HeroVisual: React.FC = () => {
         </div>
       </div>
 
+      {/* Looping Desk Developer Animation — Bottom-Left Corner */}
+      <div
+        aria-label="Looping developer animation"
+        className="absolute bottom-6 left-6 sm:bottom-8 sm:left-10 z-25 pointer-events-none select-none"
+      >
+        <div className="relative w-[110px] sm:w-[150px] md:w-[190px] aspect-[460/390]">
+          {/* Subtle ground shadow to anchor to dark floor */}
+          <div
+            aria-hidden="true"
+            className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4/5 h-3 bg-black/80 rounded-full blur-sm pointer-events-none"
+          />
+          {/* Soft ambient red floor glow matching hero spotlight */}
+          <div
+            aria-hidden="true"
+            className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3/4 h-6 bg-red-600/15 rounded-full blur-lg pointer-events-none"
+          />
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            className="w-full h-full object-contain relative z-10 select-none pointer-events-none drop-shadow-[0_8px_16px_rgba(0,0,0,0.8)]"
+          >
+            <source src="./assets/videos/sleeping-dev.webm" type="video/webm" />
+            <source src="./assets/videos/sleeping-dev.mp4" type="video/mp4" />
+            <source src="/assets/videos/sleeping-dev.webm" type="video/webm" />
+            <source src="/assets/videos/sleeping-dev.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+
       {/* Seamless bottom fade into next section */}
       <div
         aria-hidden="true"

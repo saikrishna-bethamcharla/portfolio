@@ -279,11 +279,11 @@ html, body {
 #cap-title .cap-mask {
   font-family: "Newsreader", Georgia, serif;
   font-weight: 400;
-  font-size: 31px;
-  line-height: 1.12;
-  letter-spacing: -.01em;
+  font-size: clamp(34px, 3.8vw, 46px);
+  line-height: 1.15;
+  letter-spacing: -.015em;
   color: #ffffff;
-  min-height: 36px;
+  min-height: 40px;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
 }
 
@@ -433,7 +433,7 @@ html, body {
   grid-template-columns: 1.05fr 0.95fr;
   align-items: center;
   gap: 3.5vw;
-  padding: 68px 6vw 36px 7vw;
+  padding: 72px 6vw 48px 7vw;
   overflow-y: auto;
   overflow-x: hidden;
   box-shadow: 0 0 100px rgba(0, 0, 0, 0.95);
@@ -441,19 +441,26 @@ html, body {
 
 #detail-close {
   position: absolute;
-  top: 32px;
+  top: 28px;
   left: 6vw;
   cursor: pointer !important;
   z-index: 20;
-  border-color: rgba(255, 255, 255, 0.45);
-  background: rgba(18, 18, 22, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(22, 22, 28, 0.95);
   color: #ffffff;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  font-weight: 700;
+  letter-spacing: .12em;
+  padding: 0 14px;
+  height: 27px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
 
 #detail-close:hover {
-  border-color: var(--cobalt);
-  background: rgba(220, 38, 38, 0.25);
+  border-color: #ffffff;
+  background: var(--cobalt);
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
+  transform: translateY(-1px);
 }
 
 #detail-logo {
@@ -503,7 +510,7 @@ html, body {
 #dl-title {
   font-family: "Newsreader", Georgia, serif;
   font-weight: 400;
-  font-size: clamp(36px, 4.2vw, 68px);
+  font-size: clamp(42px, 4.6vw, 74px);
   line-height: 1.05;
   letter-spacing: -.025em;
   color: var(--ink);
@@ -547,7 +554,7 @@ html, body {
 }
 
 #detail-poster {
-  max-height: min(72vh, 600px);
+  max-height: min(68vh, 520px);
   height: auto;
   aspect-ratio: 474 / 900;
   display: block;

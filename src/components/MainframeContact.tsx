@@ -227,63 +227,105 @@ export function MainframeContact() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-[#050507] text-white selection:bg-red-500/30 selection:text-white font-body">
-      {/* 1. CHARACTER 3D HERO STAGE (Elevated to front with tactile 3D perspective, zero gradient covering head) */}
+      {/* ── PLANE 0: BACKGROUND STUDIO LIGHTING & TOP/BOTTOM BLEND ── */}
       <div
-        className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-0"
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden"
         style={{
-          perspective: '1200px',
+          transform: `translate3d(${parallax.x * 12}px, ${-parallax.y * 8}px, 0)`,
+          transition: 'transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1)',
         }}
       >
-        <video
-          ref={videoRef}
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260826_041744_63efcd78-bf7d-4039-99e2-2461e8a61903.mp4"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        {/* Cinematic Crimson Red Ambient Backdrop matching Section 1 hero spotlight */}
+        <div
+          className="absolute inset-0 w-full h-full"
           style={{
-            objectPosition: '70% center',
-            // Elevated crisp lighting: rich 3D felt texture, bright eyes, sharp red rim light
-            filter: 'brightness(1.02) contrast(1.08) saturate(1.08)',
-            // 3D parallax tilt responsive to mouse cursor - brings the 3D model into physical depth
-            transform: `perspective(1200px) rotateY(${parallax.x * 4}deg) rotateX(${-parallax.y * 2.5}deg) scale(1.02)`,
-            transformOrigin: '70% center',
-            transition: 'transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1)',
-            // Gentle dissolve at very bottom edge only (below chest), keeping hair & face 100% unmasked
-            maskImage:
-              'linear-gradient(to bottom, black 0%, black 90%, transparent 100%)',
-            WebkitMaskImage:
-              'linear-gradient(to bottom, black 0%, black 90%, transparent 100%)',
+            background:
+              'radial-gradient(ellipse 75% 65% at 75% 52%, #cf1922 0%, #aa1219 32%, #68080c 62%, #050507 96%)',
           }}
-          muted
-          playsInline
-          preload="auto"
-          onSeeked={handleSeeked}
+        />
+
+        {/* Top Black Gradient: Seamlessly dissolves into Section 1 (#050507) without touching character */}
+        <div
+          className="absolute inset-x-0 top-0 h-[42vh]"
+          style={{
+            background:
+              'linear-gradient(to bottom, #050507 0%, rgba(5,5,7,0.95) 20%, rgba(5,5,7,0.55) 55%, transparent 100%)',
+          }}
+        />
+
+        {/* Bottom Black Gradient: Seamlessly dissolves into Section 3 (3D Shelf) */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-[28vh]"
+          style={{
+            background:
+              'linear-gradient(to top, #000000 0%, rgba(0,0,0,0.85) 30%, transparent 100%)',
+          }}
         />
       </div>
 
-      {/* 2. TEXT LEGIBILITY BACKDROP (Confined to left side — character on right is 100% unobstructed) */}
+      {/* ── PLANE 1: FOREGROUND 3D FELT CHARACTER (INDEPENDENT MULTI-PLANE 3D PARALLAX) ── */}
+      {/* Positioned on the right, unmasked at top, head/hair completely sharp, vibrant & 3D */}
+      <div
+        className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-[2]"
+        style={{
+          perspective: '1000px',
+        }}
+      >
+        <div
+          className="absolute inset-0 w-full h-full flex items-center justify-end"
+          style={{
+            transform: `perspective(1000px) rotateY(${parallax.x * 7}deg) rotateX(${-parallax.y * 4}deg) translate3d(${parallax.x * 28}px, ${-parallax.y * 16}px, 35px)`,
+            transformOrigin: '75% 50%',
+            transition: 'transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1)',
+          }}
+        >
+          <video
+            ref={videoRef}
+            className="w-full h-full object-cover pointer-events-none"
+            style={{
+              objectPosition: '72% center',
+              filter: 'brightness(1.03) contrast(1.08) saturate(1.06)',
+              // Gentle dissolve at very bottom edge only (below chest), keeping hair & face 100% unmasked
+              maskImage: 'linear-gradient(to bottom, black 0%, black 82%, transparent 98%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 82%, transparent 98%)',
+            }}
+            muted
+            playsInline
+            preload="auto"
+            onSeeked={handleSeeked}
+          >
+            <source src="/character_keyed.webm" type="video/webm" />
+            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260826_041744_63efcd78-bf7d-4039-99e2-2461e8a61903.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+
+      {/* ── PLANE 2: TEXT LEGIBILITY SHIELD (Confined to left side — character is 100% unobstructed) ── */}
       <div
         aria-hidden="true"
-        className="absolute inset-y-0 left-0 w-full md:w-[58%] pointer-events-none z-[1]"
+        className="absolute inset-y-0 left-0 w-full md:w-[54%] pointer-events-none z-[3]"
         style={{
           background:
-            'linear-gradient(to right, rgba(5,5,7,0.95) 0%, rgba(5,5,7,0.85) 45%, rgba(5,5,7,0.3) 75%, transparent 100%)',
+            'linear-gradient(to right, rgba(5,5,7,0.96) 0%, rgba(5,5,7,0.85) 45%, rgba(5,5,7,0.25) 80%, transparent 100%)',
         }}
       />
 
-      {/* 3. Upward drifting luminous dust particles */}
+      {/* ── PLANE 3: Upward drifting luminous dust particles ── */}
       <canvas
         ref={canvasRef}
         aria-hidden="true"
-        className="absolute inset-0 z-[1] pointer-events-none"
+        className="absolute inset-0 z-[4] pointer-events-none"
       />
 
-      {/* 3. MAIN CONTENT (z-index: 1) */}
-      <main className="h-screen flex flex-col justify-end pb-16 md:justify-center md:pb-0 px-5 sm:px-8 md:px-10 overflow-hidden relative z-[1]">
+      {/* ── PLANE 4: MAIN CONTENT & CONTACT CHANNELS (z-index: 10) ── */}
+      <main className="h-screen flex flex-col justify-end pb-16 md:justify-center md:pb-0 px-6 sm:px-12 md:px-16 lg:px-24 overflow-hidden relative z-[10]">
         <div className="max-w-xl relative z-10">
           {/* 1. Personalized intro label (Unblurred, crisp high-end typography) */}
           <div
-            className="select-none mb-5 sm:mb-6"
+            className="select-none mb-4 sm:mb-5"
             style={{
-              fontSize: 'clamp(18px, 3.8vw, 26px)',
+              fontSize: 'clamp(18px, 3.6vw, 25px)',
               lineHeight: 1.35,
               fontWeight: 400,
               color: '#ffffff',
@@ -301,7 +343,7 @@ export function MainframeContact() {
           <p
             className="text-white mb-5 sm:mb-6 min-h-[54px]"
             style={{
-              fontSize: 'clamp(18px, 4vw, 26px)',
+              fontSize: 'clamp(18px, 3.8vw, 25px)',
               lineHeight: 1.35,
               fontWeight: 400,
             }}
@@ -315,104 +357,74 @@ export function MainframeContact() {
             )}
           </p>
 
-          {/* 3. Action pill buttons */}
+          {/* 3. Action pill buttons (Matching Image 3 exact design system) */}
           <div
-            className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-1"
+            className="flex flex-wrap items-center gap-2 sm:gap-2.5 pt-1"
             style={{
               opacity: pillsVisible ? 1 : 0,
               transform: pillsVisible ? 'translateY(0)' : 'translateY(8px)',
               transition: 'opacity 0.4s ease, transform 0.4s ease',
             }}
           >
-            {/* 4 Refined Action Pill Buttons */}
-            {pillActions.map((action, idx) => (
+            {/* 4 White pill buttons */}
+            {pillActions.map((action) => (
               <a
                 key={action.label}
                 href={action.href}
-                className={`inline-flex items-center gap-1.5 h-9 sm:h-10 px-4 sm:px-5 rounded-full text-[13px] sm:text-[14px] font-medium tracking-tight transition-all duration-200 cursor-pointer no-underline group shadow-[0_4px_20px_rgba(0,0,0,0.35)] hover:-translate-y-0.5 active:translate-y-0 ${
-                  idx === 0
-                    ? 'bg-white text-black hover:bg-zinc-200 hover:shadow-[0_0_25px_rgba(255,255,255,0.3)]'
-                    : 'bg-white/[0.08] hover:bg-white text-white hover:text-black border border-white/20 hover:border-white backdrop-blur-md hover:shadow-[0_0_20px_rgba(255,255,255,0.25)]'
-                }`}
+                className="inline-flex items-center justify-center bg-white text-black font-medium text-[13.5px] sm:text-[14.5px] px-4 sm:px-5 py-[6px] rounded-full border border-black/10 hover:bg-black hover:text-white hover:border-white/30 transition-colors duration-200 cursor-pointer no-underline whitespace-nowrap shadow-[0_2px_12px_rgba(0,0,0,0.25)]"
               >
-                <span>{action.label}</span>
-                <span className="text-[11px] opacity-45 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200">
-                  ↗
-                </span>
+                {action.label}
               </a>
             ))}
 
-            {/* Direct Inbox Copy Pill */}
+            {/* Direct Inbox Outline Pill with Copy Icon */}
             <button
               type="button"
               onClick={handleCopyEmail}
-              className={`inline-flex items-center gap-2 sm:gap-2.5 h-9 sm:h-10 px-4 sm:px-5 rounded-full text-[13px] sm:text-[14px] font-medium tracking-tight transition-all duration-200 cursor-pointer group shadow-[0_4px_20px_rgba(0,0,0,0.35)] hover:-translate-y-0.5 active:translate-y-0 backdrop-blur-md ${
+              className={`inline-flex items-center justify-center gap-2 font-medium text-[13.5px] sm:text-[14.5px] px-4 sm:px-5 py-[6px] rounded-full border transition-colors duration-200 cursor-pointer whitespace-nowrap shadow-[0_2px_12px_rgba(0,0,0,0.25)] ${
                 copied
-                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/60 shadow-[0_0_20px_rgba(16,185,129,0.35)]'
-                  : 'bg-white/[0.06] hover:bg-white/12 text-white border border-white/20 hover:border-red-500/60 hover:shadow-[0_0_20px_rgba(220,38,38,0.25)]'
+                  ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.35)]'
+                  : 'bg-black/60 text-white border-white/70 hover:bg-white hover:text-black hover:border-white'
               }`}
               title="Click to copy direct email"
             >
-              <span
-                className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                  copied ? 'bg-emerald-400' : 'bg-red-500 animate-pulse'
-                }`}
+              <span>
+                Direct inbox:{' '}
+                <span className="underline underline-offset-1">
+                  {copied ? 'Copied to clipboard! ✓' : 'saikrishnabethamcharla@gmail.com'}
+                </span>
+              </span>
+              {/* 12x12 copy icon */}
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="shrink-0 transition-transform group-hover:scale-110"
                 aria-hidden="true"
-              />
-              <span className="text-white/60 font-mono text-[11.5px] uppercase tracking-wider">
-                Direct:
-              </span>
-              <span className="underline underline-offset-2 decoration-white/30 group-hover:decoration-white transition-colors">
-                {copied ? 'Copied to clipboard! ✓' : 'saikrishnabethamcharla@gmail.com'}
-              </span>
-              {/* Copy / Check Icon */}
-              {copied ? (
-                <svg
-                  width="13"
-                  height="13"
-                  viewBox="0 0 24 24"
-                  fill="none"
+              >
+                <rect
+                  x="3.5"
+                  y="1"
+                  width="7.5"
+                  height="7.5"
+                  rx="1"
                   stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="shrink-0 text-emerald-400"
-                  aria-hidden="true"
-                >
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-              ) : (
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 12 12"
+                  strokeWidth="1.1"
                   fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="shrink-0 text-white/50 group-hover:text-white transition-colors group-hover:scale-110"
-                  aria-hidden="true"
-                >
-                  <rect
-                    x="3.5"
-                    y="1"
-                    width="7.5"
-                    height="7.5"
-                    rx="1"
-                    stroke="currentColor"
-                    strokeWidth="1.1"
-                    fill="none"
-                  />
-                  <rect
-                    x="1"
-                    y="3.5"
-                    width="7.5"
-                    height="7.5"
-                    rx="1"
-                    stroke="currentColor"
-                    strokeWidth="1.1"
-                    fill="none"
-                  />
-                </svg>
-              )}
+                />
+                <rect
+                  x="1"
+                  y="3.5"
+                  width="7.5"
+                  height="7.5"
+                  rx="1"
+                  stroke="currentColor"
+                  strokeWidth="1.1"
+                  fill="none"
+                />
+              </svg>
             </button>
           </div>
         </div>

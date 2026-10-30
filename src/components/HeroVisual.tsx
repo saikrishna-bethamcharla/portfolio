@@ -82,7 +82,7 @@ export const HeroVisual: React.FC = () => {
         position: 'relative',
         width: '100vw',
         height: '100vh',
-        background: '#000000',
+        background: '#050507',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -149,39 +149,21 @@ export const HeroVisual: React.FC = () => {
         SAI KRISHNA
       </h1>
 
-      {/* Subtle indicator to scroll to shelf */}
-      <a
-        href="#shelf"
-        onClick={(e) => {
-          e.preventDefault();
-          document.getElementById('shelf')?.scrollIntoView({ behavior: 'smooth' });
-        }}
+      {/* Seamless bottom fade into shelf */}
+      <div
+        aria-hidden="true"
         style={{
           position: 'absolute',
-          bottom: '36px',
-          zIndex: 10,
-          color: 'rgba(255, 255, 255, 0.45)',
-          fontFamily: '"Inter Tight", sans-serif',
-          fontSize: '11px',
-          fontWeight: 600,
-          letterSpacing: '0.18em',
-          textTransform: 'uppercase',
-          textDecoration: 'none',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '8px',
-          transition: 'color 0.3s ease',
-          cursor: 'pointer',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: '120px',
+          background:
+            'linear-gradient(to bottom, transparent 0%, rgba(5,5,7,0.7) 60%, #050507 100%)',
+          pointerEvents: 'none',
+          zIndex: 2,
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
-        onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255, 255, 255, 0.45)')}
-      >
-        <span>FILMOGRAPHY SHELF</span>
-        <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
-          <path d="M1 1L6 6L11 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </a>
+      />
     </section>
   );
 };

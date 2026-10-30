@@ -42,13 +42,23 @@ export function App() {
           className="w-full h-full border-none block"
         />
 
+        {/* Seamless top dissolve receiving the Hero above */}
+        <div
+          aria-hidden="true"
+          className="absolute top-0 left-0 right-0 h-28 pointer-events-none z-10"
+          style={{
+            background:
+              'linear-gradient(to bottom, #050507 0%, rgba(5,5,7,0.7) 40%, transparent 100%)',
+          }}
+        />
+
         {/* Seamless bottom dissolve from Shelf into Contact section */}
         <div
           aria-hidden="true"
-          className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none z-10"
+          className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-10"
           style={{
             background:
-              'linear-gradient(to bottom, transparent 0%, rgba(5,5,7,0.4) 50%, #050507 100%)',
+              'linear-gradient(to bottom, transparent 0%, rgba(5,5,7,0.5) 45%, #050507 100%)',
           }}
         />
       </section>

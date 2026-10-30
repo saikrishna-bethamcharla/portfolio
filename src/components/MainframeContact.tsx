@@ -201,11 +201,6 @@ export function MainframeContact() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const scrollToShelf = (e?: React.MouseEvent) => {
-    if (e) e.preventDefault();
-    document.getElementById('shelf')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   const pillActions = [
     {
       label: 'Pitch a project',
@@ -284,37 +279,7 @@ export function MainframeContact() {
         className="absolute inset-0 z-0 pointer-events-none"
       />
 
-      {/* 3. INTEGRATED EDITORIAL SUB-HEADER (nestled cleanly in theme) */}
-      <div className="absolute top-8 sm:top-10 left-5 sm:left-8 right-5 sm:right-8 z-20 flex flex-row justify-between items-center pb-3 border-b border-white/10">
-        <div className="flex flex-row items-center gap-3">
-          <span className="flex items-center gap-2 text-[10.5px] tracking-[0.24em] font-mono text-red-500 uppercase font-semibold">
-            <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-            <span>[ 03 / DIRECT INQUIRY & CHANNELS ]</span>
-          </span>
-          <span className="text-white/20 hidden sm:inline">|</span>
-          <span
-            style={{ fontFamily: 'var(--font-heading)' }}
-            className="text-[17px] sm:text-[20px] tracking-tight text-white leading-none hidden sm:inline"
-          >
-            Sai Krishna®
-          </span>
-          <span className="text-[18px] text-red-500 select-none leading-none drop-shadow-[0_0_10px_rgba(239,68,68,0.8)] hidden sm:inline">
-            ✳︎
-          </span>
-        </div>
-
-        <div className="flex flex-row items-center gap-3 sm:gap-4">
-          <button
-            type="button"
-            onClick={scrollToShelf}
-            className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] font-mono text-zinc-400 hover:text-white border border-white/15 hover:border-red-500/60 px-3.5 py-1.5 rounded-full backdrop-blur-sm transition-all duration-300 cursor-pointer"
-          >
-            <span>↑ BACK TO SHELF</span>
-          </button>
-        </div>
-      </div>
-
-      {/* 4. MAIN CONTENT (z-index: 1) */}
+      {/* 3. MAIN CONTENT (z-index: 1) */}
       <main className="h-screen flex flex-col justify-end pb-16 md:justify-center md:pb-0 px-5 sm:px-8 md:px-10 overflow-hidden relative z-[1]">
         <div className="max-w-xl relative z-10">
           {/* 1. Personalized intro label (Unblurred, crisp high-end typography) */}

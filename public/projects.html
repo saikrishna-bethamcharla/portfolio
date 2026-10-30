@@ -85,60 +85,6 @@ html, body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='paperGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.85 0 0 0 0 0.85 0 0 0 0 0.85 0 0 0 0.35 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23paperGrain)'/%3E%3C/svg%3E");
 }
 
-/* ── 1. TOP BAR ─────────────────────────────────────────────────── */
-#topbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 84px;
-  padding: 0 32px;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  z-index: 50;
-}
-
-#topbar-left {
-  justify-self: start;
-}
-
-#topbar-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.project-showcase-title {
-  font-family: "Inter Tight", "Helvetica Neue", sans-serif;
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  color: #ffffff;
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.project-showcase-title::before,
-.project-showcase-title::after {
-  content: '';
-  display: inline-block;
-  width: 16px;
-  height: 1px;
-  background: var(--cobalt);
-  opacity: 0.8;
-}
-
-#topbar-right {
-  justify-self: end;
-  color: var(--muted);
-}
-
-
 /* ── SHOWCASE SECTION WRAPPER ──────────────────────────────────── */
 #showcase-section {
   position: relative;
@@ -147,44 +93,6 @@ html, body {
   min-height: 700px;
   overflow: hidden;
   background-color: var(--paper);
-}
-
-#shelf-scroll-prompt {
-  position: absolute;
-  bottom: 36px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(18, 18, 22, 0.85);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  color: #e5e7eb;
-  padding: 0 18px;
-  height: 32px;
-  border-radius: 9999px;
-  cursor: pointer !important;
-  text-decoration: none;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  font-weight: 500;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  transition: all 0.25s ease;
-}
-#shelf-scroll-prompt:hover {
-  background: rgba(220, 38, 38, 0.25);
-  border-color: rgba(239, 68, 68, 0.7);
-  color: #ffffff;
-  box-shadow: 0 0 25px rgba(220, 38, 38, 0.45);
-  transform: translateX(-50%) translateY(-2px);
-}
-#shelf-scroll-prompt svg {
-  transition: transform 0.2s ease;
-}
-#shelf-scroll-prompt:hover svg {
-  transform: translateY(2px);
 }
 
 /* ── 2. PROJECT CATEGORY TABS ───────────────────────────────────── */
@@ -650,26 +558,6 @@ html, body {
     --H: min(60vw, 40svh);
   }
 
-  #topbar {
-    height: 64px;
-    padding: 0 16px;
-  }
-
-  .project-showcase-title {
-    font-size: 11px;
-    letter-spacing: .2em;
-    gap: 8px;
-  }
-
-  .project-showcase-title::before,
-  .project-showcase-title::after {
-    width: 10px;
-  }
-
-  #topbar-right {
-    display: none;
-  }
-
   .tab-btn {
     padding: 0 8px;
     font-size: 9px;
@@ -736,19 +624,6 @@ html, body {
 
 <div id="grain" aria-hidden="true"></div>
 
-<!-- 1. TOP BAR -->
-<header id="topbar">
-  <div id="topbar-left">
-    <a href="/" class="lbl box" id="back-link">← BACK</a>
-  </div>
-  <div id="topbar-center">
-    <span class="project-showcase-title">PROJECT SHOWCASE</span>
-  </div>
-  <div id="topbar-right">
-    <button id="contact-toggle-btn" class="lbl box" aria-label="Open contact and socials">GET IN TOUCH ✦</button>
-  </div>
-</header>
-
 <!-- 2. PROJECT CATEGORY TABS -->
 <nav id="tabs" aria-label="Project categories">
   <div id="tab-indicator" aria-hidden="true"></div>
@@ -793,11 +668,6 @@ html, body {
     </svg>
   </button>
 
-  <!-- SHELF SCROLL PROMPT -->
-  <button type="button" id="shelf-scroll-prompt" class="lbl box" aria-label="Scroll to direct channels">
-    <span>CONNECT & DIRECT CHANNELS</span>
-    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 3.5L5 7.5L9 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
 </section>
 
 
@@ -6785,12 +6655,15 @@ function closeDetail() {
 // USER INPUTS & EVENT LISTENERS
 // ═══════════════════════════════════════════════════════════════════
 // Back button handler
-document.getElementById('back-link').addEventListener('click', (e) => {
-  if (window.parent && window.parent !== window) {
-    e.preventDefault();
-    window.parent.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-});
+const backLink = document.getElementById('back-link');
+if (backLink) {
+  backLink.addEventListener('click', (e) => {
+    if (window.parent && window.parent !== window) {
+      e.preventDefault();
+      window.parent.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+}
 
 // Play ring & close button
 playRing.addEventListener('click', openDetail);
@@ -6915,29 +6788,6 @@ tabBtns.forEach(btn => {
   });
 });
 
-
-// ─────────────────────────────────────────────────────────────────────────────
-// NAVIGATION INTERACTIONS
-// ─────────────────────────────────────────────────────────────────────────────
-const shelfScrollPromptBtn = document.getElementById('shelf-scroll-prompt');
-if (shelfScrollPromptBtn) {
-  shelfScrollPromptBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (window.parent && window.parent !== window) {
-      window.parent.postMessage({ type: 'SCROLL_TO_CONTACT' }, '*');
-    }
-  });
-}
-
-const contactToggleBtn = document.getElementById('contact-toggle-btn');
-if (contactToggleBtn) {
-  contactToggleBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (window.parent && window.parent !== window) {
-      window.parent.postMessage({ type: 'SCROLL_TO_CONTACT' }, '*');
-    }
-  });
-}
 
 // ═══════════════════════════════════════════════════════════════════
 // INITIALIZATION & RESIZE

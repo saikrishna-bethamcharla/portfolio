@@ -674,6 +674,250 @@ html, body {
     height: 64px;
   }
 }
+
+/* ── CONTACT & SOCIALS SECTION (3D GLOSSY PHYSICS) ──────────────── */
+#contact-toggle-btn {
+  background: rgba(220, 38, 38, 0.15);
+  border-color: rgba(220, 38, 38, 0.5);
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+#contact-toggle-btn:hover {
+  background: #dc2626;
+  border-color: #ef4444;
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+}
+
+#contact-section {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#contact-section.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#contact-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 6, 8, 0.88);
+  backdrop-filter: blur(20px);
+}
+
+#contact-container {
+  position: relative;
+  width: min(94vw, 1200px);
+  height: min(90vh, 760px);
+  background: linear-gradient(145deg, rgba(20, 20, 26, 0.95), rgba(10, 10, 14, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.95), 0 0 60px rgba(220, 38, 38, 0.18);
+  transform: scale(0.96) translateY(20px);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#contact-section.active #contact-container {
+  transform: scale(1) translateY(0);
+}
+
+#contact-header {
+  height: 64px;
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.contact-badge {
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.contact-badge::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  background: #ef4444;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ef4444;
+}
+
+#contact-close-btn {
+  border-color: rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+}
+#contact-close-btn:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+#contact-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+
+@media (max-width: 860px) {
+  #contact-body {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    overflow-y: auto;
+  }
+}
+
+#contact-info {
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#contact-title {
+  font-family: "Newsreader", Georgia, serif;
+  font-size: clamp(32px, 3.8vw, 48px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #ffffff;
+  margin: 0 0 18px 0;
+  letter-spacing: -0.02em;
+}
+
+#contact-desc {
+  font-family: "Inter Tight", sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #9ca3af;
+  margin: 0 0 32px 0;
+  max-width: 480px;
+}
+
+#contact-meta-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.contact-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meta-label {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: #6b7280;
+}
+
+.meta-value {
+  font-family: "Inter Tight", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #f3f4f6;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a.meta-value:hover {
+  color: #ef4444;
+}
+
+#contact-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.contact-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  background: #dc2626;
+  color: #ffffff;
+  border: 1px solid #ef4444;
+  border-radius: 0;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.20em;
+  box-shadow: 0 8px 25px -4px rgba(220, 38, 38, 0.5);
+  transition: all 0.25s ease;
+}
+
+.contact-cta-btn:hover {
+  background: #b91c1c;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -4px rgba(220, 38, 38, 0.7);
+}
+
+.contact-sec-btn {
+  height: 44px;
+  padding: 0 20px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+}
+
+#contact-hint {
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+#contact-canvas-wrapper {
+  position: relative;
+  background: radial-gradient(circle at 50% 60%, rgba(220, 38, 38, 0.08) 0%, transparent 70%);
+  display: flex;
+  flex-direction: column;
+}
+
+#contact-physics-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#contact-floor-label {
+  position: absolute;
+  bottom: 24px;
+  left: 32px;
+  right: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #6b7280;
+  font-size: 9.5px;
+  letter-spacing: 0.20em;
+  pointer-events: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 12px;
+}
+
+#sphere-hover-name {
+  color: #ef4444;
+  font-weight: 700;
+}
+
 </style>
 </head>
 <body>
@@ -688,7 +932,9 @@ html, body {
   <div id="topbar-center">
     <span class="project-showcase-title">PROJECT SHOWCASE</span>
   </div>
-  <div id="topbar-right"></div>
+  <div id="topbar-right">
+    <button id="contact-toggle-btn" class="lbl box" aria-label="Open contact and socials">GET IN TOUCH ✦</button>
+  </div>
 </header>
 
 <!-- 2. PROJECT CATEGORY TABS -->
@@ -742,6 +988,66 @@ html, body {
     <a href="https://github.com/saikrishna-bethamcharla" target="_blank" rel="noopener">GH</a>
   </div>
 </footer>
+
+
+<!-- 7.5. CONTACT & SOCIALS SECTION (3D GLOSSY FALLING SPHERES & EDITORIAL CTA) -->
+<section id="contact-section" role="dialog" aria-modal="true" aria-label="Contact and Socials">
+  <div id="contact-backdrop"></div>
+  <div id="contact-container">
+    <div id="contact-header">
+      <div class="contact-badge lbl">CONNECT & COLLABORATE</div>
+      <button id="contact-close-btn" class="lbl box" aria-label="Close contact">CLOSE ✕</button>
+    </div>
+
+    <div id="contact-body">
+      <!-- Left Editorial Column -->
+      <div id="contact-info">
+        <h2 id="contact-title">Let’s build something extraordinary.</h2>
+        <p id="contact-desc">
+          Directing generative AI filmmaking, high-performance web systems, and luxury brand architecture. Open for select commercial direction, technical architecture, and advisory.
+        </p>
+
+        <div id="contact-meta-grid">
+          <div class="contact-meta-item">
+            <span class="meta-label lbl">DIRECT EMAIL</span>
+            <a href="mailto:saikrishnabethamcharla@gmail.com" class="meta-value">saikrishnabethamcharla@gmail.com</a>
+          </div>
+          <div class="contact-meta-item">
+            <span class="meta-label lbl">CURRENT ROLE</span>
+            <span class="meta-value">Creative & Technical Lead — Zai Labs</span>
+          </div>
+          <div class="contact-meta-item">
+            <span class="meta-label lbl">BASE & TIMEZONE</span>
+            <span class="meta-value">Hyderabad, India (IST / UTC +5:30)</span>
+          </div>
+        </div>
+
+        <div id="contact-cta-row">
+          <a href="mailto:saikrishnabethamcharla@gmail.com?subject=Project%20Inquiry%20%E2%80%94%20Sai%20Krishna" class="contact-cta-btn lbl">
+            <span>INITIATE INQUIRY</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H3M13 1V11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="./assets/Sai_Krishna_Bethamcharla_Resume.pdf" target="_blank" rel="noopener" class="contact-sec-btn lbl box">
+            DOWNLOAD CV ↗
+          </a>
+        </div>
+
+        <div id="contact-hint" class="lbl">
+          ✦ CLICK OR DRAG ANY 3D GLOSSY SPHERE ON THE FLOOR TO LAUNCH DIRECT CHANNELS
+        </div>
+      </div>
+
+      <!-- Right 3D Interactive Physics Stage Column -->
+      <div id="contact-canvas-wrapper">
+        <canvas id="contact-physics-canvas"></canvas>
+        <div id="contact-floor-label" class="lbl">
+          <span>PHYSICS FLOOR — INTERACTIVE CHANNELS</span>
+          <span id="sphere-hover-name">HOVER OR CLICK SPHERES</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- 8. DETAIL VIEW (DIALOG) -->
 <div id="detail" role="dialog" aria-modal="true" aria-label="Project detail">
@@ -6769,6 +7075,390 @@ tabBtns.forEach(btn => {
     if (diff < -N / 2) diff += N;
     T += diff;
   });
+});
+
+
+// ═══════════════════════════════════════════════════════════════════
+// 3D GLOSSY SPHERES CONTACT PHYSICS ENGINE
+// ═══════════════════════════════════════════════════════════════════
+const contactSec = document.getElementById('contact-section');
+const contactToggleBtn = document.getElementById('contact-toggle-btn');
+const contactCloseBtn = document.getElementById('contact-close-btn');
+const contactBackdrop = document.getElementById('contact-backdrop');
+const contactCvs = document.getElementById('contact-physics-canvas');
+const contactCtx = contactCvs.getContext('2d');
+const sphereHoverLabel = document.getElementById('sphere-hover-name');
+
+let isContactOpen = false;
+let contactAnimFrame = null;
+let cW = 0, cH = 0;
+let dragBall = null;
+let dragOffsetX = 0, dragOffsetY = 0;
+let lastMouseX = 0, lastMouseY = 0;
+let mouseVX = 0, mouseVY = 0;
+
+const SOCIAL_SPHERES = [
+  {
+    name: 'LinkedIn',
+    subtitle: 'Professional Trajectory & Network',
+    color: '#0077b5',
+    accentColor: '#38bdf8',
+    iconText: 'in',
+    url: 'https://linkedin.com/in/sai-krishna-bethamcharla',
+    radius: 46
+  },
+  {
+    name: 'Instagram',
+    subtitle: 'Visual Staging & Behind the Scenes',
+    color: '#e1306c',
+    accentColor: '#f43f5e',
+    iconText: 'ig',
+    url: 'https://www.instagram.com/saikrishna_bethamcharla',
+    radius: 44
+  },
+  {
+    name: 'GitHub',
+    subtitle: 'Open Source & Code Architecture',
+    color: '#24292e',
+    accentColor: '#94a3b8',
+    iconText: 'gh',
+    url: 'https://github.com/saikrishna-bethamcharla',
+    radius: 44
+  },
+  {
+    name: 'WhatsApp',
+    subtitle: 'Direct Message & Fast Inquiries',
+    color: '#25d366',
+    accentColor: '#4ade80',
+    iconText: 'wa',
+    url: 'https://wa.me/919999999999',
+    radius: 42
+  },
+  {
+    name: 'YouTube',
+    subtitle: 'Original Films & Cinema Reels',
+    color: '#dc2626',
+    accentColor: '#f87171',
+    iconText: 'yt',
+    url: 'https://www.youtube.com/@saikrishna_bethamcharla',
+    radius: 46
+  }
+];
+
+let physicsBalls = [];
+
+function initSocialSpheres() {
+  const floorY = cH - 90;
+  physicsBalls = SOCIAL_SPHERES.map((item, idx) => {
+    const spacing = cW / (SOCIAL_SPHERES.length + 1);
+    return {
+      x: spacing * (idx + 1) + (Math.random() - 0.5) * 40,
+      y: -60 - idx * 110,
+      vx: (Math.random() - 0.5) * 4,
+      vy: Math.random() * 3 + 1,
+      radius: item.radius,
+      item,
+      isHovered: false
+    };
+  });
+}
+
+function resizeContactCanvas() {
+  if (!contactCvs.parentElement) return;
+  const rect = contactCvs.parentElement.getBoundingClientRect();
+  cW = contactCvs.width = rect.width;
+  cH = contactCvs.height = rect.height;
+}
+
+function draw3DGlossySphere(ctx, b) {
+  const { x, y, radius, item, isHovered } = b;
+  const floorY = cH - 90;
+
+  ctx.save();
+  ctx.translate(x, y);
+
+  // 1. Soft Floor Shadow (Perspective Oval)
+  const distToFloor = Math.max(0, floorY - y);
+  const shadowAlpha = Math.max(0, 0.55 - (distToFloor / 380) * 0.5);
+  const shadowScale = Math.max(0.15, 1 - distToFloor / 380);
+
+  ctx.save();
+  ctx.translate(0, distToFloor);
+  ctx.scale(1, 0.28);
+  const sGrad = ctx.createRadialGradient(0, 0, 4, 0, 0, radius * 1.45 * shadowScale);
+  sGrad.addColorStop(0, `rgba(0, 0, 0, ${shadowAlpha})`);
+  sGrad.addColorStop(0.5, `rgba(0, 0, 0, ${shadowAlpha * 0.5})`);
+  sGrad.addColorStop(1, 'transparent');
+  ctx.fillStyle = sGrad;
+  ctx.beginPath();
+  ctx.arc(0, 0, radius * 1.45 * shadowScale, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  // 2. Base Sphere 3D Shading
+  const rScale = isHovered ? 1.08 : 1.0;
+  const curR = radius * rScale;
+
+  const baseGrad = ctx.createRadialGradient(
+    -curR * 0.32, -curR * 0.35, curR * 0.08,
+    0, 0, curR
+  );
+  baseGrad.addColorStop(0, '#ffffff');
+  baseGrad.addColorStop(0.22, item.color);
+  baseGrad.addColorStop(0.75, '#0b0c10');
+  baseGrad.addColorStop(1, '#020204');
+
+  ctx.fillStyle = baseGrad;
+  ctx.beginPath();
+  ctx.arc(0, 0, curR, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 3. Colored Rim Illumination
+  ctx.strokeStyle = item.accentColor;
+  ctx.lineWidth = isHovered ? 3.0 : 1.8;
+  ctx.globalAlpha = isHovered ? 0.95 : 0.65;
+  ctx.stroke();
+  ctx.globalAlpha = 1.0;
+
+  // 4. Center High-Contrast Icon Typography
+  ctx.fillStyle = '#ffffff';
+  ctx.font = `800 ${Math.round(curR * 0.44)}px "Inter Tight", sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+  ctx.shadowBlur = 6;
+  ctx.fillText(item.iconText, 0, 2);
+  ctx.shadowBlur = 0;
+
+  // 5. Specular 3D Gloss Highlight (Upper-Left Hotspot Glaze)
+  const specGrad = ctx.createRadialGradient(
+    -curR * 0.32, -curR * 0.38, 2,
+    -curR * 0.30, -curR * 0.35, curR * 0.58
+  );
+  specGrad.addColorStop(0, 'rgba(255, 255, 255, 0.98)');
+  specGrad.addColorStop(0.35, 'rgba(255, 255, 255, 0.5)');
+  specGrad.addColorStop(0.8, 'rgba(255, 255, 255, 0.08)');
+  specGrad.addColorStop(1, 'transparent');
+
+  ctx.fillStyle = specGrad;
+  ctx.beginPath();
+  ctx.ellipse(-curR * 0.28, -curR * 0.36, curR * 0.42, curR * 0.24, -Math.PI / 6, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 6. Secondary soft reflection on bottom edge (Bounce Light)
+  const botGrad = ctx.createRadialGradient(
+    curR * 0.15, curR * 0.45, 2,
+    0, curR * 0.55, curR * 0.45
+  );
+  botGrad.addColorStop(0, `rgba(${item.accentColor === '#38bdf8' ? '56, 189, 248' : '255, 255, 255'}, 0.35)`);
+  botGrad.addColorStop(1, 'transparent');
+  ctx.fillStyle = botGrad;
+  ctx.beginPath();
+  ctx.arc(0, 0, curR - 2, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function updateContactPhysics() {
+  const gravity = 0.42;
+  const bounce = 0.65;
+  const floorY = cH - 90;
+
+  for (let i = 0; i < physicsBalls.length; i++) {
+    const b = physicsBalls[i];
+
+    if (b === dragBall) {
+      b.x = lastMouseX + dragOffsetX;
+      b.y = lastMouseY + dragOffsetY;
+      b.vx = mouseVX;
+      b.vy = mouseVY;
+      continue;
+    }
+
+    b.vy += gravity;
+    b.x += b.vx;
+    b.y += b.vy;
+
+    // Floor collision
+    if (b.y + b.radius > floorY) {
+      b.y = floorY - b.radius;
+      b.vy = -b.vy * bounce;
+      b.vx *= 0.94; // friction
+      if (Math.abs(b.vy) < 0.25) b.vy = 0;
+    }
+
+    // Walls
+    const minX = b.radius + 15;
+    const maxX = cW - b.radius - 15;
+    if (b.x < minX) {
+      b.x = minX;
+      b.vx = -b.vx * bounce;
+    }
+    if (b.x > maxX) {
+      b.x = maxX;
+      b.vx = -b.vx * bounce;
+    }
+
+    // Sphere-to-sphere collision
+    for (let j = i + 1; j < physicsBalls.length; j++) {
+      const b2 = physicsBalls[j];
+      const dx = b2.x - b.x;
+      const dy = b2.y - b.y;
+      const dist = Math.hypot(dx, dy);
+      const minDist = b.radius + b2.radius;
+
+      if (dist < minDist && dist > 0) {
+        const nx = dx / dist;
+        const ny = dy / dist;
+        const overlap = minDist - dist;
+
+        b.x -= nx * overlap * 0.5;
+        b.y -= ny * overlap * 0.5;
+        b2.x += nx * overlap * 0.5;
+        b2.y += ny * overlap * 0.5;
+
+        const kx = b.vx - b2.vx;
+        const ky = b.vy - b2.vy;
+        const p = 2 * (nx * kx + ny * ky) / 2;
+
+        b.vx -= p * 0.5 * nx * bounce;
+        b.vy -= p * 0.5 * ny * bounce;
+        b2.vx += p * 0.5 * nx * bounce;
+        b2.vy += p * 0.5 * ny * bounce;
+      }
+    }
+  }
+}
+
+function renderContactPhysics() {
+  if (!isContactOpen) return;
+  contactCtx.clearRect(0, 0, cW, cH);
+
+  // Architectural floor structure (Glossy Reflective Grid)
+  const floorY = cH - 90;
+
+  // Floor perspective plane
+  const floorGrad = contactCtx.createLinearGradient(0, floorY, 0, cH);
+  floorGrad.addColorStop(0, 'rgba(255, 255, 255, 0.08)');
+  floorGrad.addColorStop(0.3, 'rgba(220, 38, 38, 0.05)');
+  floorGrad.addColorStop(1, 'transparent');
+  contactCtx.fillStyle = floorGrad;
+  contactCtx.fillRect(0, floorY, cW, cH - floorY);
+
+  contactCtx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
+  contactCtx.lineWidth = 1.2;
+  contactCtx.beginPath();
+  contactCtx.moveTo(20, floorY);
+  contactCtx.lineTo(cW - 20, floorY);
+  contactCtx.stroke();
+
+  // Grid tick marks
+  for (let gx = 40; gx < cW; gx += 45) {
+    contactCtx.beginPath();
+    contactCtx.moveTo(gx, floorY);
+    contactCtx.lineTo(gx - 15, floorY + 18);
+    contactCtx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+    contactCtx.stroke();
+  }
+
+  updateContactPhysics();
+  physicsBalls.forEach(b => draw3DGlossySphere(contactCtx, b));
+
+  contactAnimFrame = requestAnimationFrame(renderContactPhysics);
+}
+
+function openContact() {
+  if (isContactOpen) return;
+  isContactOpen = true;
+  contactSec.classList.add('active');
+  resizeContactCanvas();
+  initSocialSpheres();
+  renderContactPhysics();
+}
+
+function closeContact() {
+  if (!isContactOpen) return;
+  isContactOpen = false;
+  contactSec.classList.remove('active');
+  if (contactAnimFrame) cancelAnimationFrame(contactAnimFrame);
+  dragBall = null;
+}
+
+contactToggleBtn.addEventListener('click', openContact);
+contactCloseBtn.addEventListener('click', closeContact);
+contactBackdrop.addEventListener('click', closeContact);
+
+// Drag and Click Interaction for Spheres
+contactCvs.addEventListener('pointerdown', e => {
+  const rect = contactCvs.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+
+  for (let i = physicsBalls.length - 1; i >= 0; i--) {
+    const b = physicsBalls[i];
+    if (Math.hypot(mx - b.x, my - b.y) <= b.radius * 1.1) {
+      dragBall = b;
+      dragOffsetX = b.x - mx;
+      dragOffsetY = b.y - my;
+      lastMouseX = mx;
+      lastMouseY = my;
+      dragBall.downX = mx;
+      dragBall.downY = my;
+      dragBall.downTime = performance.now();
+      break;
+    }
+  }
+});
+
+window.addEventListener('pointermove', e => {
+  if (!isContactOpen) return;
+  const rect = contactCvs.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+
+  mouseVX = mx - lastMouseX;
+  mouseVY = my - lastMouseY;
+  lastMouseX = mx;
+  lastMouseY = my;
+
+  // Check hover state
+  let hoveredItem = null;
+  physicsBalls.forEach(b => {
+    const hovered = Math.hypot(mx - b.x, my - b.y) <= b.radius * 1.1;
+    b.isHovered = hovered;
+    if (hovered) hoveredItem = b.item;
+  });
+
+  if (hoveredItem) {
+    sphereHoverLabel.textContent = `${hoveredItem.name.toUpperCase()} — ${hoveredItem.subtitle.toUpperCase()}`;
+    contactCvs.style.cursor = 'pointer';
+  } else {
+    sphereHoverLabel.textContent = 'HOVER OR CLICK SPHERES';
+    contactCvs.style.cursor = 'default';
+  }
+});
+
+window.addEventListener('pointerup', e => {
+  if (dragBall) {
+    const rect = contactCvs.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const distMoved = Math.hypot(mx - dragBall.downX, my - dragBall.downY);
+    const duration = performance.now() - dragBall.downTime;
+
+    // Clicked (short tap / no large drag) -> open URL
+    if (distMoved < 8 && duration < 350) {
+      window.open(dragBall.item.url, '_blank');
+    }
+    dragBall = null;
+  }
+});
+
+window.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && isContactOpen) {
+    closeContact();
+  }
 });
 
 // ═══════════════════════════════════════════════════════════════════

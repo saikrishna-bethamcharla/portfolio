@@ -6769,12 +6769,28 @@ arrRight.addEventListener('click', () => { lastInteractionTime = performance.now
 window.addEventListener('wheel', e => {
   if (isOpen) return;
 
+  // Zone-Restricted Wheel (Option B):
+  // Check if cursor is directly over the 3D shelf cassette area in the center.
+  // The center stage cassette band spans from 22% to 78% of viewport height.
+  const isOverStageEl = !!(e.target && e.target.closest && e.target.closest('#stage, .tape, #shelf-section, #play-ring, .arrow-btn'));
+  const inShelfVerticalZone = e.clientY >= window.innerHeight * 0.22 && e.clientY <= window.innerHeight * 0.78;
+  const isDirectlyOverShelf = isOverStageEl || inShelfVerticalZone;
+
+  if (!isDirectlyOverShelf) {
+    // Scrolling outside the 3D shelf (top bar, category tabs, bottom caption, or top/bottom margins):
+    // Forward vertical scroll to parent page so it scrolls up or down normally without touching the books!
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ type: 'PARENT_SCROLL', deltaY: e.deltaY }, '*');
+    }
+    return;
+  }
+
   // Dominant scroll delta (supports standard vertical mouse wheel and trackpad)
   const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
   if (Math.abs(delta) < 0.2) return;
 
   // If user scrolls up strongly near the top edge, smoothly scroll back to Contact section
-  if (e.deltaY < -60 && (my < 140 || e.clientY < 140) && window.parent && window.parent !== window) {
+  if (e.deltaY < -50 && e.clientY < window.innerHeight * 0.28 && window.parent && window.parent !== window) {
     window.parent.postMessage({ type: 'SCROLL_TO_CONTACT' }, '*');
     return;
   }
@@ -6784,7 +6800,7 @@ window.addEventListener('wheel', e => {
   isWheelActive = true;
   lastInteractionTime = performance.now();
 
-  // Continuous velocity scroll scaled to book width + gap
+  // Continuous velocity scroll scaled to book width + gap (UNTOUCHED ORIGINAL PHYSICS)
   const sensitivity = 0.45;
   T += (delta / (ws + gap)) * sensitivity;
 

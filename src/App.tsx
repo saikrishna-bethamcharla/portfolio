@@ -12,7 +12,9 @@ export function App() {
   useEffect(() => {
     // Listen for cross-frame navigation messages from the shelf iframe
     const handleMsg = (e: MessageEvent) => {
-      if (e.data?.type === 'SCROLL_TO_CONTACT') {
+      if (e.data?.type === 'PARENT_SCROLL' && typeof e.data.deltaY === 'number') {
+        window.scrollBy({ top: e.data.deltaY, behavior: 'auto' });
+      } else if (e.data?.type === 'SCROLL_TO_CONTACT') {
         document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
       } else if (e.data?.type === 'SCROLL_TO_HERO') {
         window.scrollTo({ top: 0, behavior: 'smooth' });

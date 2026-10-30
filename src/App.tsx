@@ -36,16 +36,6 @@ export function App() {
         id="contact"
         className="relative w-full h-screen overflow-hidden bg-[#050507]"
       >
-        {/* Seamless top dissolve receiving the Hero */}
-        <div
-          aria-hidden="true"
-          className="absolute top-0 left-0 right-0 h-32 sm:h-40 pointer-events-none z-20"
-          style={{
-            background:
-              'linear-gradient(to bottom, #050507 0%, rgba(5,5,7,0.85) 35%, transparent 100%)',
-          }}
-        />
-
         <MainframeContact />
 
         {/* Seamless bottom dissolve into the 3D Shelf below */}

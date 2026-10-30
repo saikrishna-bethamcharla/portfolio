@@ -49,6 +49,7 @@ export function useTypewriter(text: string, speed = 38, startDelay = 600) {
 export function MainframeContact() {
   const [pillsVisible, setPillsVisible] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [parallax, setParallax] = useState({ x: 0, y: 0 });
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -154,22 +155,26 @@ export function MainframeContact() {
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       const video = videoRef.current;
-      if (!video) return;
+      if (video) {
+        if (prevXRef.current === null) {
+          prevXRef.current = e.clientX;
+        } else {
+          const delta = e.clientX - prevXRef.current;
+          prevXRef.current = e.clientX;
 
-      if (prevXRef.current === null) {
-        prevXRef.current = e.clientX;
-        return;
+          const SENSITIVITY = 0.8;
+          const duration = video.duration || 1;
+          const timeOffset = (delta / window.innerWidth) * SENSITIVITY * duration;
+
+          targetTimeRef.current = Math.max(0, Math.min(duration, targetTimeRef.current + timeOffset));
+          performSeek();
+        }
       }
 
-      const delta = e.clientX - prevXRef.current;
-      prevXRef.current = e.clientX;
-
-      const SENSITIVITY = 0.8;
-      const duration = video.duration || 1;
-      const timeOffset = (delta / window.innerWidth) * SENSITIVITY * duration;
-
-      targetTimeRef.current = Math.max(0, Math.min(duration, targetTimeRef.current + timeOffset));
-      performSeek();
+      // Subtle 3D perspective tilt coordinates
+      const normX = e.clientX / window.innerWidth - 0.5;
+      const normY = e.clientY / window.innerHeight - 0.5;
+      setParallax({ x: normX, y: normY });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -222,61 +227,53 @@ export function MainframeContact() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-[#050507] text-white selection:bg-red-500/30 selection:text-white font-body">
-      {/* 1. BACKGROUND VIDEO (mouse-scrub controlled with soft theatrical spotlight mask) */}
-      <video
-        ref={videoRef}
-        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260826_041744_63efcd78-bf7d-4039-99e2-2461e8a61903.mp4"
-        className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+      {/* 1. CHARACTER 3D HERO STAGE (Elevated to front with tactile 3D perspective, zero gradient covering head) */}
+      <div
+        className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-0"
         style={{
-          objectPosition: '70% center',
-          filter: 'brightness(0.70) contrast(1.22) saturate(0.85)',
-          maskImage:
-            'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 12%, black 28%, black 85%, transparent 100%)',
-          WebkitMaskImage:
-            'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 12%, black 28%, black 85%, transparent 100%)',
+          perspective: '1200px',
         }}
-        muted
-        playsInline
-        preload="auto"
-        onSeeked={handleSeeked}
-      />
+      >
+        <video
+          ref={videoRef}
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260826_041744_63efcd78-bf7d-4039-99e2-2461e8a61903.mp4"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          style={{
+            objectPosition: '70% center',
+            // Elevated crisp lighting: rich 3D felt texture, bright eyes, sharp red rim light
+            filter: 'brightness(1.02) contrast(1.08) saturate(1.08)',
+            // 3D parallax tilt responsive to mouse cursor - brings the 3D model into physical depth
+            transform: `perspective(1200px) rotateY(${parallax.x * 4}deg) rotateX(${-parallax.y * 2.5}deg) scale(1.02)`,
+            transformOrigin: '70% center',
+            transition: 'transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1)',
+            // Gentle dissolve at very bottom edge only (below chest), keeping hair & face 100% unmasked
+            maskImage:
+              'linear-gradient(to bottom, black 0%, black 90%, transparent 100%)',
+            WebkitMaskImage:
+              'linear-gradient(to bottom, black 0%, black 90%, transparent 100%)',
+          }}
+          muted
+          playsInline
+          preload="auto"
+          onSeeked={handleSeeked}
+        />
+      </div>
 
-      {/* 2. THEME OVERLAYS: CINEMATIC DISSOLVES & SPOTLIGHT GRADING */}
-      {/* A. Deep obsidian left vignette (makes white typography pop without background distraction) */}
+      {/* 2. TEXT LEGIBILITY BACKDROP (Confined to left side — character on right is 100% unobstructed) */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 z-0 pointer-events-none"
+        className="absolute inset-y-0 left-0 w-full md:w-[58%] pointer-events-none z-[1]"
         style={{
           background:
-            'linear-gradient(to right, rgba(5,5,7,0.98) 0%, rgba(5,5,7,0.88) 35%, rgba(5,5,7,0.45) 60%, transparent 85%)',
+            'linear-gradient(to right, rgba(5,5,7,0.95) 0%, rgba(5,5,7,0.85) 45%, rgba(5,5,7,0.3) 75%, transparent 100%)',
         }}
       />
 
-      {/* B. Edge vignette framing the entire viewport */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse 90% 80% at 50% 50%, transparent 40%, rgba(5,5,7,0.65) 75%, #050507 100%)',
-        }}
-      />
-
-      {/* C. Signature red ambient bloom behind the character */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse 65% 55% at 65% 48%, rgba(220, 20, 20, 0.25) 0%, rgba(160, 10, 10, 0.10) 35%, transparent 70%)',
-        }}
-      />
-
-      {/* D. Upward drifting luminous dust particles */}
+      {/* 3. Upward drifting luminous dust particles */}
       <canvas
         ref={canvasRef}
         aria-hidden="true"
-        className="absolute inset-0 z-0 pointer-events-none"
+        className="absolute inset-0 z-[1] pointer-events-none"
       />
 
       {/* 3. MAIN CONTENT (z-index: 1) */}

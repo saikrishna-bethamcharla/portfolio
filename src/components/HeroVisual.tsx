@@ -320,6 +320,46 @@ export const HeroVisual: React.FC = () => {
         </button>
       </div>
 
+      {/* Looping Desk Developer Mascot — Bottom Left Corner */}
+      <aside
+        aria-label="Developer avatar resting at desk"
+        className="absolute bottom-5 left-5 sm:bottom-8 sm:left-10 z-20 flex flex-col items-start select-none pointer-events-auto group"
+      >
+        {/* Subtle status eyebrow */}
+        <div className="flex items-center gap-1.5 px-2.5 py-0.5 mb-1.5 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-md opacity-60 group-hover:opacity-100 transition-opacity">
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+          <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.22em] text-white/60 uppercase">
+            AFK &bull; COMPILING
+          </span>
+        </div>
+
+        {/* Video Canvas Container with Ambient Red Bounce & Depth Shadow */}
+        <div className="relative w-[130px] sm:w-[175px] md:w-[210px] aspect-[460/390] transition-transform duration-300 ease-out group-hover:scale-105">
+          {/* Ambient red floor bounce blending into theme */}
+          <div
+            aria-hidden="true"
+            className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4/5 h-8 bg-red-600/15 rounded-full blur-xl pointer-events-none"
+          />
+          {/* Ground contact shadow */}
+          <div
+            aria-hidden="true"
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-3 bg-black/80 rounded-full blur-md pointer-events-none"
+          />
+
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            className="w-full h-full object-contain relative z-10 select-none pointer-events-none drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)]"
+          >
+            <source src="/assets/videos/sleeping-dev.webm" type="video/webm" />
+            <source src="/assets/videos/sleeping-dev.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </aside>
+
       {/* Seamless bottom fade into next section */}
       <div
         aria-hidden="true"

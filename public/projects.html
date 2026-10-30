@@ -923,9 +923,9 @@ const FILMS = [
     romaji: 'THE DOOR AT 11:47',
     kanji: '',
     year: '2024',
-    genre: 'AI SHORT FILM',
-    minutes: '14 MIN TRAILER',
-    synopsis: 'An original cinematic short exploring liminal time, directed and generated with Seedance 2.0, Kling 3.0, and DaVinci Resolve.',
+    genre: 'AI MOVIE TRAILER',
+    minutes: 'OFFICIAL TRAILER',
+    synopsis: 'Theatrical cinematic movie trailer created entirely with generative AI (Seedance 2.0, Kling 3.0, and DaVinci Resolve), exploring liminal time, existential suspense, and cinematic storytelling.',
     credit: 'Written and Directed by Sai Krishna Bethamcharla',
     liveUrl: 'https://youtu.be/r9kHcvYWZ4c',
     customTextures: true,
@@ -1679,7 +1679,7 @@ function generateDoorSpine() {
   ctx.fillStyle = '#e63946';
   ctx.font = '700 13px "Inter Tight", sans-serif';
   ctx.letterSpacing = '0.24em';
-  ctx.fillText('AI SHORT FILM', W / 2, H - 198);
+  ctx.fillText('AI MOVIE TRAILER', W / 2, H - 198);
 
   const bW = 140, bH = 75;
   const bX = (W - bW) / 2, bY = H - 155;
@@ -1818,7 +1818,7 @@ function generateDoorCover() {
   ctx.font = '700 13px "Inter Tight", sans-serif';
   ctx.fillStyle = '#e63946';
   ctx.letterSpacing = '0.24em';
-  ctx.fillText('AI SHORT FILM • DIRECTED WITH SEEDANCE 2.0 & KLING 3.0', W / 2, subY + 36);
+  ctx.fillText('AI MOVIE TRAILER • DIRECTED WITH SEEDANCE 2.0 & KLING 3.0', W / 2, subY + 36);
 
   ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
   ctx.lineWidth = 1;
@@ -1842,7 +1842,7 @@ function generateDoorCover() {
   // 6. BOTTOM RIGHT: Full [ SHORT FILM ] Badge
   const bW = 210, bH = 74;
   const bX = W - 80 - bW, bY = H - 172;
-  drawClassicBadge(ctx, bX, bY, bW, bH, 'SHORT FILM', '#f0e8d8', '#e63946', 26);
+  drawClassicBadge(ctx, W - 80 - 240, H - 172, 240, 74, 'MOVIE TRAILER', '#f0e8d8', '#e63946', 22);
 
   return canvas.toDataURL('image/webp', 0.95);
 }

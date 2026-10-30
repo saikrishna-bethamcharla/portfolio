@@ -4130,138 +4130,258 @@ function generateGreenFieldCover() {
 // ============================================================================
 // 5. AURA ORGANICS LUXURY (Book 9 - Brand Systems)
 // ============================================================================
-function generateAuraSpine() {
+function generateAuraSpine(auraKeshImg, auraFullImg) {
   const canvas = document.createElement('canvas');
   canvas.width = 300; canvas.height = 1800;
   const ctx = canvas.getContext('2d');
   const W = 300, H = 1800;
 
+  // Deep botanical forest emerald buckram cloth gradient
   const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, '#c2876c');
-  bg.addColorStop(0.5, '#ab735a');
-  bg.addColorStop(1, '#945e47');
+  bg.addColorStop(0, '#073325');
+  bg.addColorStop(0.35, '#042419');
+  bg.addColorStop(0.7, '#021810');
+  bg.addColorStop(1, '#010e09');
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
+  // Fine linen weave texture
+  ctx.fillStyle = 'rgba(212, 175, 55, 0.025)';
+  for (let i = 0; i < H; i += 4) {
+    ctx.fillRect(0, i, W, 1);
+  }
+
   drawCornerSpineWear(ctx, W, H);
 
-  // Botanical Leaf Glyph
-  const gY = 160;
-  ctx.strokeStyle = '#fdfaf5'; ctx.lineWidth = 2.4;
-  ctx.beginPath();
-  ctx.ellipse(W / 2, gY, 18, 45, Math.PI / 4, 0, Math.PI * 2);
-  ctx.stroke();
+  // Top Hero: Sculpted Golden Lotus Insignia
+  const lY = 175;
+  const logoSrc = auraKeshImg || auraFullImg;
+  if (logoSrc) {
+    const cleanCanvas = makeTransparentCanvas(logoSrc, 240);
+    // The lotus is at the top center of the logo image
+    // In 900x600, lotus is x: 300..600 (w: 300), y: 70..270 (h: 200)
+    const srcW = cleanCanvas.width;
+    const srcH = cleanCanvas.height;
+    const lotusCropX = srcW * 0.30;
+    const lotusCropY = srcH * 0.10;
+    const lotusCropW = srcW * 0.40;
+    const lotusCropH = srcH * 0.38;
 
-  // Vertical Title
+    // Draw circular gold cameo plate behind lotus
+    const cR = 56;
+    ctx.save();
+    ctx.shadowColor = 'rgba(212, 175, 55, 0.3)';
+    ctx.shadowBlur = 14;
+    ctx.fillStyle = '#062d20';
+    ctx.beginPath(); ctx.arc(W / 2, lY, cR, 0, Math.PI * 2); ctx.fill();
+
+    ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 2.4;
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(212, 175, 55, 0.4)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(W / 2, lY, cR - 5, 0, Math.PI * 2); ctx.stroke();
+    ctx.restore();
+
+    const destW = 88;
+    const destH = destW * (lotusCropH / lotusCropW);
+    ctx.drawImage(
+      cleanCanvas,
+      lotusCropX, lotusCropY, lotusCropW, lotusCropH,
+      (W - destW) / 2, lY - destH / 2, destW, destH
+    );
+  } else {
+    ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.ellipse(W / 2, lY, 20, 40, 0, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  // Thin decorative gold divider
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.5)'; ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.moveTo(W / 2 - 45, lY + 85); ctx.lineTo(W / 2 + 45, lY + 85); ctx.stroke();
+
+  // Vertical Title: AURA ORGANICS
   ctx.save();
   ctx.translate(W / 2, H * 0.53);
   ctx.rotate(Math.PI / 2);
   ctx.textAlign = 'center';
-  ctx.fillStyle = '#fdfaf5';
+
+  ctx.shadowColor = 'rgba(212, 175, 55, 0.45)';
+  ctx.shadowBlur = 10;
+  ctx.fillStyle = '#fef3c7';
   ctx.font = '700 80px "Newsreader", serif';
   ctx.letterSpacing = '0.12em';
   ctx.fillText('AURA ORGANICS', 0, 26);
   ctx.restore();
 
-  ctx.fillStyle = '#fdfaf5';
+  // Bottom info
+  ctx.fillStyle = '#d4af37';
   ctx.font = '700 22px "Inter Tight", sans-serif';
   ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
-  ctx.fillText('SAI KRISHNA', W / 2, H - 228);
+  ctx.fillText('SAI KRISHNA', W / 2, H - 232);
 
-  ctx.fillStyle = '#fbd5c6';
+  ctx.fillStyle = '#6ee7b7';
   ctx.font = '700 13px "Inter Tight", sans-serif';
   ctx.letterSpacing = '0.24em';
-  ctx.fillText('LUXURY PACKAGING', W / 2, H - 198);
+  ctx.fillText('LUXURY PACKAGING', W / 2, H - 202);
 
-  drawClassicBadge(ctx, (W - 140) / 2, H - 155, 140, 75, 'BRAND', '#fdfaf5', '#fdfaf5', 24);
+  drawClassicBadge(ctx, (W - 140) / 2, H - 160, 140, 75, 'BRAND', '#fef3c7', '#d4af37', 24);
   return canvas.toDataURL('image/webp', 0.95);
 }
 
-function generateAuraCover() {
+function generateAuraCover(auraFullImg, auraKeshImg) {
   const canvas = document.createElement('canvas');
   canvas.width = 800; canvas.height = 1560;
   const ctx = canvas.getContext('2d');
   const W = 800, H = 1560;
 
+  // Deep botanical forest emerald gradient
   const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, '#cb9076');
-  bg.addColorStop(0.35, '#b97a61');
-  bg.addColorStop(0.7, '#a5684f');
-  bg.addColorStop(1, '#8f533b');
+  bg.addColorStop(0, '#063224');
+  bg.addColorStop(0.35, '#032318');
+  bg.addColorStop(0.75, '#021810');
+  bg.addColorStop(1, '#010d08');
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
-  drawAuthenticWear(ctx, W, H, false);
+  // Subtle linen weave texture
+  ctx.fillStyle = 'rgba(212, 175, 55, 0.02)';
+  for (let y = 0; y < H; y += 4) ctx.fillRect(0, y, W, 1);
+  for (let x = 0; x < W; x += 4) ctx.fillRect(x, 0, 1, H);
 
-  ctx.fillStyle = '#fdfaf5';
-  ctx.font = '600 14px "Inter Tight", sans-serif';
-  ctx.textAlign = 'center'; ctx.letterSpacing = '0.32em';
-  ctx.fillText('HAUTE BOTANICALS & SUSTAINABLE LUXURY', W / 2, 85);
+  drawAuthenticWear(ctx, W, H, true);
 
-  ctx.fillStyle = '#fdfaf5';
-  ctx.font = '700 92px "Newsreader", serif';
-  ctx.letterSpacing = '0.04em';
-  ctx.fillText('AURA', W / 2, 195);
-  ctx.fillText('ORGANICS', W / 2, 290);
+  // Double Metallic Gold Borders
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.55)'; ctx.lineWidth = 1.8;
+  ctx.strokeRect(36, 36, W - 72, H - 72);
 
-  ctx.strokeStyle = 'rgba(253, 250, 245, 0.45)';
-  ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(140, 320); ctx.lineTo(W - 140, 320); ctx.stroke();
+  ctx.strokeStyle = 'rgba(110, 231, 183, 0.35)'; ctx.lineWidth = 1;
+  ctx.strokeRect(44, 44, W - 88, H - 88);
 
-  // Hero: Minimalist Intaglio Botanical Branch & Glass Flacon
-  const cX = W / 2, cY = 720;
-  ctx.save();
-  ctx.translate(cX, cY);
-
-  const aura = ctx.createRadialGradient(0, 0, 30, 0, 0, 260);
-  aura.addColorStop(0, 'rgba(253, 250, 245, 0.35)');
-  aura.addColorStop(1, 'transparent');
-  ctx.fillStyle = aura; ctx.beginPath(); ctx.arc(0, 0, 260, 0, Math.PI * 2); ctx.fill();
-
-  // Botanical Branch
-  ctx.strokeStyle = '#fdfaf5'; ctx.lineWidth = 2.4;
-  ctx.beginPath();
-  ctx.moveTo(0, 180);
-  ctx.quadraticCurveTo(-40, 20, 0, -180);
-  ctx.stroke();
-
-  // Leaves
-  [-120, -50, 20, 90].forEach((ly, idx) => {
-    const dir = idx % 2 === 0 ? 1 : -1;
+  // Corner botanical brackets
+  const bL = 22;
+  [[48, 48], [W - 48, 48], [48, H - 48], [W - 48, H - 48]].forEach(([cx, cy], idx) => {
+    ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 2;
+    const sx = idx % 2 === 0 ? 1 : -1;
+    const sy = idx < 2 ? 1 : -1;
     ctx.beginPath();
-    ctx.ellipse(dir * 38, ly, 28, 14, dir * 0.45, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(253, 250, 245, 0.85)';
-    ctx.fill();
+    ctx.moveTo(cx, cy + sy * bL);
+    ctx.lineTo(cx, cy);
+    ctx.lineTo(cx + sx * bL, cy);
     ctx.stroke();
   });
+
+  // Top header
+  ctx.fillStyle = '#d4af37';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.34em';
+  ctx.fillText('HAUTE BOTANICALS // SUSTAINABLE LUXURY', W / 2, 88);
+
+  // Sub-header
+  ctx.fillStyle = '#fef3c7';
+  ctx.font = '700 16px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.30em';
+  ctx.fillText('AURA ORGANICS • LUXURY PACKAGING SUITE', W / 2, 122);
+
+  // Gold divider rule
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.45)'; ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.moveTo(160, 146); ctx.lineTo(W - 160, 146); ctx.stroke();
+
+  // Hero Card: Inset Satin-Ivory Debossed Plate displaying official brand lockup
+  const cardW = 680, cardH = 560;
+  const cardX = (W - cardW) / 2;
+  const cardY = 270;
+
+  ctx.save();
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.65)';
+  ctx.shadowBlur = 26;
+  ctx.shadowOffsetY = 14;
+
+  const cardBg = ctx.createLinearGradient(cardX, cardY, cardX, cardY + cardH);
+  cardBg.addColorStop(0, '#ffffff');
+  cardBg.addColorStop(0.85, '#fafaf8');
+  cardBg.addColorStop(1, '#f5f4ee');
+  ctx.fillStyle = cardBg;
+
+  ctx.beginPath();
+  const r = 16;
+  ctx.moveTo(cardX + r, cardY);
+  ctx.lineTo(cardX + cardW - r, cardY);
+  ctx.quadraticCurveTo(cardX + cardW, cardY, cardX + cardW, cardY + r);
+  ctx.lineTo(cardX + cardW, cardY + cardH - r);
+  ctx.quadraticCurveTo(cardX + cardW, cardY + cardH, cardX + cardW - r, cardY + cardH);
+  ctx.lineTo(cardX + r, cardY + cardH);
+  ctx.quadraticCurveTo(cardX, cardY + cardH, cardX, cardY + cardH - r);
+  ctx.lineTo(cardX, cardY + r);
+  ctx.quadraticCurveTo(cardX, cardY, cardX + r, cardY);
+  ctx.closePath();
+  ctx.fill();
   ctx.restore();
 
-  const subY = 1110;
-  ctx.fillStyle = '#fdfaf5';
+  // Plaque inner decorative borders
+  ctx.strokeStyle = 'rgba(6, 78, 59, 0.35)'; ctx.lineWidth = 1.5;
+  ctx.strokeRect(cardX + 12, cardY + 12, cardW - 24, cardH - 24);
+
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.45)'; ctx.lineWidth = 1;
+  ctx.strokeRect(cardX + 18, cardY + 18, cardW - 36, cardH - 36);
+
+  // Draw the official high-resolution Aura Organics logo inside the card
+  const logoSrc = auraKeshImg || auraFullImg;
+  if (logoSrc) {
+    const cleanCanvas = makeTransparentCanvas(logoSrc, 240);
+    const bounds = getImageBounds(cleanCanvas);
+    const targetW = 560;
+    const targetH = targetW * (bounds.h / bounds.w);
+    const drawX = cardX + (cardW - targetW) / 2;
+    const drawY = cardY + (cardH - targetH) / 2;
+
+    ctx.save();
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.15)';
+    ctx.shadowBlur = 10;
+    ctx.shadowOffsetY = 4;
+    ctx.drawImage(
+      cleanCanvas,
+      bounds.x, bounds.y, bounds.w, bounds.h,
+      drawX, drawY, targetW, targetH
+    );
+    ctx.restore();
+  }
+
+  // Under-card radiating decorative lotus arcs
+  const arcY = cardY + cardH + 50;
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.25)'; ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.arc(W / 2, arcY + 80, 70, Math.PI, 0); ctx.stroke();
+  ctx.beginPath(); ctx.arc(W / 2, arcY + 80, 110, Math.PI, 0); ctx.stroke();
+
+  // Editorial Section
+  const subY = 1010;
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 34px "Newsreader", serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.04em';
+  ctx.fillText('SANSKRIT-ROOTED LUXURY', W / 2, subY);
+
+  ctx.fillStyle = '#e2e8f0';
   ctx.font = 'italic 19px "Newsreader", serif';
-  ctx.textAlign = 'center'; ctx.letterSpacing = '0.01em';
-  ctx.fillText('“Comprehensive luxury brand identity and bespoke bottle cinematography.”', W / 2, subY);
+  ctx.letterSpacing = '0.01em';
+  ctx.fillText('“Architectural brand identity, gold-embossed marks, and bespoke botanical packaging.”', W / 2, subY + 44);
 
   ctx.font = '700 13px "Inter Tight", sans-serif';
-  ctx.fillStyle = '#ffe4d6'; ctx.letterSpacing = '0.24em';
-  ctx.fillText('24 ASSET SUITE • SUSTAINABLE PACKAGING • 2023', W / 2, subY + 36);
+  ctx.fillStyle = '#d4af37'; ctx.letterSpacing = '0.24em';
+  ctx.fillText('5-SKU PACKAGING • SUSTAINABLE MATERIALS • VECTOR IDENTITY', W / 2, subY + 82);
 
-  ctx.strokeStyle = 'rgba(253, 250, 245, 0.25)'; ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(80, H - 200); ctx.lineTo(W - 80, H - 200); ctx.stroke();
+  // Bottom specs & credits
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(80, H - 210); ctx.lineTo(W - 80, H - 210); ctx.stroke();
 
   ctx.textAlign = 'left';
-  ctx.fillStyle = '#fdfaf5'; ctx.font = '700 13px "Inter Tight", sans-serif'; ctx.letterSpacing = '0.20em';
-  ctx.fillText('CREATIVE DIRECTION', 80, H - 160);
+  ctx.fillStyle = '#d4af37'; ctx.font = '700 13px "Inter Tight", sans-serif'; ctx.letterSpacing = '0.20em';
+  ctx.fillText('CREATIVE DIRECTION & PACKAGING', 80, H - 165);
   ctx.fillStyle = '#ffffff'; ctx.font = '700 16px "Inter Tight", sans-serif';
-  ctx.fillText('SAI KRISHNA BETHAMCHARLA', 80, H - 134);
+  ctx.fillText('SAI KRISHNA BETHAMCHARLA', 80, H - 138);
 
-  drawClassicBadge(ctx, W - 80 - 260, H - 172, 260, 74, 'LUXURY PACKAGING', '#fdfaf5', '#fdfaf5', 20);
+  drawClassicBadge(ctx, W - 80 - 270, H - 180, 270, 74, 'LUXURY PACKAGING', '#fef3c7', '#d4af37', 19);
   return canvas.toDataURL('image/webp', 0.95);
 }
 
-// ============================================================================
-// 6. DR. RASHMI KATARI / VIRUPAKSHA (Book 10 - Brand Systems)
-// ============================================================================
 function generateVirupakshaSpine() {
   const canvas = document.createElement('canvas');
   canvas.width = 300; canvas.height = 1800;
@@ -5213,7 +5333,9 @@ async function init() {
     abacusLogoImg,
     gheeEndImg,
     gheeLogoImg,
-    knbLogoImg
+    knbLogoImg,
+    auraKeshImg,
+    auraFullImg
   ] = await Promise.all([
     loadImg('./assets/gmcks/ph-logo.png'),
     loadImg('./assets/gmcks/gmcks-pencil-portrait.jpg'),
@@ -5232,7 +5354,9 @@ async function init() {
     loadImg('./assets/abacus/abacus-logo.jpg'),
     loadImg('./assets/godavari/ghee-end.jpg'),
     loadImg('./assets/godavari/godavari-logo.png'),
-    loadImg('./assets/godavari/knb-logo.png')
+    loadImg('./assets/godavari/knb-logo.png'),
+    loadImg('./assets/aura/aura-kesh.png'),
+    loadImg('./assets/aura/aura-logo-full.png')
   ]);
 
   const gmcksFilm = FILMS.find(f => f.id === 'gmcks');
@@ -5291,8 +5415,8 @@ async function init() {
 
   const auraFilm = FILMS.find(f => f.id === 'tide');
   if (auraFilm) {
-    auraFilm.customSpineUrl = generateAuraSpine();
-    auraFilm.customCoverUrl = generateAuraCover();
+    auraFilm.customSpineUrl = generateAuraSpine(auraKeshImg, auraFullImg);
+    auraFilm.customCoverUrl = generateAuraCover(auraFullImg, auraKeshImg);
   }
 
   const virupakshaFilm = FILMS.find(f => f.id === 'war');

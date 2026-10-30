@@ -431,25 +431,73 @@ html, body {
   background: var(--sheet);
   visibility: hidden;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4vw;
-  padding: 110px 6vw 56px 7vw;
-  overflow: hidden;
-  box-shadow: 0 0 100px rgba(0, 0, 0, 0.9);
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 3.5vw;
+  padding: 68px 6vw 36px 7vw;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.95);
 }
 
 #detail-close {
   position: absolute;
-  top: 32px;
+  top: 24px;
   left: 6vw;
-  cursor: pointer;
-  z-index: 2;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 18px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(14px);
+  color: #ffffff;
+  font-family: "Inter Tight", system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer !important;
+  z-index: 20;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  transition: all 0.2s ease;
 }
 
 #detail-close:hover {
-  border-color: var(--cobalt);
-  background: rgba(220, 38, 38, 0.2);
+  background: var(--cobalt);
+  border-color: #ef4444;
+  color: #ffffff;
+  box-shadow: 0 0 25px rgba(220, 38, 38, 0.6);
+  transform: translateY(-1px);
+}
+
+#detail-close-corner {
+  position: absolute;
+  top: 24px;
+  right: 6vw;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(14px);
+  color: #ffffff;
+  cursor: pointer !important;
+  z-index: 20;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  transition: all 0.2s ease;
+}
+
+#detail-close-corner:hover {
+  background: var(--cobalt);
+  border-color: #ef4444;
+  box-shadow: 0 0 25px rgba(220, 38, 38, 0.6);
+  transform: translateY(-1px) scale(1.05);
 }
 
 #detail-logo {
@@ -457,7 +505,7 @@ html, body {
   top: 0;
   left: 0;
   right: 0;
-  height: 84px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -475,8 +523,8 @@ html, body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 18px;
-  max-width: 520px;
+  gap: 16px;
+  max-width: 540px;
   z-index: 1;
 }
 
@@ -485,6 +533,7 @@ html, body {
   align-items: center;
   justify-content: center;
   z-index: 1;
+  height: 100%;
 }
 
 .dl-mask {
@@ -498,8 +547,8 @@ html, body {
 #dl-title {
   font-family: "Newsreader", Georgia, serif;
   font-weight: 400;
-  font-size: clamp(44px, 5.4vw, 84px);
-  line-height: 1;
+  font-size: clamp(36px, 4.2vw, 68px);
+  line-height: 1.05;
   letter-spacing: -.025em;
   color: var(--ink);
 }
@@ -511,26 +560,26 @@ html, body {
 #dl-synopsis {
   font-family: "Newsreader", Georgia, serif;
   font-weight: 400;
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.5;
-  max-width: 42ch;
+  max-width: 44ch;
   color: #d1d1d6;
 }
 
 #dl-credit {
   font-family: "Newsreader", Georgia, serif;
   font-style: italic;
-  font-size: 15px;
+  font-size: 14.5px;
   color: var(--muted);
 }
 
 #dl-watch {
-  height: 44px;
-  padding: 0 20px;
+  height: 42px;
+  padding: 0 22px;
   border: 1px solid var(--cobalt);
   background: rgba(220, 38, 38, 0.12);
   color: #ffffff;
-  margin-top: 10px;
+  margin-top: 6px;
   align-self: flex-start;
   cursor: pointer;
   transition: background 0.2s ease, box-shadow 0.2s ease;
@@ -542,10 +591,12 @@ html, body {
 }
 
 #detail-poster {
-  height: min(100%, 78vh);
+  max-height: min(72vh, 600px);
+  height: auto;
   aspect-ratio: 474 / 900;
   display: block;
-  filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.8));
+  margin: auto;
+  filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.85));
 }
 
 /* ── REDUCED MOTION ─────────────────────────────────────────────── */
@@ -687,7 +738,13 @@ html, body {
 
 <!-- 8. DETAIL VIEW (DIALOG) -->
 <div id="detail" role="dialog" aria-modal="true" aria-label="Project detail">
-  <button id="detail-close" class="lbl box" aria-label="Close detail">CLOSE</button>
+  <button id="detail-close" aria-label="Close project detail">
+    <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="1" y1="1" x2="11" y2="11"/><line x1="1" y1="11" x2="11" y2="1"/></svg>
+    <span>CLOSE</span>
+  </button>
+  <button id="detail-close-corner" aria-label="Close project detail">
+    <svg width="13" height="13" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="1" y1="1" x2="11" y2="11"/><line x1="1" y1="11" x2="11" y2="1"/></svg>
+  </button>
   <div id="detail-logo">
     <div id="detail-logo-inner">
       <span class="project-showcase-title" style="font-size: 11px; letter-spacing: .24em;">PROJECT SHOWCASE</span>
@@ -6687,6 +6744,8 @@ if (backLink) {
 // Play ring & close button
 playRing.addEventListener('click', openDetail);
 detClose.addEventListener('click', closeDetail);
+const detCloseCorner = document.getElementById('detail-close-corner');
+if (detCloseCorner) detCloseCorner.addEventListener('click', closeDetail);
 
 // Stage Pointer Drag & Click
 stage.addEventListener('pointerdown', e => {

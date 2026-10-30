@@ -37,18 +37,16 @@ export function useTypewriter(text: string, speed = 38, startDelay = 600) {
 }
 
 /**
- * MainframeContact — Interactive Contact & Channels Section
+ * MainframeContact — Seamlessly Blended Interactive Direct Channels
  * Features:
- * - Video scrub background with dark luxury cinnabar red ambient glow
- * - Luminous micro-dust canvas particles
- * - A.R.I.A blurred intro label
- * - Conversational typewriter interaction
- * - 4 Interactive Action Pills (mailto launches)
- * - 1 Outline Pill with 1-click clipboard copy
- * - Navigation anchors back to Showcase and Hero
+ * - Seamless top gradient dissolve melting into the 3D shelf
+ * - Mouse-scrub video masked with spotlight radial feather
+ * - Luminous micro-dust particles matching HeroVisual
+ * - Subtle integrated sub-header [ 03 / DIRECT INQUIRY & CHANNELS ]
+ * - A.R.I.A blurred intro + conversational typewriter
+ * - Action pill buttons with direct mailto + clipboard copy
  */
 export function MainframeContact() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [pillsVisible, setPillsVisible] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -70,7 +68,7 @@ export function MainframeContact() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Ambient micro-particles animation
+  // Ambient micro-particles animation matching the portfolio theme
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -90,7 +88,7 @@ export function MainframeContact() {
       drift: number;
     }
 
-    const count = 50;
+    const count = 55;
     const particles: Particle[] = Array.from({ length: count }, () => ({
       x: Math.random() * W,
       y: Math.random() * H,
@@ -201,13 +199,11 @@ export function MainframeContact() {
   const scrollToHero = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    setMenuOpen(false);
   };
 
   const scrollToShelf = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
     document.getElementById('shelf')?.scrollIntoView({ behavior: 'smooth' });
-    setMenuOpen(false);
   };
 
   const pillActions = [
@@ -230,15 +226,19 @@ export function MainframeContact() {
   ];
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-[#050507] text-white selection:bg-red-500/30 selection:text-white font-body border-t border-red-500/30">
-      {/* 1. BACKGROUND VIDEO (mouse-scrub controlled with dark cinematic color grade) */}
+    <div className="relative w-full h-screen overflow-hidden bg-[#050507] text-white selection:bg-red-500/30 selection:text-white font-body">
+      {/* 1. BACKGROUND VIDEO (mouse-scrub controlled with soft theatrical spotlight mask) */}
       <video
         ref={videoRef}
         src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260826_041744_63efcd78-bf7d-4039-99e2-2461e8a61903.mp4"
         className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
         style={{
           objectPosition: '70% center',
-          filter: 'brightness(0.78) contrast(1.18) saturate(0.92)',
+          filter: 'brightness(0.70) contrast(1.22) saturate(0.85)',
+          maskImage:
+            'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 12%, black 28%, black 85%, transparent 100%)',
+          WebkitMaskImage:
+            'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 12%, black 28%, black 85%, transparent 100%)',
         }}
         muted
         playsInline
@@ -246,34 +246,34 @@ export function MainframeContact() {
         onSeeked={handleSeeked}
       />
 
-      {/* 2. THEME OVERLAYS: CINEMATIC LIGHTING & SHADOWS */}
-      {/* A. Deep obsidian left vignette */}
+      {/* 2. THEME OVERLAYS: CINEMATIC DISSOLVES & SPOTLIGHT GRADING */}
+      {/* A. Deep obsidian left vignette (makes white typography pop without background distraction) */}
       <div
         aria-hidden="true"
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
           background:
-            'linear-gradient(to right, rgba(5,5,7,0.96) 0%, rgba(5,5,7,0.86) 35%, rgba(5,5,7,0.45) 60%, transparent 85%)',
+            'linear-gradient(to right, rgba(5,5,7,0.98) 0%, rgba(5,5,7,0.88) 35%, rgba(5,5,7,0.45) 60%, transparent 85%)',
         }}
       />
 
-      {/* B. Edge vignette */}
+      {/* B. Edge vignette framing the entire viewport */}
       <div
         aria-hidden="true"
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 90% 80% at 50% 50%, transparent 40%, rgba(5,5,7,0.55) 75%, #050507 100%)',
+            'radial-gradient(ellipse 90% 80% at 50% 50%, transparent 40%, rgba(5,5,7,0.65) 75%, #050507 100%)',
         }}
       />
 
-      {/* C. Signature red ambient bloom */}
+      {/* C. Signature red ambient bloom behind the character */}
       <div
         aria-hidden="true"
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 65% 55% at 65% 48%, rgba(220, 20, 20, 0.28) 0%, rgba(160, 10, 10, 0.12) 35%, transparent 70%)',
+            'radial-gradient(ellipse 65% 55% at 65% 48%, rgba(220, 20, 20, 0.25) 0%, rgba(160, 10, 10, 0.10) 35%, transparent 70%)',
         }}
       />
 
@@ -284,108 +284,34 @@ export function MainframeContact() {
         className="absolute inset-0 z-0 pointer-events-none"
       />
 
-      {/* 3. SECTION NAVBAR (absolute top-0, z-index: 10) */}
-      <nav className="absolute top-0 left-0 right-0 z-10 w-full px-5 sm:px-8 py-4 sm:py-5 flex flex-row justify-between items-center">
-        {/* Logo / Section Label (left) */}
+      {/* 3. INTEGRATED EDITORIAL SUB-HEADER (nestled cleanly in theme) */}
+      <div className="absolute top-8 sm:top-10 left-5 sm:left-8 right-5 sm:right-8 z-20 flex flex-row justify-between items-center pb-3 border-b border-white/10">
         <div className="flex flex-row items-center gap-3">
+          <span className="flex items-center gap-2 text-[10.5px] tracking-[0.24em] font-mono text-red-500 uppercase font-semibold">
+            <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+            <span>[ 03 / DIRECT INQUIRY & CHANNELS ]</span>
+          </span>
+          <span className="text-white/20 hidden sm:inline">|</span>
           <span
             style={{ fontFamily: 'var(--font-heading)' }}
-            className="text-[21px] sm:text-[26px] tracking-tight text-white leading-none"
+            className="text-[17px] sm:text-[20px] tracking-tight text-white leading-none hidden sm:inline"
           >
             Mainframe®
           </span>
-          <span
-            className="text-[25px] sm:text-[30px] text-red-500 select-none leading-none drop-shadow-[0_0_12px_rgba(239,68,68,0.7)]"
-            style={{ letterSpacing: '-0.02em' }}
-          >
+          <span className="text-[18px] text-red-500 select-none leading-none drop-shadow-[0_0_10px_rgba(239,68,68,0.8)] hidden sm:inline">
             ✳︎
-          </span>
-          <span className="hidden sm:inline-block ml-3 px-3 py-1 bg-red-500/10 border border-red-500/30 rounded-full text-[10px] tracking-[0.22em] text-red-400 uppercase font-mono">
-            Direct Channels
           </span>
         </div>
 
-        {/* Desktop Quick Links (center, hidden below md) */}
-        <div className="hidden md:flex flex-row text-[21px] text-white items-center gap-6">
-          <button
-            type="button"
-            onClick={scrollToHero}
-            className="hover:opacity-60 transition-opacity cursor-pointer bg-transparent border-none text-white p-0 text-[21px]"
-          >
-            Overview
-          </button>
-          <span className="text-white/30">•</span>
+        <div className="flex flex-row items-center gap-3 sm:gap-4">
           <button
             type="button"
             onClick={scrollToShelf}
-            className="hover:opacity-60 transition-opacity cursor-pointer bg-transparent border-none text-white p-0 text-[21px]"
+            className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] font-mono text-zinc-400 hover:text-white border border-white/15 hover:border-red-500/60 px-3.5 py-1.5 rounded-full backdrop-blur-sm transition-all duration-300 cursor-pointer"
           >
-            Filmography Shelf
+            <span>↑ BACK TO SHELF</span>
           </button>
         </div>
-
-        {/* Desktop Top Return CTA (right, hidden below md) */}
-        <button
-          type="button"
-          onClick={scrollToHero}
-          className="hidden md:inline-flex items-center gap-2 text-xs uppercase tracking-widest text-zinc-300 hover:text-white border border-white/20 hover:border-red-500/80 px-4 py-2 rounded-full backdrop-blur-sm transition-all duration-300 cursor-pointer"
-        >
-          <span>↑ BACK TO TOP</span>
-        </button>
-
-        {/* Mobile hamburger */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden flex flex-col justify-center items-center gap-[5px] w-8 h-8 z-20 focus:outline-none cursor-pointer"
-          aria-label="Toggle menu"
-          aria-expanded={menuOpen}
-        >
-          <span
-            className={`w-6 h-[2px] bg-white transition-all duration-300 ${
-              menuOpen ? 'rotate-45 translate-y-[7px]' : ''
-            }`}
-          />
-          <span
-            className={`w-6 h-[2px] bg-white transition-all duration-300 ${
-              menuOpen ? 'opacity-0' : 'opacity-100'
-            }`}
-          />
-          <span
-            className={`w-6 h-[2px] bg-white transition-all duration-300 ${
-              menuOpen ? '-rotate-45 -translate-y-[7px]' : ''
-            }`}
-          />
-        </button>
-      </nav>
-
-      {/* Mobile overlay */}
-      <div
-        className={`absolute inset-0 bg-[#050507]/95 backdrop-blur-md z-[9] flex flex-col justify-center items-start px-8 gap-8 md:hidden transition-all duration-300 ${
-          menuOpen
-            ? 'opacity-100 pointer-events-auto'
-            : 'opacity-0 pointer-events-none'
-        }`}
-      >
-        <button
-          type="button"
-          onClick={scrollToHero}
-          className="text-[32px] font-medium text-white hover:opacity-60 transition-opacity text-left cursor-pointer"
-        >
-          Overview (Hero)
-        </button>
-        <button
-          type="button"
-          onClick={scrollToShelf}
-          className="text-[32px] font-medium text-white hover:opacity-60 transition-opacity text-left cursor-pointer"
-        >
-          Filmography Shelf
-        </button>
-        <a
-          href="mailto:saikrishnabethamcharla@gmail.com"
-          className="text-[32px] font-medium text-white underline underline-offset-4 hover:opacity-60 transition-opacity text-left"
-        >
-          Direct Email ↗
-        </a>
       </div>
 
       {/* 4. MAIN CONTENT (z-index: 1) */}

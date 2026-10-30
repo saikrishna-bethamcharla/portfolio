@@ -152,28 +152,33 @@ html, body {
 
 #shelf-scroll-prompt {
   position: absolute;
-  bottom: 26px;
+  bottom: 36px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 50;
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(18, 18, 22, 0.75);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #d1d5db;
-  padding: 0 16px;
-  height: 30px;
+  background: rgba(18, 18, 22, 0.85);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #e5e7eb;
+  padding: 0 18px;
+  height: 32px;
+  border-radius: 9999px;
   cursor: pointer !important;
   text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  font-weight: 500;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   transition: all 0.25s ease;
 }
 #shelf-scroll-prompt:hover {
-  background: rgba(220, 38, 38, 0.2);
-  border-color: rgba(220, 38, 38, 0.6);
+  background: rgba(220, 38, 38, 0.25);
+  border-color: rgba(239, 68, 68, 0.7);
   color: #ffffff;
-  box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
+  box-shadow: 0 0 25px rgba(220, 38, 38, 0.45);
   transform: translateX(-50%) translateY(-2px);
 }
 #shelf-scroll-prompt svg {
@@ -7869,6 +7874,19 @@ if ('IntersectionObserver' in window) {
 }
 
 // NAVIGATION BUTTONS & INTERACTIONS
+const shelfScrollPromptBtn = document.getElementById('shelf-scroll-prompt');
+if (shelfScrollPromptBtn) {
+  shelfScrollPromptBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ type: 'SCROLL_TO_CONTACT' }, '*');
+    } else {
+      contactSec.scrollIntoView({ behavior: 'smooth' });
+      startPhysics();
+    }
+  });
+}
+
 if (contactToggleBtn) {
   contactToggleBtn.addEventListener('click', () => {
     if (window.parent && window.parent !== window) {

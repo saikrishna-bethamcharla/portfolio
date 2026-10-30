@@ -29,99 +29,6 @@ export const HeroVisual: React.FC = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Hero section title animation (GSAP SplitText + CustomBounce)
-  useEffect(() => {
-    let tl: any;
-    let split: any;
-
-    const runTitleAnimation = async () => {
-      const win = window as any;
-      const gsap = win.gsap;
-      const SplitText = win.SplitText;
-      const CustomEase = win.CustomEase;
-      const CustomBounce = win.CustomBounce;
-
-      if (!gsap) return;
-
-      if (SplitText && CustomEase && CustomBounce) {
-        gsap.registerPlugin(SplitText, CustomEase, CustomBounce);
-      }
-
-      await document.fonts.ready;
-
-      const heroNameEl = document.querySelector('.hero-name');
-      if (!heroNameEl) return;
-
-      if (CustomBounce) {
-        try {
-          CustomBounce.create('land', { strength: 0.45 });
-        } catch {
-          // Already created
-        }
-      }
-
-      let chars: any;
-      if (SplitText) {
-        split = SplitText.create('.hero-name', {
-          type: 'chars',
-          charsClass: 'char',
-        });
-        chars = split.chars;
-      } else {
-        chars = document.querySelectorAll('.hero-name .char');
-      }
-
-      tl = gsap.timeline({ delay: 0.4 });
-
-      // drop in with bounce + blur + random tilt
-      tl.from(chars, {
-        y: -window.innerHeight * 0.7,
-        autoAlpha: 0,
-        filter: 'blur(14px)',
-        duration: 1.3,
-        ease: 'land',
-        stagger: 0.09,
-      })
-        .from(
-          chars,
-          {
-            rotation: () => gsap.utils.random(-45, 45),
-            duration: 0.9,
-            ease: 'power3.out',
-            stagger: 0.09,
-          },
-          0
-        )
-        // light sweep across the metal
-        .to(
-          chars,
-          {
-            backgroundPosition: '100% 0',
-            duration: 1.6,
-            ease: 'power2.inOut',
-            stagger: 0.06,
-          },
-          '-=0.2'
-        )
-        // slow red glow pulse
-        .to('.hero-name', {
-          filter:
-            'drop-shadow(0 0 34px rgba(255,30,30,.8)) drop-shadow(0 6px 10px rgba(0,0,0,.8))',
-          duration: 1.6,
-          ease: 'sine.inOut',
-          yoyo: true,
-          repeat: -1,
-        });
-    };
-
-    runTitleAnimation();
-
-    return () => {
-      tl?.kill();
-      split?.revert();
-    };
-  }, []);
-
   // Animated particle field — tiny luminous specks drifting upward
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -242,39 +149,9 @@ export const HeroVisual: React.FC = () => {
         }}
       />
 
-      {/* Dynamic 3D Sculpted Typography */}
-      <div
-        style={{
-          position: 'relative',
-          perspective: '1200px',
-          transformStyle: 'preserve-3d',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 10,
-          cursor: 'default',
-          padding: '0 1rem',
-        }}
-      >
-        {/* 3D Title Lockup */}
-        <div
-          style={{
-            position: 'relative',
-            transform: `perspective(1000px) rotateX(${tilt.x * 0.5}deg) rotateY(${tilt.y * 0.5}deg) translateZ(25px)`,
-            transition: 'transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1)',
-            transformStyle: 'preserve-3d',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-            maxWidth: '1200px',
-            userSelect: 'none',
-          }}
-        >
-          <h1 className="hero-name">SAI KRISHNA</h1>
-        </div>
-      </div>
+      {/* 3D Cinematic Name Animation (Three.js WebGL) */}
+      <h1 className="hero-name">SAI KRISHNA</h1>
+      <div id="hero-name-3d"></div>
 
       {/* Looping Desk Developer Animation — Bottom-Left Corner */}
       <div

@@ -119,3 +119,28 @@ body.high-contrast .glass-panel {
     scroll-behavior: auto !important;
   }
 }
+
+/* Hero Section 3D Brushed Metal Title */
+.hero-name {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(4rem, 13vw, 12rem);
+  letter-spacing: 0.04em;
+  text-align: center;
+  margin: 0;
+  line-height: 1.05;
+  filter: drop-shadow(0 0 18px rgba(255, 30, 30, .45))
+          drop-shadow(0 6px 10px rgba(0, 0, 0, .8));
+}
+.hero-name .char {
+  display: inline-block;
+  /* brushed-metal gradient with a bright band for the shine sweep */
+  background: linear-gradient(110deg,
+    #5b5f6b 0%, #c9ced9 22%, #ffffff 30%, #9aa0ad 40%,
+    #4a4d57 60%, #b8bdc9 80%, #6b6f7c 100%);
+  background-size: 300% 100%;
+  background-position: 0% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  will-change: transform, filter;
+}

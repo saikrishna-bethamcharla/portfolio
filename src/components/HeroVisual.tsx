@@ -29,6 +29,99 @@ export const HeroVisual: React.FC = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  // Hero section title animation (GSAP SplitText + CustomBounce)
+  useEffect(() => {
+    let tl: any;
+    let split: any;
+
+    const runTitleAnimation = async () => {
+      const win = window as any;
+      const gsap = win.gsap;
+      const SplitText = win.SplitText;
+      const CustomEase = win.CustomEase;
+      const CustomBounce = win.CustomBounce;
+
+      if (!gsap) return;
+
+      if (SplitText && CustomEase && CustomBounce) {
+        gsap.registerPlugin(SplitText, CustomEase, CustomBounce);
+      }
+
+      await document.fonts.ready;
+
+      const heroNameEl = document.querySelector('.hero-name');
+      if (!heroNameEl) return;
+
+      if (CustomBounce) {
+        try {
+          CustomBounce.create('land', { strength: 0.45 });
+        } catch {
+          // Already created
+        }
+      }
+
+      let chars: any;
+      if (SplitText) {
+        split = SplitText.create('.hero-name', {
+          type: 'chars',
+          charsClass: 'char',
+        });
+        chars = split.chars;
+      } else {
+        chars = document.querySelectorAll('.hero-name .char');
+      }
+
+      tl = gsap.timeline({ delay: 0.4 });
+
+      // drop in with bounce + blur + random tilt
+      tl.from(chars, {
+        y: -window.innerHeight * 0.7,
+        autoAlpha: 0,
+        filter: 'blur(14px)',
+        duration: 1.3,
+        ease: 'land',
+        stagger: 0.09,
+      })
+        .from(
+          chars,
+          {
+            rotation: () => gsap.utils.random(-45, 45),
+            duration: 0.9,
+            ease: 'power3.out',
+            stagger: 0.09,
+          },
+          0
+        )
+        // light sweep across the metal
+        .to(
+          chars,
+          {
+            backgroundPosition: '100% 0',
+            duration: 1.6,
+            ease: 'power2.inOut',
+            stagger: 0.06,
+          },
+          '-=0.2'
+        )
+        // slow red glow pulse
+        .to('.hero-name', {
+          filter:
+            'drop-shadow(0 0 34px rgba(255,30,30,.8)) drop-shadow(0 6px 10px rgba(0,0,0,.8))',
+          duration: 1.6,
+          ease: 'sine.inOut',
+          yoyo: true,
+          repeat: -1,
+        });
+    };
+
+    runTitleAnimation();
+
+    return () => {
+      tl?.kill();
+      split?.revert();
+    };
+  }, []);
+
   // Animated particle field — tiny luminous specks drifting upward
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -164,122 +257,22 @@ export const HeroVisual: React.FC = () => {
           padding: '0 1rem',
         }}
       >
-        {/* 3D Extruded & Textured Title Lockup */}
+        {/* 3D Title Lockup */}
         <div
           style={{
             position: 'relative',
-            transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateZ(30px)`,
+            transform: `perspective(1000px) rotateX(${tilt.x * 0.5}deg) rotateY(${tilt.y * 0.5}deg) translateZ(25px)`,
             transition: 'transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1)',
             transformStyle: 'preserve-3d',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             width: '100%',
-            maxWidth: '1100px',
+            maxWidth: '1200px',
             userSelect: 'none',
           }}
         >
-          <svg
-            viewBox="0 0 1020 180"
-            className="w-full h-auto overflow-visible select-none pointer-events-none"
-            aria-label="Sai Krishna"
-          >
-            <defs>
-              {/* Metallic Titanium Face Gradient with Specular Sheen & Crimson Bounce */}
-              <linearGradient
-                id="titanium3d"
-                x1={`${50 - tilt.y * 0.8}%`}
-                y1="0%"
-                x2={`${50 + tilt.y * 0.8}%`}
-                y2="100%"
-              >
-                <stop offset="0%" stopColor="#FFFFFF" stopOpacity="1" />
-                <stop offset="20%" stopColor="#F8FAFC" stopOpacity="1" />
-                <stop offset="42%" stopColor="#E2E8F0" stopOpacity="1" />
-                <stop offset="68%" stopColor="#94A3B8" stopOpacity="1" />
-                <stop offset="88%" stopColor="#475569" stopOpacity="1" />
-                <stop offset="100%" stopColor="#EF4444" stopOpacity="1" />
-              </linearGradient>
-
-              {/* Brushed Texture Pattern */}
-              <pattern id="brushedGrain" width="4" height="4" patternUnits="userSpaceOnUse">
-                <line x1="0" y1="0" x2="4" y2="4" stroke="rgba(255,255,255,0.08)" strokeWidth="0.8" />
-                <line x1="0" y1="4" x2="4" y2="0" stroke="rgba(0,0,0,0.12)" strokeWidth="0.8" />
-              </pattern>
-
-              {/* Stepped 3D Extrusion, Specular Lighting & Ambient Red Spotlight Rim Filter */}
-              <filter id="sculpt3d" x="-30%" y="-40%" width="160%" height="180%">
-                {/* Red ambient rim bloom hugging letter shapes */}
-                <feGaussianBlur in="SourceAlpha" stdDeviation="22" result="redBloom" />
-                <feFlood floodColor="#EF4444" floodOpacity="0.45" result="redFlood" />
-                <feComposite in="redFlood" in2="redBloom" operator="in" result="redGlow" />
-
-                {/* Grounding deep contact shadow */}
-                <feDropShadow in="SourceAlpha" dx="0" dy="16" stdDeviation="14" floodColor="#000000" floodOpacity="0.9" result="deepShadow" />
-
-                {/* Crisp stepped physical extrusion from back to front */}
-                <feDropShadow in="SourceAlpha" dx={-tilt.y * 0.35} dy={7 - tilt.x * 0.3} stdDeviation="0.4" floodColor="#090D16" floodOpacity="1" result="ext7" />
-                <feDropShadow in="SourceAlpha" dx={-tilt.y * 0.30} dy={6 - tilt.x * 0.25} stdDeviation="0.35" floodColor="#1E293B" floodOpacity="1" result="ext6" />
-                <feDropShadow in="SourceAlpha" dx={-tilt.y * 0.25} dy={5 - tilt.x * 0.20} stdDeviation="0.3" floodColor="#334155" floodOpacity="1" result="ext5" />
-                <feDropShadow in="SourceAlpha" dx={-tilt.y * 0.20} dy={4 - tilt.x * 0.16} stdDeviation="0.25" floodColor="#475569" floodOpacity="1" result="ext4" />
-                <feDropShadow in="SourceAlpha" dx={-tilt.y * 0.15} dy={3 - tilt.x * 0.12} stdDeviation="0.2" floodColor="#64748B" floodOpacity="1" result="ext3" />
-                <feDropShadow in="SourceAlpha" dx={-tilt.y * 0.10} dy={2 - tilt.x * 0.08} stdDeviation="0.15" floodColor="#94A3B8" floodOpacity="1" result="ext2" />
-                <feDropShadow in="SourceAlpha" dx={-tilt.y * 0.05} dy={1 - tilt.x * 0.04} stdDeviation="0.1" floodColor="#E2E8F0" floodOpacity="0.9" result="ext1" />
-
-                {/* 3D Specular reflection catching the bevel */}
-                <feSpecularLighting in="SourceAlpha" surfaceScale="4" specularConstant="0.8" specularExponent="24" lightingColor="#FFFFFF" result="specular">
-                  <fePointLight x={510 + tilt.y * 20} y={-80 - tilt.x * 15} z="220" />
-                </feSpecularLighting>
-                <feComposite in="specular" in2="SourceAlpha" operator="in" result="specularBevel" />
-
-                {/* Composite all 3D layers cleanly without distortion */}
-                <feMerge>
-                  <feMergeNode in="redGlow" />
-                  <feMergeNode in="deepShadow" />
-                  <feMergeNode in="ext7" />
-                  <feMergeNode in="ext6" />
-                  <feMergeNode in="ext5" />
-                  <feMergeNode in="ext4" />
-                  <feMergeNode in="ext3" />
-                  <feMergeNode in="ext2" />
-                  <feMergeNode in="ext1" />
-                  <feMergeNode in="SourceGraphic" />
-                  <feMergeNode in="specularBevel" />
-                </feMerge>
-              </filter>
-            </defs>
-
-            {/* Extruded & Beveled Base */}
-            <text
-              x="50%"
-              y="120"
-              textAnchor="middle"
-              fontFamily="var(--font-heading), 'Helvetica Neue', 'SF Pro Display', Arial, sans-serif"
-              fontWeight="800"
-              fontSize="112"
-              letterSpacing="4"
-              fill="url(#titanium3d)"
-              filter="url(#sculpt3d)"
-            >
-              SAI&nbsp;KRISHNA
-            </text>
-
-            {/* Tactile Brushed Grain Overlay */}
-            <text
-              x="50%"
-              y="120"
-              textAnchor="middle"
-              fontFamily="var(--font-heading), 'Helvetica Neue', 'SF Pro Display', Arial, sans-serif"
-              fontWeight="800"
-              fontSize="112"
-              letterSpacing="4"
-              fill="url(#brushedGrain)"
-              opacity="0.4"
-              style={{ mixBlendMode: 'overlay' }}
-            >
-              SAI&nbsp;KRISHNA
-            </text>
-          </svg>
+          <h1 className="hero-name">SAI KRISHNA</h1>
         </div>
       </div>
 

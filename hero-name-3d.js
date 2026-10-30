@@ -41,39 +41,49 @@ async function init() {
   const scene = new THREE.Scene();
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-  scene.environmentIntensity = 0.35;
+  scene.environmentIntensity = 1.35;
 
   const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 200);
 
-  /* ---------- font ---------- */
+  /* ---------- font: Monumental Architectural Monolith (Anton) ---------- */
   let buf;
   try {
-    const res = await fetch('./fonts/cinzel-black.ttf');
+    const res = await fetch('./fonts/anton.ttf');
     if (!res.ok) throw new Error('Local font fetch failed');
     buf = await res.arrayBuffer();
   } catch {
-    buf = await (await fetch('https://fonts.gstatic.com/s/cinzel/v26/8vIU7ww63mVu7gtR-kwKxNvkNOjw-n_gTYo.ttf')).arrayBuffer();
+    buf = await (await fetch('https://fonts.gstatic.com/s/anton/v27/1Ptgg87LROyAm0K0.ttf')).arrayBuffer();
   }
   const font = new FontLoader().parse(new TTFLoader().parse(buf));
-  const SIZE = 1, TRACK = 0.07;
+  const SIZE = 1, TRACK = 0.09;
   const scaleF = SIZE / font.data.resolution;
   const adv = ch => (font.data.glyphs[ch] || font.data.glyphs['?']).ha * scaleF;
 
-  /* ---------- material: polished dark-chrome, red-lit ---------- */
+  /* ---------- material: smoked liquid obsidian chrome with razor PVD titanium bevels ---------- */
   const mat = new THREE.MeshPhysicalMaterial({
-    color: 0xe8dcdc, metalness: 1, roughness: 0.26,
-    clearcoat: 0.6, clearcoatRoughness: 0.2, envMapIntensity: 1
+    color: 0xf5f7fa,
+    metalness: 0.98,
+    roughness: 0.12,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.05,
+    envMapIntensity: 1.45,
+    reflectivity: 0.98,
   });
   const sideMat = new THREE.MeshPhysicalMaterial({
-    color: 0x7a0f14, metalness: 0.85, roughness: 0.35, emissive: 0x2a0204, envMapIntensity: 0.8
+    color: 0x12141a,
+    metalness: 0.94,
+    roughness: 0.28,
+    envMapIntensity: 0.95,
+    clearcoat: 0.35,
+    clearcoatRoughness: 0.18,
   });
 
   /* ---------- lights ---------- */
-  const key = new THREE.DirectionalLight(0xfff1e8, 3.2); key.position.set(-4, 6, 8); scene.add(key);
-  const fill = new THREE.DirectionalLight(0x6a7cff, 0.5); fill.position.set(6, -2, 5); scene.add(fill);
-  const rimL = new THREE.PointLight(0xff2a1a, 90, 0, 2); scene.add(rimL);
-  const rimR = new THREE.PointLight(0xff3a22, 90, 0, 2); scene.add(rimR);
-  const under = new THREE.PointLight(0xff1a10, 18, 0, 2); scene.add(under);
+  const key = new THREE.DirectionalLight(0xfff5ee, 3.8); key.position.set(-5, 7, 9); scene.add(key);
+  const fill = new THREE.DirectionalLight(0x7090ff, 0.65); fill.position.set(7, -3, 6); scene.add(fill);
+  const rimL = new THREE.PointLight(0xff2212, 110, 0, 2); scene.add(rimL);
+  const rimR = new THREE.PointLight(0xff3018, 110, 0, 2); scene.add(rimR);
+  const under = new THREE.PointLight(0xff1808, 22, 0, 2); scene.add(under);
   const sweep = new THREE.PointLight(0xffffff, 0, 0, 2); scene.add(sweep);
 
   /* ---------- build letters ---------- */
@@ -93,12 +103,12 @@ async function init() {
       for (const c of t) {
         const a = adv(c);
         if (c !== ' ') {
-          const g = new TextGeometry(c, { font, size: SIZE, depth: 0.42, height: 0.42, curveSegments: 10,
-            bevelEnabled: true, bevelThickness: 0.045, bevelSize: 0.03, bevelSegments: 5 });
+          const g = new TextGeometry(c, { font, size: SIZE, depth: 0.38, height: 0.38, curveSegments: 8,
+            bevelEnabled: true, bevelThickness: 0.05, bevelSize: 0.032, bevelSegments: 3 });
           g.computeBoundingBox();
           const bb = g.boundingBox;
           const cx = (bb.min.x + bb.max.x) / 2, cy = (bb.min.y + bb.max.y) / 2;
-          g.translate(-cx, -cy, -0.21);
+          g.translate(-cx, -cy, -0.19);
           const mesh = new THREE.Mesh(g, [mat, sideMat]);
           const homeX = x + cx * 1 , homeY = y + cy;
           mesh.position.set(homeX, homeY, 0);

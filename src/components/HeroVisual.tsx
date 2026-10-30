@@ -288,16 +288,16 @@ export const HeroVisual: React.FC = () => {
         aria-label="Looping developer animation"
         className="absolute bottom-5 left-5 sm:bottom-7 sm:left-8 md:bottom-8 md:left-10 z-25 pointer-events-none select-none"
       >
-        <div className="relative w-[170px] sm:w-[230px] md:w-[290px] lg:w-[340px] xl:w-[380px] aspect-[460/390]">
-          {/* Subtle ground shadow to anchor to dark floor */}
+        <div className="relative w-[160px] sm:w-[220px] md:w-[280px] lg:w-[330px] xl:w-[360px] aspect-[736/668]">
+          {/* Ground contact shadow directly under chair wheels & desk legs */}
           <div
             aria-hidden="true"
-            className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-4/5 h-4 bg-black/85 rounded-full blur-sm pointer-events-none"
+            className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-[92%] h-3 bg-black/95 rounded-full blur-[3px] pointer-events-none"
           />
-          {/* Soft ambient red floor glow matching hero spotlight */}
+          {/* Soft ambient red floor bounce harmonizing with hero spotlight */}
           <div
             aria-hidden="true"
-            className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-red-600/18 rounded-full blur-xl pointer-events-none"
+            className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-[85%] h-6 bg-red-600/15 rounded-full blur-xl pointer-events-none"
           />
           <video
             autoPlay
@@ -305,7 +305,12 @@ export const HeroVisual: React.FC = () => {
             muted
             playsInline
             preload="auto"
-            className="w-full h-full object-contain relative z-10 select-none pointer-events-none drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)]"
+            className="w-full h-full object-contain relative z-10 select-none pointer-events-none"
+            style={{
+              filter: 'brightness(0.96) contrast(1.04) saturate(1.05)',
+              maskImage: 'linear-gradient(to bottom, black 0%, black 95%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 95%, transparent 100%)',
+            }}
           >
             <source src="./assets/videos/sleeping-dev.webm" type="video/webm" />
             <source src="./assets/videos/sleeping-dev.mp4" type="video/mp4" />

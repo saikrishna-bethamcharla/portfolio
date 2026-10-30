@@ -25,10 +25,14 @@
   --H: min(46vh, 31vw);
 }
 
+html {
+  scroll-behavior: smooth;
+}
 html, body {
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
   background-color: var(--paper);
   color: var(--ink);
   user-select: none;
@@ -133,6 +137,50 @@ html, body {
 #topbar-right {
   justify-self: end;
   color: var(--muted);
+}
+
+
+/* ── SHOWCASE SECTION WRAPPER ──────────────────────────────────── */
+#showcase-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 700px;
+  overflow: hidden;
+  background-color: var(--paper);
+}
+
+#shelf-scroll-prompt {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(18, 18, 22, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #d1d5db;
+  padding: 0 16px;
+  height: 30px;
+  cursor: pointer !important;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+#shelf-scroll-prompt:hover {
+  background: rgba(220, 38, 38, 0.2);
+  border-color: rgba(220, 38, 38, 0.6);
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
+  transform: translateX(-50%) translateY(-2px);
+}
+#shelf-scroll-prompt svg {
+  transition: transform 0.2s ease;
+}
+#shelf-scroll-prompt:hover svg {
+  transform: translateY(2px);
 }
 
 /* ── 2. PROJECT CATEGORY TABS ───────────────────────────────────── */
@@ -675,179 +723,246 @@ html, body {
   }
 }
 
-/* ── CONTACT & SOCIALS SECTION (3D GLOSSY PHYSICS) ──────────────── */
-#contact-toggle-btn {
-  background: rgba(220, 38, 38, 0.15);
-  border-color: rgba(220, 38, 38, 0.5);
-  color: #ffffff;
-  transition: all 0.2s ease;
-}
-#contact-toggle-btn:hover {
-  background: #dc2626;
-  border-color: #ef4444;
-  box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
-}
 
+/* ── CONTACT & BILLIARD ARENA SECTION (EDITORIAL DARK LUXURY) ───── */
 #contact-section {
-  position: fixed;
-  inset: 0;
-  z-index: 900;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-#contact-section.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-#contact-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(6, 6, 8, 0.88);
-  backdrop-filter: blur(20px);
-}
-
-#contact-container {
   position: relative;
-  width: min(94vw, 1200px);
-  height: min(90vh, 760px);
-  background: linear-gradient(145deg, rgba(20, 20, 26, 0.95), rgba(10, 10, 14, 0.98));
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 4px;
+  width: 100%;
+  min-height: 100vh;
+  background: #07070a;
+  border-top: 1px solid rgba(220, 38, 38, 0.35);
+  box-shadow: 0 -30px 100px rgba(0, 0, 0, 0.95);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  padding: 104px 48px 48px;
+  box-sizing: border-box;
+  z-index: 50;
   overflow: hidden;
-  box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.95), 0 0 60px rgba(220, 38, 38, 0.18);
-  transform: scale(0.96) translateY(20px);
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-#contact-section.active #contact-container {
-  transform: scale(1) translateY(0);
+#contact-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #ef4444, transparent);
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.8);
+  pointer-events: none;
 }
 
-#contact-header {
-  height: 64px;
-  padding: 0 32px;
+.contact-ambient-glow {
+  position: absolute;
+  top: -120px;
+  right: -80px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(220, 38, 38, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.contact-layout-container {
+  position: relative;
+  max-width: 1380px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  z-index: 1;
+}
+
+/* Header Row */
+.contact-section-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-bottom: 24px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.contact-badge {
-  font-size: 11px;
-  letter-spacing: 0.28em;
-  color: #ef4444;
-  display: flex;
+.contact-status-pill {
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  padding: 6px 14px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 999px;
+  color: #34d399;
+  font-size: 10px;
+  letter-spacing: 0.22em;
 }
-.contact-badge::before {
-  content: '';
+
+.status-pulse-dot {
   width: 7px;
   height: 7px;
-  background: #ef4444;
+  background: #10b981;
   border-radius: 50%;
-  box-shadow: 0 0 10px #ef4444;
+  box-shadow: 0 0 10px #10b981;
+  animation: pulseStatus 2.2s infinite ease-in-out;
 }
 
-#contact-close-btn {
-  border-color: rgba(255, 255, 255, 0.2);
+@keyframes pulseStatus {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.85); }
+}
+
+#return-to-shelf-btn {
+  background: rgba(18, 18, 22, 0.6);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #9ca3af;
   transition: all 0.2s ease;
+  height: 28px;
+  padding: 0 14px;
 }
-#contact-close-btn:hover {
+#return-to-shelf-btn:hover {
+  color: #ffffff;
   border-color: #ef4444;
-  color: #ef4444;
+  background: rgba(220, 38, 38, 0.15);
 }
 
-#contact-body {
-  flex: 1;
+/* Main 2-Column Grid */
+.contact-main-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  overflow: hidden;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 48px;
+  align-items: stretch;
 }
 
-@media (max-width: 860px) {
-  #contact-body {
+@media (max-width: 1024px) {
+  .contact-main-grid {
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-    overflow-y: auto;
+    gap: 36px;
   }
 }
 
-#contact-info {
-  padding: 48px 40px;
+/* Left Editorial Column */
+.contact-editorial-col {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 28px;
+  padding-right: 20px;
 }
 
-#contact-title {
-  font-family: "Newsreader", Georgia, serif;
-  font-size: clamp(32px, 3.8vw, 48px);
-  font-weight: 400;
-  line-height: 1.15;
-  color: #ffffff;
-  margin: 0 0 18px 0;
-  letter-spacing: -0.02em;
-}
-
-#contact-desc {
-  font-family: "Inter Tight", sans-serif;
-  font-size: 15px;
-  line-height: 1.6;
-  color: #9ca3af;
-  margin: 0 0 32px 0;
-  max-width: 480px;
-}
-
-#contact-meta-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 36px;
-}
-
-.contact-meta-item {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.meta-label {
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  color: #6b7280;
-}
-
-.meta-value {
-  font-family: "Inter Tight", sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  color: #f3f4f6;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-a.meta-value:hover {
+.contact-kicker {
+  font-size: 11px;
+  letter-spacing: 0.26em;
   color: #ef4444;
 }
 
-#contact-cta-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 24px;
+.contact-headline {
+  font-family: "Newsreader", Georgia, serif;
+  font-size: clamp(34px, 4.2vw, 56px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.02em;
 }
 
-.contact-cta-btn {
+.contact-headline em {
+  font-style: italic;
+  font-weight: 300;
+  color: #e5e7eb;
+}
+
+.contact-lead {
+  font-family: "Inter Tight", sans-serif;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: #9ca3af;
+  margin: 0;
+  max-width: 540px;
+}
+
+.contact-channels-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: rgba(14, 14, 18, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 24px;
+}
+
+.channel-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.channel-type {
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  color: #6b7280;
+}
+
+.channel-copy-btn {
+  height: 22px;
+  padding: 0 10px;
+  font-size: 9.5px;
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #9ca3af;
+  transition: all 0.2s ease;
+}
+.channel-copy-btn:hover {
+  border-color: #ef4444;
+  color: #ffffff;
+  background: rgba(220, 38, 38, 0.15);
+}
+
+.channel-primary-val {
+  font-family: "Inter Tight", sans-serif;
+  font-size: clamp(16px, 1.8vw, 22px);
+  font-weight: 600;
+  color: #f9fafb;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  transition: color 0.2s ease;
+  word-break: break-all;
+}
+.channel-primary-val:hover {
+  color: #ef4444;
+}
+
+.channel-meta-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.meta-title {
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  color: #6b7280;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.meta-desc {
+  font-family: "Inter Tight", sans-serif;
+  font-size: 13.5px;
+  color: #d1d5db;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.contact-action-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.contact-primary-cta {
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -855,40 +970,91 @@ a.meta-value:hover {
   background: #dc2626;
   color: #ffffff;
   border: 1px solid #ef4444;
-  border-radius: 0;
   text-decoration: none;
-  font-weight: 700;
   font-size: 11px;
   letter-spacing: 0.20em;
-  box-shadow: 0 8px 25px -4px rgba(220, 38, 38, 0.5);
+  font-weight: 700;
+  box-shadow: 0 10px 30px -5px rgba(220, 38, 38, 0.55);
   transition: all 0.25s ease;
 }
-
-.contact-cta-btn:hover {
+.contact-primary-cta:hover {
   background: #b91c1c;
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px -4px rgba(220, 38, 38, 0.7);
+  box-shadow: 0 14px 35px -5px rgba(220, 38, 38, 0.75);
 }
 
-.contact-sec-btn {
-  height: 44px;
-  padding: 0 20px;
+.contact-secondary-cta {
+  height: 45px;
+  padding: 0 22px;
   font-size: 11px;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
+  color: #e5e7eb;
+  border-color: rgba(255, 255, 255, 0.2);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.contact-secondary-cta:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+  background: rgba(220, 38, 38, 0.1);
 }
 
-#contact-hint {
-  font-size: 9.5px;
-  letter-spacing: 0.16em;
+.contact-physics-hint {
+  font-size: 10px;
+  letter-spacing: 0.18em;
   color: #6b7280;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
-#contact-canvas-wrapper {
-  position: relative;
-  background: radial-gradient(circle at 50% 60%, rgba(220, 38, 38, 0.08) 0%, transparent 70%);
+/* Right Stage Column: Pool Arena Frame */
+.contact-stage-col {
   display: flex;
   flex-direction: column;
+}
+
+.pool-arena-frame {
+  position: relative;
+  background: linear-gradient(160deg, #111116 0%, #09090c 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.8), 0 25px 60px -10px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  height: 520px;
+}
+
+.arena-header-bar {
+  height: 40px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: #6b7280;
+}
+
+#arena-live-status {
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+#arena-live-status::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: #ef4444;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ef4444;
+}
+
+.arena-canvas-container {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 65%, rgba(220, 38, 38, 0.06) 0%, transparent 65%);
 }
 
 #contact-physics-canvas {
@@ -897,25 +1063,67 @@ a.meta-value:hover {
   display: block;
 }
 
-#contact-floor-label {
+#arena-hover-card {
   position: absolute;
-  bottom: 24px;
-  left: 32px;
-  right: 32px;
+  bottom: 16px;
+  left: 20px;
+  right: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #6b7280;
-  font-size: 9.5px;
-  letter-spacing: 0.20em;
+  padding: 10px 16px;
+  background: rgba(10, 10, 14, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
   pointer-events: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 12px;
 }
 
 #sphere-hover-name {
   color: #ef4444;
   font-weight: 700;
+}
+
+#sphere-hover-action {
+  color: #9ca3af;
+}
+
+.arena-footer-bar {
+  height: 34px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  color: #4b5563;
+}
+
+/* Contact Section Footer */
+.contact-section-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: #6b7280;
+  font-size: 10px;
+}
+
+.contact-footer-links {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.contact-footer-links a {
+  color: #9ca3af;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.contact-footer-links a:hover {
+  color: #ffffff;
 }
 
 </style>
@@ -948,104 +1156,157 @@ a.meta-value:hover {
 </nav>
 
 <!-- 3. THE SHELF (3D STAGE) -->
-<section id="shelf-section" aria-label="Filmography shelf">
-  <div id="stage"></div>
+
+<!-- SHOWCASE SECTION -->
+<section id="showcase-section" aria-label="Filmography showcase and shelf">
+  <!-- 3. THE SHELF (3D STAGE) -->
+  <section id="shelf-section" aria-label="Filmography shelf">
+    <div id="stage"></div>
+  </section>
+
+  <!-- 4. PLAY RING -->
+  <button id="play-ring" aria-label="Open project">
+    <svg width="12" height="14" viewBox="0 0 12 14" fill="none" aria-hidden="true">
+      <path d="M1 1L11 7L1 13V1Z" fill="currentColor"/>
+    </svg>
+  </button>
+
+  <!-- 5. CAPTION -->
+  <div id="caption" aria-live="polite">
+    <div id="cap-title"><div class="cap-mask"><span></span></div></div>
+    <div id="cap-sub"><div class="cap-mask"><span></span></div></div>
+  </div>
+
+  <!-- 6. ARROWS -->
+  <button id="arr-left" class="arrow-btn" aria-label="Previous project">
+    <svg width="18" height="10" viewBox="0 0 18 10" fill="none" aria-hidden="true">
+      <path d="M5 1L1 5L5 9M1 5H17" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <button id="arr-right" class="arrow-btn" aria-label="Next project">
+    <svg width="18" height="10" viewBox="0 0 18 10" fill="none" aria-hidden="true">
+      <path d="M13 1L17 5L13 9M17 5H1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <!-- SHELF SCROLL PROMPT -->
+  <a href="#contact-section" id="shelf-scroll-prompt" class="lbl box" aria-label="Scroll to contact and socials">
+    <span>CONNECT & DIRECT CHANNELS</span>
+    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 3.5L5 7.5L9 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
 </section>
 
-<!-- 4. PLAY RING -->
-<button id="play-ring" aria-label="Open project">
-  <svg width="12" height="14" viewBox="0 0 12 14" fill="none" aria-hidden="true">
-    <path d="M1 1L11 7L1 13V1Z" fill="currentColor"/>
-  </svg>
-</button>
-
-<!-- 5. CAPTION -->
-<div id="caption" aria-live="polite">
-  <div id="cap-title"><div class="cap-mask"><span></span></div></div>
-  <div id="cap-sub"><div class="cap-mask"><span></span></div></div>
-</div>
-
-<!-- 6. ARROWS -->
-<button id="arr-left" class="arrow-btn" aria-label="Previous project">
-  <svg width="18" height="10" viewBox="0 0 18 10" fill="none" aria-hidden="true">
-    <path d="M5 1L1 5L5 9M1 5H17" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-</button>
-<button id="arr-right" class="arrow-btn" aria-label="Next project">
-  <svg width="18" height="10" viewBox="0 0 18 10" fill="none" aria-hidden="true">
-    <path d="M13 1L17 5L13 9M17 5H1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-</button>
-
-<!-- 7. FOOTER -->
-<footer id="footer">
-  <span class="lbl">© 2026 SAI KRISHNA BETHAMCHARLA. ALL RIGHTS RESERVED.</span>
-  <div id="footer-links" class="lbl">
-    <a href="https://www.youtube.com/@saikrishna_bethamcharla" target="_blank" rel="noopener">YT</a>
-    <span>/</span>
-    <a href="https://linkedin.com/in/sai-krishna-bethamcharla" target="_blank" rel="noopener">LI</a>
-    <span>/</span>
-    <a href="https://github.com/saikrishna-bethamcharla" target="_blank" rel="noopener">GH</a>
-  </div>
-</footer>
 
 
-<!-- 7.5. CONTACT & SOCIALS SECTION (3D GLOSSY FALLING SPHERES & EDITORIAL CTA) -->
-<section id="contact-section" role="dialog" aria-modal="true" aria-label="Contact and Socials">
-  <div id="contact-backdrop"></div>
-  <div id="contact-container">
-    <div id="contact-header">
-      <div class="contact-badge lbl">CONNECT & COLLABORATE</div>
-      <button id="contact-close-btn" class="lbl box" aria-label="Close contact">CLOSE ✕</button>
+
+<!-- 7.5. CONTACT & SOCIALS SECTION (EMBEDDED EDITORIAL & POOL ARENA) -->
+<section id="contact-section" aria-label="Direct Channels and Studio Contact">
+  <div class="contact-ambient-glow" aria-hidden="true"></div>
+
+  <div class="contact-layout-container">
+    <!-- Top Bar -->
+    <div class="contact-section-top">
+      <div class="contact-status-pill">
+        <span class="status-pulse-dot" aria-hidden="true"></span>
+        <span class="lbl">AVAILABLE FOR COMMISSIONS & ADVISORY — Q1 2026</span>
+      </div>
+      <button id="return-to-shelf-btn" class="lbl box" aria-label="Return to showcase shelf">
+        ↑ BACK TO SHOWCASE
+      </button>
     </div>
 
-    <div id="contact-body">
-      <!-- Left Editorial Column -->
-      <div id="contact-info">
-        <h2 id="contact-title">Let’s build something extraordinary.</h2>
-        <p id="contact-desc">
-          Directing generative AI filmmaking, high-performance web systems, and luxury brand architecture. Open for select commercial direction, technical architecture, and advisory.
+    <!-- Main Grid -->
+    <div class="contact-main-grid">
+      <!-- Left Column: Editorial Information -->
+      <div class="contact-editorial-col">
+        <div>
+          <div class="contact-kicker lbl">[ DIRECT CONTACT & ARCHITECTURE ]</div>
+          <h2 class="contact-headline">
+            Let’s craft cinema, code<br><em>& brand systems.</em>
+          </h2>
+        </div>
+
+        <p class="contact-lead">
+          Directing generative AI filmmaking, high-performance web systems, and luxury brand architecture. Open for select commercial direction, technical architecture, and advisory collaborations.
         </p>
 
-        <div id="contact-meta-grid">
-          <div class="contact-meta-item">
-            <span class="meta-label lbl">DIRECT EMAIL</span>
-            <a href="mailto:saikrishnabethamcharla@gmail.com" class="meta-value">saikrishnabethamcharla@gmail.com</a>
+        <!-- Direct Channel Cards -->
+        <div class="contact-channels-list">
+          <div class="channel-card-header">
+            <span class="channel-type lbl">DIRECT INBOX</span>
+            <button id="copy-email-btn" class="lbl box channel-copy-btn" title="Copy email address">
+              COPY EMAIL
+            </button>
           </div>
-          <div class="contact-meta-item">
-            <span class="meta-label lbl">CURRENT ROLE</span>
-            <span class="meta-value">Creative & Technical Lead — Zai Labs</span>
-          </div>
-          <div class="contact-meta-item">
-            <span class="meta-label lbl">BASE & TIMEZONE</span>
-            <span class="meta-value">Hyderabad, India (IST / UTC +5:30)</span>
+          <a href="mailto:saikrishnabethamcharla@gmail.com" class="channel-primary-val">
+            saikrishnabethamcharla@gmail.com
+          </a>
+
+          <div class="channel-meta-row">
+            <div>
+              <span class="meta-title lbl">CURRENT ROLE</span>
+              <span class="meta-desc">Creative & Tech Lead — Zai Labs</span>
+            </div>
+            <div>
+              <span class="meta-title lbl">STUDIO BASE</span>
+              <span class="meta-desc">Hyderabad, India (IST / UTC +5:30)</span>
+            </div>
           </div>
         </div>
 
-        <div id="contact-cta-row">
-          <a href="mailto:saikrishnabethamcharla@gmail.com?subject=Project%20Inquiry%20%E2%80%94%20Sai%20Krishna" class="contact-cta-btn lbl">
+        <!-- Action CTAs -->
+        <div class="contact-action-row">
+          <a href="mailto:saikrishnabethamcharla@gmail.com?subject=Project%20Inquiry%20%E2%80%94%20Sai%20Krishna" class="contact-primary-cta lbl">
             <span>INITIATE INQUIRY</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H3M13 1V11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a href="./assets/Sai_Krishna_Bethamcharla_Resume.pdf" target="_blank" rel="noopener" class="contact-sec-btn lbl box">
-            DOWNLOAD CV ↗
+          <a href="./assets/Sai_Krishna_Bethamcharla_Resume.pdf" target="_blank" rel="noopener" class="contact-secondary-cta lbl box">
+            DOWNLOAD RESUME ↗
           </a>
         </div>
 
-        <div id="contact-hint" class="lbl">
-          ✦ CLICK OR DRAG ANY 3D GLOSSY SPHERE ON THE FLOOR TO LAUNCH DIRECT CHANNELS
+        <div class="contact-physics-hint lbl">
+          ✦ INTERACTIVE BILLIARD TABLE: DRAG, FLING OR CLICK ANY POOL BALL TO LAUNCH DIRECT CHANNELS
         </div>
       </div>
 
-      <!-- Right 3D Interactive Physics Stage Column -->
-      <div id="contact-canvas-wrapper">
-        <canvas id="contact-physics-canvas"></canvas>
-        <div id="contact-floor-label" class="lbl">
-          <span>PHYSICS FLOOR — INTERACTIVE CHANNELS</span>
-          <span id="sphere-hover-name">HOVER OR CLICK SPHERES</span>
+      <!-- Right Column: Billiard Arena Frame -->
+      <div class="contact-stage-col">
+        <div class="pool-arena-frame">
+          <div class="arena-header-bar lbl">
+            <span>BILLIARD ARENA — 5 RESIN CHANNELS</span>
+            <span id="arena-live-status">PHYSICS ACTIVE</span>
+          </div>
+
+          <div class="arena-canvas-container">
+            <canvas id="contact-physics-canvas"></canvas>
+            <div id="arena-hover-card" class="lbl">
+              <span id="sphere-hover-name">HOVER OR TOSS POOL BALLS</span>
+              <span id="sphere-hover-action">CLICK TO LAUNCH CHANNEL ↗</span>
+            </div>
+          </div>
+
+          <div class="arena-footer-bar lbl">
+            <span>DRAG & FLING FOR VELOCITY</span>
+            <span>RESTS ON REBOUND FLOOR</span>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- Section Bottom Footer -->
+    <footer class="contact-section-footer">
+      <span class="lbl">© 2026 SAI KRISHNA BETHAMCHARLA. ALL RIGHTS RESERVED.</span>
+      <div class="contact-footer-links lbl">
+        <a href="https://www.youtube.com/@saikrishna_bethamcharla" target="_blank" rel="noopener">YT</a>
+        <span>/</span>
+        <a href="https://linkedin.com/in/sai-krishna-bethamcharla" target="_blank" rel="noopener">LI</a>
+        <span>/</span>
+        <a href="https://github.com/saikrishna-bethamcharla" target="_blank" rel="noopener">GH</a>
+        <span>/</span>
+        <a href="https://www.instagram.com/saikrishna_bethamcharla" target="_blank" rel="noopener">IG</a>
+      </div>
+    </footer>
   </div>
 </section>
 
@@ -7103,17 +7364,22 @@ stage.addEventListener('pointerleave', e => {
 arrLeft.addEventListener('click',  () => { T = Math.round(T) - 1; });
 arrRight.addEventListener('click', () => { T = Math.round(T) + 1; });
 
-// Wheel
+// Wheel — Allow natural vertical page scroll while keeping horizontal book navigation
 window.addEventListener('wheel', e => {
   if (isOpen) return;
-  e.preventDefault();
-  const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-  T += (delta / (ws + gap)) * 0.5;
 
-  clearTimeout(wheelTimer);
-  wheelTimer = setTimeout(() => {
-    T = Math.round(T);
-  }, 160);
+  // If dominant horizontal scroll (trackpad gesture or shift+wheel), slide books horizontally
+  if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey) {
+    e.preventDefault();
+    const delta = e.shiftKey ? e.deltaY : e.deltaX;
+    T += (delta / (ws + gap)) * 0.5;
+
+    clearTimeout(wheelTimer);
+    wheelTimer = setTimeout(() => {
+      T = Math.round(T);
+    }, 160);
+  }
+  // Otherwise, allow natural vertical scroll between showcase and contact section!
 }, { passive: false });
 
 // Keyboard
@@ -7129,7 +7395,7 @@ window.addEventListener('pointermove', e => {
   mx = e.clientX;
   my = e.clientY;
 
-  const onInteractive = e.target.closest('button, a, .box') && !e.target.closest('#stage');
+  const onInteractive = e.target && e.target.closest && e.target.closest('button, a, .box') && !e.target.closest('#stage');
   if (cursor) {
     cursor.classList.toggle('btn', !!onInteractive);
   }
@@ -7156,17 +7422,19 @@ tabBtns.forEach(btn => {
 
 
 // ═══════════════════════════════════════════════════════════════════
-// 3D GLOSSY SPHERES CONTACT PHYSICS ENGINE
+// 3D REALISTIC POOL BALLS CONTACT PHYSICS ENGINE
 // ═══════════════════════════════════════════════════════════════════
 const contactSec = document.getElementById('contact-section');
+const showcaseSec = document.getElementById('showcase-section');
 const contactToggleBtn = document.getElementById('contact-toggle-btn');
-const contactCloseBtn = document.getElementById('contact-close-btn');
-const contactBackdrop = document.getElementById('contact-backdrop');
+const returnToShelfBtn = document.getElementById('return-to-shelf-btn');
+const copyEmailBtn = document.getElementById('copy-email-btn');
 const contactCvs = document.getElementById('contact-physics-canvas');
 const contactCtx = contactCvs.getContext('2d');
-const sphereHoverLabel = document.getElementById('sphere-hover-name');
+const sphereHoverName = document.getElementById('sphere-hover-name');
+const sphereHoverAction = document.getElementById('sphere-hover-action');
 
-let isContactOpen = false;
+let isPhysicsRunning = false;
 let contactAnimFrame = null;
 let cW = 0, cH = 0;
 let dragBall = null;
@@ -7174,49 +7442,94 @@ let dragOffsetX = 0, dragOffsetY = 0;
 let lastMouseX = 0, lastMouseY = 0;
 let mouseVX = 0, mouseVY = 0;
 
+// OFFICIAL VECTOR SVG PATHS FOR POOL BALL MEDALLIONS
+// All paths designed for standard 24x24 bounding boxes
+const SVG_PATHS = {
+  // 1. GitHub Octocat
+  github: new Path2D('M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z'),
+
+  // 2. LinkedIn official 'in' mark
+  linkedin: new Path2D('M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z'),
+
+  // 3. Instagram Camera Glyph (compound path)
+  instagram: new Path2D('M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z'),
+
+  // 4. WhatsApp Speech Bubble + Phone Handset
+  whatsapp: new Path2D('M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 01-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 012.41 5.83c.02 4.54-3.68 8.23-8.23 8.23zm4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.84-.86 2.05s.88 2.38 1 2.55c.12.17 1.73 2.64 4.19 3.7.59.25 1.05.4 1.41.51.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.12-.23-.19-.48-.31z'),
+
+  // 5. YouTube Play Badge
+  youtube: new Path2D('M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z')
+};
+
+// 5 REALISTIC BILLIARD POOL BALLS CONFIGURATION
 const SOCIAL_SPHERES = [
   {
+    name: 'GitHub',
+    number: '8',
+    subtitle: 'Code Architecture & Open Source',
+    // Polished Obsidian 8-Ball
+    baseColor: '#12141a',
+    shadeColor: '#040507',
+    highlightColor: '#4b5563',
+    logoColor: '#16171d',
+    path: SVG_PATHS.github,
+    isEvenOdd: false,
+    url: 'https://github.com/saikrishna-bethamcharla',
+    radius: 46
+  },
+  {
     name: 'LinkedIn',
-    subtitle: 'Professional Trajectory & Network',
-    color: '#0077b5',
-    accentColor: '#38bdf8',
-    iconText: 'in',
+    number: '10',
+    subtitle: 'Professional Trajectory & Advisory',
+    // Royal Sapphire Blue Pool Ball
+    baseColor: '#0a66c2',
+    shadeColor: '#032d57',
+    highlightColor: '#60a5fa',
+    logoColor: '#0a66c2',
+    path: SVG_PATHS.linkedin,
+    isEvenOdd: false,
     url: 'https://linkedin.com/in/sai-krishna-bethamcharla',
     radius: 46
   },
   {
     name: 'Instagram',
-    subtitle: 'Visual Staging & Behind the Scenes',
-    color: '#e1306c',
-    accentColor: '#f43f5e',
-    iconText: 'ig',
+    number: '4',
+    subtitle: 'Visual Staging & Behind The Scenes',
+    // Rich Magenta / Plum Pool Ball
+    baseColor: '#b51770',
+    shadeColor: '#530531',
+    highlightColor: '#f472b6',
+    logoColor: '#c13584',
+    path: SVG_PATHS.instagram,
+    isEvenOdd: true,
     url: 'https://www.instagram.com/saikrishna_bethamcharla',
     radius: 44
   },
   {
-    name: 'GitHub',
-    subtitle: 'Open Source & Code Architecture',
-    color: '#24292e',
-    accentColor: '#94a3b8',
-    iconText: 'gh',
-    url: 'https://github.com/saikrishna-bethamcharla',
+    name: 'WhatsApp',
+    number: '6',
+    subtitle: 'Direct Message & Fast Inquiries',
+    // Emerald Green Pool Ball
+    baseColor: '#108c4a',
+    shadeColor: '#053d20',
+    highlightColor: '#4ade80',
+    logoColor: '#108c4a',
+    path: SVG_PATHS.whatsapp,
+    isEvenOdd: false,
+    url: 'https://wa.me/919999999999',
     radius: 44
   },
   {
-    name: 'WhatsApp',
-    subtitle: 'Direct Message & Fast Inquiries',
-    color: '#25d366',
-    accentColor: '#4ade80',
-    iconText: 'wa',
-    url: 'https://wa.me/919999999999',
-    radius: 42
-  },
-  {
     name: 'YouTube',
-    subtitle: 'Original Films & Cinema Reels',
-    color: '#dc2626',
-    accentColor: '#f87171',
-    iconText: 'yt',
+    number: '3',
+    subtitle: 'Cinema Reels & Director Editions',
+    // Ruby Red Pool Ball
+    baseColor: '#c91616',
+    shadeColor: '#570808',
+    highlightColor: '#f87171',
+    logoColor: '#cc0000',
+    path: SVG_PATHS.youtube,
+    isEvenOdd: true,
     url: 'https://www.youtube.com/@saikrishna_bethamcharla',
     radius: 46
   }
@@ -7225,15 +7538,16 @@ const SOCIAL_SPHERES = [
 let physicsBalls = [];
 
 function initSocialSpheres() {
-  const floorY = cH - 90;
+  const floorY = cH - 50;
   physicsBalls = SOCIAL_SPHERES.map((item, idx) => {
     const spacing = cW / (SOCIAL_SPHERES.length + 1);
     return {
-      x: spacing * (idx + 1) + (Math.random() - 0.5) * 40,
+      x: spacing * (idx + 1) + (Math.random() - 0.5) * 30,
       y: -60 - idx * 110,
-      vx: (Math.random() - 0.5) * 4,
-      vy: Math.random() * 3 + 1,
+      vx: (Math.random() - 0.5) * 3,
+      vy: Math.random() * 2 + 1,
       radius: item.radius,
+      rot: 0,
       item,
       isHovered: false
     };
@@ -7247,100 +7561,171 @@ function resizeContactCanvas() {
   cH = contactCvs.height = rect.height;
 }
 
-function draw3DGlossySphere(ctx, b) {
-  const { x, y, radius, item, isHovered } = b;
-  const floorY = cH - 90;
+// REALISTIC POOL BILLIARD BALL RENDERER
+function drawRealisticPoolBall(ctx, b) {
+  const { x, y, radius, item, isHovered, rot } = b;
+  const floorY = cH - 50;
 
   ctx.save();
   ctx.translate(x, y);
 
-  // 1. Soft Floor Shadow (Perspective Oval)
+  // 1. FLOOR SHADOW & SUBTLE SLATE REFLECTION
   const distToFloor = Math.max(0, floorY - y);
-  const shadowAlpha = Math.max(0, 0.55 - (distToFloor / 380) * 0.5);
-  const shadowScale = Math.max(0.15, 1 - distToFloor / 380);
+  const shadowAlpha = Math.max(0, 0.65 - (distToFloor / 320) * 0.6);
+  const shadowScale = Math.max(0.18, 1 - distToFloor / 320);
 
   ctx.save();
   ctx.translate(0, distToFloor);
-  ctx.scale(1, 0.28);
-  const sGrad = ctx.createRadialGradient(0, 0, 4, 0, 0, radius * 1.45 * shadowScale);
+  ctx.scale(1, 0.22);
+
+  // Tight contact occlusion patch
+  if (distToFloor < 5) {
+    ctx.beginPath();
+    ctx.ellipse(0, 0, radius * 0.85, radius * 0.35, 0, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
+    ctx.fill();
+  }
+
+  // Soft diffused drop shadow
+  const sGrad = ctx.createRadialGradient(0, 0, 4, 0, 0, radius * 1.55 * shadowScale);
   sGrad.addColorStop(0, `rgba(0, 0, 0, ${shadowAlpha})`);
-  sGrad.addColorStop(0.5, `rgba(0, 0, 0, ${shadowAlpha * 0.5})`);
+  sGrad.addColorStop(0.4, `rgba(0, 0, 0, ${shadowAlpha * 0.55})`);
   sGrad.addColorStop(1, 'transparent');
   ctx.fillStyle = sGrad;
   ctx.beginPath();
-  ctx.arc(0, 0, radius * 1.45 * shadowScale, 0, Math.PI * 2);
+  ctx.arc(0, 0, radius * 1.55 * shadowScale, 0, Math.PI * 2);
   ctx.fill();
   ctx.restore();
 
-  // 2. Base Sphere 3D Shading
-  const rScale = isHovered ? 1.08 : 1.0;
+  // Faint floor mirror reflection (Tournament Slate Table Sheen)
+  if (distToFloor < radius * 1.4) {
+    ctx.save();
+    ctx.translate(0, distToFloor * 2);
+    ctx.scale(1, -0.32);
+    ctx.globalAlpha = Math.max(0, 0.16 * (1 - distToFloor / (radius * 1.4)));
+    ctx.beginPath();
+    ctx.arc(0, 0, radius * 0.95, 0, Math.PI * 2);
+    ctx.fillStyle = item.baseColor;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // 2. RESIN SPHERE BODY (High-Depth Phenolic Composite Shading)
+  const rScale = isHovered ? 1.06 : 1.0;
   const curR = radius * rScale;
 
-  const baseGrad = ctx.createRadialGradient(
-    -curR * 0.32, -curR * 0.35, curR * 0.08,
-    0, 0, curR
+  // 3D Spherical Ambient & Diffuse Gradient
+  const sphereGrad = ctx.createRadialGradient(
+    -curR * 0.36, -curR * 0.40, curR * 0.05,
+    -curR * 0.10, -curR * 0.10, curR * 1.05
   );
-  baseGrad.addColorStop(0, '#ffffff');
-  baseGrad.addColorStop(0.22, item.color);
-  baseGrad.addColorStop(0.75, '#0b0c10');
-  baseGrad.addColorStop(1, '#020204');
+  sphereGrad.addColorStop(0, item.highlightColor);
+  sphereGrad.addColorStop(0.24, item.baseColor);
+  sphereGrad.addColorStop(0.72, item.shadeColor);
+  sphereGrad.addColorStop(0.96, '#030406');
+  sphereGrad.addColorStop(1, '#000000');
 
-  ctx.fillStyle = baseGrad;
+  ctx.fillStyle = sphereGrad;
   ctx.beginPath();
   ctx.arc(0, 0, curR, 0, Math.PI * 2);
   ctx.fill();
 
-  // 3. Colored Rim Illumination
-  ctx.strokeStyle = item.accentColor;
-  ctx.lineWidth = isHovered ? 3.0 : 1.8;
-  ctx.globalAlpha = isHovered ? 0.95 : 0.65;
+  // 3. FLOOR BOUNCE LIGHT (Subtle Ambient Glow on Lower Hemisphere)
+  const bounceGrad = ctx.createRadialGradient(
+    0, curR * 0.75, curR * 0.1,
+    0, curR * 0.55, curR * 0.55
+  );
+  bounceGrad.addColorStop(0, 'rgba(255, 255, 255, 0.22)');
+  bounceGrad.addColorStop(1, 'transparent');
+  ctx.fillStyle = bounceGrad;
+  ctx.beginPath();
+  ctx.arc(0, 0, curR, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 4. INSET WHITE POOL BALL DISC (The Authentic Billiard Medallion)
+  ctx.save();
+  ctx.rotate(rot);
+
+  const medR = curR * 0.46;
+  const medGrad = ctx.createRadialGradient(
+    -curR * 0.15, -curR * 0.18, 1,
+    0, 0, medR
+  );
+  medGrad.addColorStop(0, '#ffffff');
+  medGrad.addColorStop(0.78, '#f4f3ee');
+  medGrad.addColorStop(1, '#dedad0');
+
+  ctx.fillStyle = medGrad;
+  ctx.beginPath();
+  ctx.arc(0, 0, medR, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Inset bezel line for depth
+  ctx.strokeStyle = 'rgba(0, 0, 0, 0.22)';
+  ctx.lineWidth = 1.0;
   ctx.stroke();
-  ctx.globalAlpha = 1.0;
 
-  // 4. Center High-Contrast Icon Typography
-  ctx.fillStyle = '#ffffff';
-  ctx.font = `800 ${Math.round(curR * 0.44)}px "Inter Tight", sans-serif`;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-  ctx.shadowBlur = 6;
-  ctx.fillText(item.iconText, 0, 2);
-  ctx.shadowBlur = 0;
+  // 5. OFFICIAL VECTOR LOGO EMBEDDED IN THE MEDALLION
+  ctx.save();
+  const logoBox = medR * 1.15;
+  const logoScale = logoBox / 24;
+  ctx.scale(logoScale, logoScale);
+  ctx.translate(-12, -12); // Center 24x24 viewBox
 
-  // 5. Specular 3D Gloss Highlight (Upper-Left Hotspot Glaze)
-  const specGrad = ctx.createRadialGradient(
-    -curR * 0.32, -curR * 0.38, 2,
-    -curR * 0.30, -curR * 0.35, curR * 0.58
+  ctx.fillStyle = item.logoColor;
+  if (item.isEvenOdd) {
+    ctx.fill(item.path, 'evenodd');
+  } else {
+    ctx.fill(item.path);
+  }
+  ctx.restore();
+  ctx.restore();
+
+  // 6. HIGH-GLOSS LACQUER SPECULAR COATING (Real Pool Ball Shine)
+  // Sharp pinpoint hotspot glare
+  const glintGrad = ctx.createRadialGradient(
+    -curR * 0.34, -curR * 0.38, 0.5,
+    -curR * 0.34, -curR * 0.38, curR * 0.22
   );
-  specGrad.addColorStop(0, 'rgba(255, 255, 255, 0.98)');
-  specGrad.addColorStop(0.35, 'rgba(255, 255, 255, 0.5)');
-  specGrad.addColorStop(0.8, 'rgba(255, 255, 255, 0.08)');
-  specGrad.addColorStop(1, 'transparent');
+  glintGrad.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
+  glintGrad.addColorStop(0.25, 'rgba(255, 255, 255, 0.85)');
+  glintGrad.addColorStop(0.65, 'rgba(255, 255, 255, 0.15)');
+  glintGrad.addColorStop(1, 'transparent');
 
-  ctx.fillStyle = specGrad;
+  ctx.fillStyle = glintGrad;
   ctx.beginPath();
-  ctx.ellipse(-curR * 0.28, -curR * 0.36, curR * 0.42, curR * 0.24, -Math.PI / 6, 0, Math.PI * 2);
+  ctx.arc(-curR * 0.34, -curR * 0.38, curR * 0.22, 0, Math.PI * 2);
   ctx.fill();
 
-  // 6. Secondary soft reflection on bottom edge (Bounce Light)
-  const botGrad = ctx.createRadialGradient(
-    curR * 0.15, curR * 0.45, 2,
-    0, curR * 0.55, curR * 0.45
-  );
-  botGrad.addColorStop(0, `rgba(${item.accentColor === '#38bdf8' ? '56, 189, 248' : '255, 255, 255'}, 0.35)`);
-  botGrad.addColorStop(1, 'transparent');
-  ctx.fillStyle = botGrad;
+  // Secondary soft overhead light reflection arc
+  ctx.save();
+  ctx.translate(-curR * 0.24, -curR * 0.34);
+  ctx.rotate(-Math.PI / 5.5);
+  const arcGrad = ctx.createLinearGradient(0, -curR * 0.12, 0, curR * 0.12);
+  arcGrad.addColorStop(0, 'rgba(255, 255, 255, 0.55)');
+  arcGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.22)');
+  arcGrad.addColorStop(1, 'transparent');
+
+  ctx.fillStyle = arcGrad;
   ctx.beginPath();
-  ctx.arc(0, 0, curR - 2, 0, Math.PI * 2);
+  ctx.ellipse(0, 0, curR * 0.34, curR * 0.16, 0, 0, Math.PI * 2);
   ctx.fill();
+  ctx.restore();
+
+  // Glancing Fresnel edge glint
+  ctx.strokeStyle = isHovered ? 'rgba(255, 255, 255, 0.45)' : 'rgba(255, 255, 255, 0.2)';
+  ctx.lineWidth = isHovered ? 2.0 : 1.2;
+  ctx.beginPath();
+  ctx.arc(0, 0, curR - 0.6, 0, Math.PI * 2);
+  ctx.stroke();
 
   ctx.restore();
 }
 
 function updateContactPhysics() {
-  const gravity = 0.42;
-  const bounce = 0.65;
-  const floorY = cH - 90;
+  const gravity = 0.44;
+  const bounce = 0.62;
+  const floorY = cH - 50;
 
   for (let i = 0; i < physicsBalls.length; i++) {
     const b = physicsBalls[i];
@@ -7350,19 +7735,21 @@ function updateContactPhysics() {
       b.y = lastMouseY + dragOffsetY;
       b.vx = mouseVX;
       b.vy = mouseVY;
+      b.rot += mouseVX * 0.02;
       continue;
     }
 
     b.vy += gravity;
     b.x += b.vx;
     b.y += b.vy;
+    b.rot = (b.rot + b.vx * 0.012) * 0.975;
 
     // Floor collision
     if (b.y + b.radius > floorY) {
       b.y = floorY - b.radius;
       b.vy = -b.vy * bounce;
-      b.vx *= 0.94; // friction
-      if (Math.abs(b.vy) < 0.25) b.vy = 0;
+      b.vx *= 0.94; // felt friction
+      if (Math.abs(b.vy) < 0.2) b.vy = 0;
     }
 
     // Walls
@@ -7377,7 +7764,7 @@ function updateContactPhysics() {
       b.vx = -b.vx * bounce;
     }
 
-    // Sphere-to-sphere collision
+    // Ball-to-ball elastic collision
     for (let j = i + 1; j < physicsBalls.length; j++) {
       const b2 = physicsBalls[j];
       const dx = b2.x - b.x;
@@ -7403,68 +7790,134 @@ function updateContactPhysics() {
         b.vy -= p * 0.5 * ny * bounce;
         b2.vx += p * 0.5 * nx * bounce;
         b2.vy += p * 0.5 * ny * bounce;
+
+        b.rot += (b.vx - b2.vx) * 0.02;
       }
     }
   }
 }
 
 function renderContactPhysics() {
-  if (!isContactOpen) return;
+  if (!isPhysicsRunning) return;
   contactCtx.clearRect(0, 0, cW, cH);
 
-  // Architectural floor structure (Glossy Reflective Grid)
-  const floorY = cH - 90;
+  // Tournament Slate / Billiard Table Floor Line
+  const floorY = cH - 50;
 
-  // Floor perspective plane
+  // Floor Perspective Gradient
   const floorGrad = contactCtx.createLinearGradient(0, floorY, 0, cH);
-  floorGrad.addColorStop(0, 'rgba(255, 255, 255, 0.08)');
-  floorGrad.addColorStop(0.3, 'rgba(220, 38, 38, 0.05)');
+  floorGrad.addColorStop(0, 'rgba(255, 255, 255, 0.12)');
+  floorGrad.addColorStop(0.2, 'rgba(220, 38, 38, 0.06)');
   floorGrad.addColorStop(1, 'transparent');
   contactCtx.fillStyle = floorGrad;
   contactCtx.fillRect(0, floorY, cW, cH - floorY);
 
-  contactCtx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
+  contactCtx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
   contactCtx.lineWidth = 1.2;
   contactCtx.beginPath();
-  contactCtx.moveTo(20, floorY);
-  contactCtx.lineTo(cW - 20, floorY);
+  contactCtx.moveTo(15, floorY);
+  contactCtx.lineTo(cW - 15, floorY);
   contactCtx.stroke();
 
-  // Grid tick marks
-  for (let gx = 40; gx < cW; gx += 45) {
+  // Grid tick marks on felt floor
+  for (let gx = 35; gx < cW; gx += 45) {
     contactCtx.beginPath();
     contactCtx.moveTo(gx, floorY);
-    contactCtx.lineTo(gx - 15, floorY + 18);
+    contactCtx.lineTo(gx - 14, floorY + 16);
     contactCtx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
     contactCtx.stroke();
   }
 
   updateContactPhysics();
-  physicsBalls.forEach(b => draw3DGlossySphere(contactCtx, b));
+  physicsBalls.forEach(b => drawRealisticPoolBall(contactCtx, b));
 
   contactAnimFrame = requestAnimationFrame(renderContactPhysics);
 }
 
-function openContact() {
-  if (isContactOpen) return;
-  isContactOpen = true;
-  contactSec.classList.add('active');
+function startPhysics() {
+  if (isPhysicsRunning) return;
+  isPhysicsRunning = true;
   resizeContactCanvas();
   initSocialSpheres();
   renderContactPhysics();
 }
 
-function closeContact() {
-  if (!isContactOpen) return;
-  isContactOpen = false;
-  contactSec.classList.remove('active');
+function stopPhysics() {
+  if (!isPhysicsRunning) return;
+  isPhysicsRunning = false;
   if (contactAnimFrame) cancelAnimationFrame(contactAnimFrame);
   dragBall = null;
 }
 
-contactToggleBtn.addEventListener('click', openContact);
-contactCloseBtn.addEventListener('click', closeContact);
-contactBackdrop.addEventListener('click', closeContact);
+// Observe when contact section enters viewport to run physics automatically
+if ('IntersectionObserver' in window) {
+  const contactObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        startPhysics();
+      } else {
+        stopPhysics();
+      }
+    });
+  }, { threshold: 0.15 });
+
+  if (contactSec) {
+    contactObserver.observe(contactSec);
+  }
+} else {
+  startPhysics();
+}
+
+// NAVIGATION BUTTONS & INTERACTIONS
+if (contactToggleBtn) {
+  contactToggleBtn.addEventListener('click', () => {
+    contactSec.scrollIntoView({ behavior: 'smooth' });
+    startPhysics();
+  });
+}
+
+if (returnToShelfBtn) {
+  returnToShelfBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+if (copyEmailBtn) {
+  copyEmailBtn.addEventListener('click', () => {
+    const email = 'saikrishnabethamcharla@gmail.com';
+    const showSuccess = () => {
+      const orig = copyEmailBtn.textContent;
+      copyEmailBtn.textContent = 'COPIED! ✓';
+      copyEmailBtn.style.color = '#34d399';
+      copyEmailBtn.style.borderColor = '#10b981';
+      setTimeout(() => {
+        copyEmailBtn.textContent = orig;
+        copyEmailBtn.style.color = '';
+        copyEmailBtn.style.borderColor = '';
+      }, 2000);
+    };
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(email).then(showSuccess).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = email;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showSuccess();
+      });
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = email;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showSuccess();
+    }
+  });
+}
 
 // Drag and Click Interaction for Spheres
 contactCvs.addEventListener('pointerdown', e => {
@@ -7489,7 +7942,7 @@ contactCvs.addEventListener('pointerdown', e => {
 });
 
 window.addEventListener('pointermove', e => {
-  if (!isContactOpen) return;
+  if (!isPhysicsRunning) return;
   const rect = contactCvs.getBoundingClientRect();
   const mx = e.clientX - rect.left;
   const my = e.clientY - rect.top;
@@ -7508,10 +7961,14 @@ window.addEventListener('pointermove', e => {
   });
 
   if (hoveredItem) {
-    sphereHoverLabel.textContent = `${hoveredItem.name.toUpperCase()} — ${hoveredItem.subtitle.toUpperCase()}`;
-    contactCvs.style.cursor = 'pointer';
+    sphereHoverName.textContent = `${hoveredItem.name.toUpperCase()} (BALL #${hoveredItem.number}) — ${hoveredItem.subtitle.toUpperCase()}`;
+    sphereHoverAction.textContent = 'CLICK TO LAUNCH CHANNEL ↗';
+    sphereHoverAction.style.color = '#ef4444';
+    contactCvs.style.cursor = 'grab';
   } else {
-    sphereHoverLabel.textContent = 'HOVER OR CLICK SPHERES';
+    sphereHoverName.textContent = 'HOVER OR TOSS POOL BALLS';
+    sphereHoverAction.textContent = 'CLICK TO LAUNCH CHANNEL ↗';
+    sphereHoverAction.style.color = '#9ca3af';
     contactCvs.style.cursor = 'default';
   }
 });
@@ -7532,9 +7989,9 @@ window.addEventListener('pointerup', e => {
   }
 });
 
-window.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && isContactOpen) {
-    closeContact();
+window.addEventListener('resize', () => {
+  if (isPhysicsRunning) {
+    resizeContactCanvas();
   }
 });
 

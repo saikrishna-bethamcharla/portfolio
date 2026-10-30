@@ -37,14 +37,17 @@ export function useTypewriter(text: string, speed = 38, startDelay = 600) {
 }
 
 /**
- * MainframeHero — Full-screen interactive landing hero for creative agency "Mainframe"
- * Features:
- * - Horizontal mouse-scrubbed background video
+ * MainframeHero — Full-screen interactive landing/about section for creative agency "Mainframe"
+ * Customized to the site's dark luxury cinematic theme:
+ * - Obsidian black framing with cinnabar red ambient glow
+ * - Upward drifting luminous ambient particles
+ * - Horizontal mouse-scrubbed background video with cinematic grading
  * - Authentic typography with Helvetica Now Display
  * - Responsive Navbar with mobile animated hamburger
  * - A.R.I.A blurred intro label
  * - Typewriter narrative with blinking cursor
- * - Delayed action pill buttons with 1-click clipboard copy
+ * - Action pill buttons with 1-click clipboard copy
+ * - Smooth scroll anchor down to 3D Filmography Shelf
  */
 export function MainframeHero() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -52,6 +55,7 @@ export function MainframeHero() {
   const [copied, setCopied] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const prevXRef = useRef<number | null>(null);
   const targetTimeRef = useRef<number>(0);
   const isSeekingRef = useRef<boolean>(false);
@@ -66,6 +70,70 @@ export function MainframeHero() {
       setPillsVisible(true);
     }, 400);
     return () => clearTimeout(timer);
+  }, []);
+
+  // Ambient Micro-Particles Animation (Our signature luminous dust)
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animId: number;
+    let W = (canvas.width = window.innerWidth);
+    let H = (canvas.height = window.innerHeight);
+
+    interface Particle {
+      x: number;
+      y: number;
+      r: number;
+      vy: number;
+      opacity: number;
+      drift: number;
+    }
+
+    const count = 55;
+    const particles: Particle[] = Array.from({ length: count }, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.3 + 0.3,
+      vy: -(Math.random() * 0.35 + 0.08),
+      opacity: Math.random() * 0.3 + 0.05,
+      drift: (Math.random() - 0.5) * 0.15,
+    }));
+
+    const draw = () => {
+      ctx.clearRect(0, 0, W, H);
+      for (const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+        ctx.fill();
+
+        p.y += p.vy;
+        p.x += p.drift;
+        if (p.y < -4) {
+          p.y = H + 4;
+          p.x = Math.random() * W;
+        }
+        if (p.x < -4) p.x = W + 4;
+        if (p.x > W + 4) p.x = -4;
+      }
+      animId = requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    const onResize = () => {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', onResize);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', onResize);
+    };
   }, []);
 
   // Video Scrubbing Logic
@@ -121,7 +189,6 @@ export function MainframeHero() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback
       const ta = document.createElement('textarea');
       ta.value = email;
       document.body.appendChild(ta);
@@ -133,7 +200,19 @@ export function MainframeHero() {
     }
   };
 
-  const navLinks = ['Labs', 'Studio', 'Openings', 'Shop'];
+  const scrollToShelf = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    document.getElementById('shelf')?.scrollIntoView({ behavior: 'smooth' });
+    setMenuOpen(false);
+  };
+
+  const navLinks = [
+    { label: 'Works', onClick: scrollToShelf },
+    { label: 'Labs', href: '#labs' },
+    { label: 'Studio', href: '#studio' },
+    { label: 'Openings', href: '#openings' },
+  ];
+
   const pillButtons = [
     'Pitch us an idea',
     'Come work here',
@@ -142,21 +221,62 @@ export function MainframeHero() {
   ];
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black text-white selection:bg-white selection:text-black font-body">
-      {/* 1. BACKGROUND VIDEO (mouse-scrub controlled) */}
+    <div className="relative w-full h-screen overflow-hidden bg-[#050507] text-white selection:bg-red-500/30 selection:text-white font-body">
+      {/* 1. BACKGROUND VIDEO (mouse-scrub controlled with cinematic dark color grade) */}
       <video
         ref={videoRef}
         src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260826_041744_63efcd78-bf7d-4039-99e2-2461e8a61903.mp4"
         className="fixed inset-0 w-full h-full object-cover z-0 pointer-events-none"
-        style={{ objectPosition: '70% center' }}
+        style={{
+          objectPosition: '70% center',
+          filter: 'brightness(0.78) contrast(1.18) saturate(0.92)',
+        }}
         muted
         playsInline
         preload="auto"
         onSeeked={handleSeeked}
       />
 
-      {/* 2. NAVBAR (fixed, z-index: 10) */}
-      <nav className="fixed top-0 left-0 right-0 z-10 w-full px-5 sm:px-8 py-4 sm:py-5 flex flex-row justify-between items-center">
+      {/* 2. THEME CUSTOMIZATIONS: CINEMATIC OVERLAYS */}
+      {/* A. Deep obsidian left vignette (ensures typography is crisp and high-contrast) */}
+      <div
+        aria-hidden="true"
+        className="fixed inset-0 z-0 pointer-events-none"
+        style={{
+          background:
+            'linear-gradient(to right, rgba(5,5,7,0.96) 0%, rgba(5,5,7,0.85) 35%, rgba(5,5,7,0.45) 60%, transparent 85%)',
+        }}
+      />
+
+      {/* B. Edge vignette framing */}
+      <div
+        aria-hidden="true"
+        className="fixed inset-0 z-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 90% 80% at 50% 50%, transparent 40%, rgba(5,5,7,0.55) 75%, #050507 100%)',
+        }}
+      />
+
+      {/* C. Our signature cinnabar red ambient glow */}
+      <div
+        aria-hidden="true"
+        className="fixed inset-0 z-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 65% 55% at 65% 48%, rgba(220, 20, 20, 0.28) 0%, rgba(160, 10, 10, 0.12) 35%, transparent 70%)',
+        }}
+      />
+
+      {/* D. Upward drifting luminous dust particles */}
+      <canvas
+        ref={canvasRef}
+        aria-hidden="true"
+        className="fixed inset-0 z-0 pointer-events-none"
+      />
+
+      {/* 3. NAVBAR (absolute top-0, z-index: 10) */}
+      <nav className="absolute top-0 left-0 right-0 z-10 w-full px-5 sm:px-8 py-4 sm:py-5 flex flex-row justify-between items-center">
         {/* Logo (left) */}
         <div className="flex flex-row items-center gap-3">
           <span
@@ -166,7 +286,7 @@ export function MainframeHero() {
             Mainframe®
           </span>
           <span
-            className="text-[25px] sm:text-[30px] text-white select-none leading-none"
+            className="text-[25px] sm:text-[30px] text-red-500 select-none leading-none drop-shadow-[0_0_12px_rgba(239,68,68,0.7)]"
             style={{ letterSpacing: '-0.02em' }}
           >
             ✳︎
@@ -175,14 +295,24 @@ export function MainframeHero() {
 
         {/* Desktop nav links (center, hidden below md) */}
         <div className="hidden md:flex flex-row text-[23px] text-white items-center">
-          {navLinks.map((link, idx) => (
-            <React.Fragment key={link}>
-              <a
-                href={`#${link.toLowerCase()}`}
-                className="hover:opacity-60 transition-opacity"
-              >
-                {link}
-              </a>
+          {navLinks.map((item, idx) => (
+            <React.Fragment key={item.label}>
+              {item.onClick ? (
+                <button
+                  type="button"
+                  onClick={item.onClick}
+                  className="hover:opacity-60 transition-opacity cursor-pointer bg-transparent border-none text-white p-0 text-[23px]"
+                >
+                  {item.label}
+                </button>
+              ) : (
+                <a
+                  href={item.href}
+                  className="hover:opacity-60 transition-opacity"
+                >
+                  {item.label}
+                </a>
+              )}
               {idx < navLinks.length - 1 && <span className="mr-2">, </span>}
             </React.Fragment>
           ))}
@@ -190,10 +320,11 @@ export function MainframeHero() {
 
         {/* Desktop CTA (right, hidden below md) */}
         <a
-          href="#contact"
+          href="#shelf"
+          onClick={scrollToShelf}
           className="hidden md:block text-[23px] text-white underline underline-offset-2 hover:opacity-60 transition-opacity"
         >
-          Get in touch
+          Explore Projects
         </a>
 
         {/* Mobile hamburger (visible below md) */}
@@ -223,33 +354,40 @@ export function MainframeHero() {
 
       {/* Mobile overlay (z-index: 9) */}
       <div
-        className={`fixed inset-0 bg-black/90 backdrop-blur-md z-[9] flex flex-col justify-center items-start px-8 gap-8 md:hidden transition-all duration-300 ${
+        className={`fixed inset-0 bg-[#050507]/95 backdrop-blur-md z-[9] flex flex-col justify-center items-start px-8 gap-8 md:hidden transition-all duration-300 ${
           menuOpen
             ? 'opacity-100 pointer-events-auto'
             : 'opacity-0 pointer-events-none'
         }`}
       >
-        {navLinks.map((link) => (
+        <button
+          type="button"
+          onClick={scrollToShelf}
+          className="text-[32px] font-medium text-white hover:opacity-60 transition-opacity text-left cursor-pointer"
+        >
+          Works (Filmography Shelf)
+        </button>
+        {navLinks.filter(n => n.label !== 'Works').map((item) => (
           <a
-            key={link}
-            href={`#${link.toLowerCase()}`}
+            key={item.label}
+            href={item.href}
             onClick={() => setMenuOpen(false)}
             className="text-[32px] font-medium text-white hover:opacity-60 transition-opacity"
           >
-            {link}
+            {item.label}
           </a>
         ))}
-        <a
-          href="#contact"
-          onClick={() => setMenuOpen(false)}
-          className="text-[32px] font-medium text-white underline underline-offset-4 hover:opacity-60 transition-opacity"
+        <button
+          type="button"
+          onClick={scrollToShelf}
+          className="text-[32px] font-medium text-white underline underline-offset-4 hover:opacity-60 transition-opacity text-left cursor-pointer"
         >
-          Get in touch
-        </a>
+          Explore Projects
+        </button>
       </div>
 
-      {/* 3. HERO SECTION (z-index: 1) */}
-      <main className="h-screen flex flex-col justify-end pb-12 md:justify-center md:pb-0 px-5 sm:px-8 md:px-10 overflow-hidden relative z-[1]">
+      {/* 4. HERO SECTION (z-index: 1) */}
+      <main className="h-screen flex flex-col justify-end pb-16 md:justify-center md:pb-0 px-5 sm:px-8 md:px-10 overflow-hidden relative z-[1]">
         <div className="max-w-xl relative z-10">
           {/* 1. Blurred intro label */}
           <div
@@ -279,7 +417,7 @@ export function MainframeHero() {
             {displayed}
             {!done && (
               <span
-                className="inline-block w-[2px] h-[1.1em] bg-white align-middle ml-[2px] animate-blink"
+                className="inline-block w-[2px] h-[1.1em] bg-red-500 align-middle ml-[2px] animate-blink"
                 aria-hidden="true"
               />
             )}
@@ -299,6 +437,7 @@ export function MainframeHero() {
               <button
                 key={label}
                 type="button"
+                onClick={scrollToShelf}
                 className="inline-flex items-center justify-center bg-white text-black border border-black/10 rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] mx-[0.2em] mb-[0.4em] whitespace-nowrap hover:bg-black hover:text-white transition-colors duration-200 cursor-pointer"
               >
                 {label}
@@ -309,16 +448,16 @@ export function MainframeHero() {
             <button
               type="button"
               onClick={handleCopyEmail}
-              className="inline-flex items-center justify-center text-white bg-transparent border border-white rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] mx-[0.2em] mb-[0.4em] whitespace-nowrap gap-2 sm:gap-3 hover:bg-white hover:text-black transition-colors duration-200 cursor-pointer group"
+              className="inline-flex items-center justify-center text-white bg-transparent border border-white/80 rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] mx-[0.2em] mb-[0.4em] whitespace-nowrap gap-2 sm:gap-3 hover:bg-white hover:text-black transition-colors duration-200 cursor-pointer group"
               title="Click to copy email address"
             >
               <span>
                 Reach us:{' '}
                 <span className="underline underline-offset-1">
-                  {copied ? 'Copied to clipboard!' : 'hello@mainframe.co'}
+                  {copied ? 'Copied to clipboard! ✓' : 'hello@mainframe.co'}
                 </span>
               </span>
-              {/* 12x12 copy icon: two overlapping rectangles */}
+              {/* 12x12 copy icon */}
               <svg
                 width="12"
                 height="12"
@@ -352,6 +491,30 @@ export function MainframeHero() {
             </button>
           </div>
         </div>
+
+        {/* 4. Elegant scroll prompt to 3D Filmography Shelf */}
+        <a
+          href="#shelf"
+          onClick={scrollToShelf}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-white/50 hover:text-white font-mono text-[10.5px] tracking-[0.24em] uppercase no-underline flex flex-col items-center gap-2 transition-colors duration-300 cursor-pointer"
+        >
+          <span>3D FILMOGRAPHY SHELF</span>
+          <svg
+            width="12"
+            height="8"
+            viewBox="0 0 12 8"
+            fill="none"
+            className="animate-bounce"
+          >
+            <path
+              d="M1 1L6 6L11 1"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </a>
       </main>
     </div>
   );

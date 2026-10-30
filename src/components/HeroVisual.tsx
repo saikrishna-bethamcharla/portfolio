@@ -149,7 +149,7 @@ export const HeroVisual: React.FC = () => {
         }}
       />
 
-      {/* Dynamic 3D Sculpted Typography & Hero Architecture */}
+      {/* Dynamic 3D Sculpted Typography */}
       <div
         style={{
           position: 'relative',
@@ -164,20 +164,6 @@ export const HeroVisual: React.FC = () => {
           padding: '0 1rem',
         }}
       >
-        {/* Top Editorial Eyebrow Badge */}
-        <div
-          className="flex items-center gap-2 mb-3 sm:mb-5 px-3.5 py-1 rounded-full bg-white/[0.05] border border-white/10 backdrop-blur-md"
-          style={{
-            transform: `perspective(1000px) rotateX(${tilt.x * 0.3}deg) rotateY(${tilt.y * 0.3}deg) translateZ(10px)`,
-            transition: 'transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1)',
-          }}
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-          <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.28em] text-white/70 uppercase">
-            CREATIVE DIRECTION & ARCHITECTURE
-          </span>
-        </div>
-
         {/* 3D Extruded & Textured Title Lockup */}
         <div
           style={{
@@ -295,70 +281,7 @@ export const HeroVisual: React.FC = () => {
             </text>
           </svg>
         </div>
-
-        {/* Subtitle / Discipline Tags */}
-        <p
-          className="mt-4 sm:mt-6 font-mono text-[11px] sm:text-[13px] tracking-[0.22em] text-white/60 uppercase text-center"
-          style={{
-            transform: `perspective(1000px) rotateX(${tilt.x * 0.4}deg) rotateY(${tilt.y * 0.4}deg) translateZ(12px)`,
-            transition: 'transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1)',
-          }}
-        >
-          AI FILMMAKING &bull; SPATIAL SYSTEMS &bull; BRAND ARCHITECTURE
-        </p>
-
-        {/* Scroll Down Prompt Button */}
-        <button
-          type="button"
-          onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-          className="mt-6 sm:mt-8 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.1] border border-white/10 hover:border-red-500/50 text-white/50 hover:text-white font-mono text-[10px] tracking-[0.22em] uppercase transition-all duration-200 cursor-pointer shadow-[0_4px_16px_rgba(0,0,0,0.4)] hover:-translate-y-0.5 group"
-        >
-          <span>DISCOVER WORK & DIRECT CHANNELS</span>
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="transition-transform group-hover:translate-y-0.5">
-            <path d="M1 3.5L5 7.5L9 3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
       </div>
-
-      {/* Looping Desk Developer Mascot — Bottom Left Corner */}
-      <aside
-        aria-label="Developer avatar resting at desk"
-        className="absolute bottom-5 left-5 sm:bottom-8 sm:left-10 z-20 flex flex-col items-start select-none pointer-events-auto group"
-      >
-        {/* Subtle status eyebrow */}
-        <div className="flex items-center gap-1.5 px-2.5 py-0.5 mb-1.5 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-md opacity-60 group-hover:opacity-100 transition-opacity">
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-          <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.22em] text-white/60 uppercase">
-            AFK &bull; COMPILING
-          </span>
-        </div>
-
-        {/* Video Canvas Container with Ambient Red Bounce & Depth Shadow */}
-        <div className="relative w-[130px] sm:w-[175px] md:w-[210px] aspect-[460/390] transition-transform duration-300 ease-out group-hover:scale-105">
-          {/* Ambient red floor bounce blending into theme */}
-          <div
-            aria-hidden="true"
-            className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4/5 h-8 bg-red-600/15 rounded-full blur-xl pointer-events-none"
-          />
-          {/* Ground contact shadow */}
-          <div
-            aria-hidden="true"
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-3 bg-black/80 rounded-full blur-md pointer-events-none"
-          />
-
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            className="w-full h-full object-contain relative z-10 select-none pointer-events-none drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)]"
-          >
-            <source src="/assets/videos/sleeping-dev.webm" type="video/webm" />
-            <source src="/assets/videos/sleeping-dev.mp4" type="video/mp4" />
-          </video>
-        </div>
-      </aside>
 
       {/* Seamless bottom fade into next section */}
       <div

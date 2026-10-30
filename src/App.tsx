@@ -31,6 +31,16 @@ export function App() {
       {/* 1. Hero Section */}
       <section id="hero" className="relative w-full h-screen overflow-hidden">
         <HeroVisual />
+
+        {/* Seamless bottom dissolve into Contact section below */}
+        <div
+          aria-hidden="true"
+          className="absolute bottom-0 left-0 right-0 h-32 sm:h-40 pointer-events-none z-20"
+          style={{
+            background:
+              'linear-gradient(to bottom, transparent 0%, rgba(5,5,7,0.85) 60%, #050507 100%)',
+          }}
+        />
       </section>
 
       {/* 2. Direct Channels & Studio Contact (Switched to 2nd section for seamless scroll flow) */}
@@ -38,6 +48,16 @@ export function App() {
         id="contact"
         className="relative w-full h-screen overflow-hidden bg-[#050507]"
       >
+        {/* Seamless top dissolve receiving the Hero section above */}
+        <div
+          aria-hidden="true"
+          className="absolute top-0 left-0 right-0 h-36 sm:h-48 pointer-events-none z-20"
+          style={{
+            background:
+              'linear-gradient(to bottom, #050507 0%, rgba(5,5,7,0.95) 30%, transparent 100%)',
+          }}
+        />
+
         <MainframeContact />
 
         {/* Seamless bottom dissolve into the 3D Shelf below */}

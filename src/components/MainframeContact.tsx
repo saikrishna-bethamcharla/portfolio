@@ -234,6 +234,11 @@ export function MainframeContact() {
         style={{
           transform: `translate3d(${parallax.x * 12}px, ${-parallax.y * 8}px, 0)`,
           transition: 'transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1)',
+          // Smoothly mask the ambient red backdrop so it starts at 0% opacity at the very top edge
+          maskImage:
+            'linear-gradient(to bottom, transparent 0%, black 25%, black 78%, transparent 100%)',
+          WebkitMaskImage:
+            'linear-gradient(to bottom, transparent 0%, black 25%, black 78%, transparent 100%)',
         }}
       >
         {/* Cinematic Crimson Red Ambient Backdrop matching Section 1 hero spotlight */}
@@ -241,16 +246,16 @@ export function MainframeContact() {
           className="absolute inset-0 w-full h-full"
           style={{
             background:
-              'radial-gradient(ellipse 75% 65% at 75% 52%, #cf1922 0%, #aa1219 32%, #68080c 62%, #050507 96%)',
+              'radial-gradient(ellipse 75% 65% at 75% 55%, #cf1922 0%, #aa1219 32%, #68080c 62%, #050507 96%)',
           }}
         />
 
-        {/* Top Black Gradient: Seamlessly dissolves into Section 1 (#050507) without touching character */}
+        {/* Top Black Gradient: Seamlessly dissolves into Section 1 (#050507) */}
         <div
-          className="absolute inset-x-0 top-0 h-[42vh]"
+          className="absolute inset-x-0 top-0 h-[48vh]"
           style={{
             background:
-              'linear-gradient(to bottom, #050507 0%, rgba(5,5,7,0.95) 20%, rgba(5,5,7,0.55) 55%, transparent 100%)',
+              'linear-gradient(to bottom, #050507 0%, #050507 12%, rgba(5,5,7,0.95) 28%, rgba(5,5,7,0.5) 65%, transparent 100%)',
           }}
         />
 
@@ -295,7 +300,7 @@ export function MainframeContact() {
             preload="auto"
             onSeeked={handleSeeked}
           >
-            <source src="/character_keyed.webm" type="video/webm" />
+            <source src="./character_keyed.webm" type="video/webm" />
             <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260826_041744_63efcd78-bf7d-4039-99e2-2461e8a61903.mp4" type="video/mp4" />
           </video>
         </div>

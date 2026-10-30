@@ -1308,14 +1308,14 @@ const FILMS = [
   {
     id: 'storm',
     category: 'motion',
-    title: 'Green Field International',
-    romaji: 'GREEN FIELD',
+    title: 'Green Field School International',
+    romaji: 'GREEN FIELD SCHOOL',
     kanji: '',
     year: '2024',
     genre: 'COMMERCIAL FILM',
-    minutes: '5 MIN CAMPAIGN',
-    synopsis: 'Cinematic brand commercial for Green Field School International featuring hand-drawn motion accents and spatial sound design.',
-    credit: 'Motion Design — Sai Krishna Bethamcharla',
+    minutes: '5 MIN ANTHEM',
+    synopsis: 'Cinematic brand anthem film and institutional commercial for Green Field School (GFS International), capturing academic excellence, youthful discovery, and global leadership with hand-drawn motion accents and spatial sound design.',
+    credit: 'Direction & Motion Design — Sai Krishna Bethamcharla',
     liveUrl: 'https://www.youtube.com/@saikrishna_bethamcharla',
     customTextures: true,
     customSpineUrl: null,
@@ -5622,160 +5622,237 @@ function generateGodavariCover(packshotImg, gheeLogoImg) {
   return canvas.toDataURL('image/webp', 0.95);
 }
 
-function generateGreenFieldSpine() {
+function generateGreenFieldSpine(gfsLogoImg) {
   const canvas = document.createElement('canvas');
   canvas.width = 300; canvas.height = 1800;
   const ctx = canvas.getContext('2d');
   const W = 300, H = 1800;
 
+  // Deep British racing green / collegiate emerald cloth
   const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, '#0c2214');
-  bg.addColorStop(0.5, '#07150c');
-  bg.addColorStop(1, '#030a06');
+  bg.addColorStop(0, '#062817');
+  bg.addColorStop(0.35, '#041c10');
+  bg.addColorStop(0.7, '#02130b');
+  bg.addColorStop(1, '#010a06');
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
+  // Subtle linen / twill weave grain
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.025)';
+  for (let i = 0; i < H; i += 4) {
+    ctx.fillRect(0, i, W, 1);
+  }
+
   drawCornerSpineWear(ctx, W, H);
 
-  // School Shield Crest Glyph
-  const gY = 160;
-  ctx.strokeStyle = '#e5c07b'; ctx.lineWidth = 2.4;
-  ctx.beginPath();
-  ctx.moveTo(W / 2 - 32, gY - 40);
-  ctx.lineTo(W / 2 + 32, gY - 40);
-  ctx.lineTo(W / 2 + 32, gY + 10);
-  ctx.quadraticCurveTo(W / 2, gY + 45, W / 2, gY + 55);
-  ctx.quadraticCurveTo(W / 2, gY + 45, W / 2 - 32, gY + 10);
-  ctx.closePath();
-  ctx.stroke();
+  // Top Hero: Green Field School Crest
+  const gY = 175;
+  if (gfsLogoImg) {
+    const cleanCanvas = makeTransparentCanvas(gfsLogoImg, 240);
+    const bounds = getImageBounds(cleanCanvas);
+    const destW = 160;
+    const destH = destW * (bounds.h / bounds.w);
+    ctx.save();
+    ctx.shadowColor = 'rgba(34, 197, 94, 0.35)';
+    ctx.shadowBlur = 14;
+    ctx.drawImage(
+      cleanCanvas,
+      bounds.x, bounds.y, bounds.w, bounds.h,
+      (W - destW) / 2, gY - destH / 2, destW, destH
+    );
+    ctx.restore();
+  } else {
+    // School Crest Shield Placeholder
+    ctx.strokeStyle = '#4ade80'; ctx.lineWidth = 2.4;
+    ctx.strokeRect(W / 2 - 32, gY - 40, 64, 80);
+  }
 
-  // Vertical Title
+  // Thin decorative gold/emerald divider
+  ctx.strokeStyle = 'rgba(74, 222, 128, 0.45)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(W / 2 - 45, gY + 95); ctx.lineTo(W / 2 + 45, gY + 95); ctx.stroke();
+
+  // Vertical Title: GREEN FIELD SCHOOL
   ctx.save();
   ctx.translate(W / 2, H * 0.53);
   ctx.rotate(Math.PI / 2);
   ctx.textAlign = 'center';
-  ctx.fillStyle = '#ffffff';
-  ctx.font = '700 78px "Newsreader", serif';
+
+  ctx.shadowColor = 'rgba(34, 197, 94, 0.4)';
+  ctx.shadowBlur = 10;
+  ctx.fillStyle = '#f0fdf4';
+  ctx.font = '700 76px "Newsreader", serif';
   ctx.letterSpacing = '0.10em';
   ctx.fillText('GREEN FIELD', 0, 26);
   ctx.restore();
 
   // Bottom info
-  ctx.fillStyle = '#e5c07b';
+  ctx.fillStyle = '#4ade80';
   ctx.font = '700 22px "Inter Tight", sans-serif';
   ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
-  ctx.fillText('SAI KRISHNA', W / 2, H - 228);
+  ctx.fillText('SAI KRISHNA', W / 2, H - 232);
 
   ctx.fillStyle = '#86efac';
   ctx.font = '700 13px "Inter Tight", sans-serif';
   ctx.letterSpacing = '0.24em';
-  ctx.fillText('COMMERCIAL FILM', W / 2, H - 198);
+  ctx.fillText('COMMERCIAL FILM', W / 2, H - 202);
 
-  drawClassicBadge(ctx, (W - 140) / 2, H - 155, 140, 75, 'FILM', '#ffffff', '#e5c07b', 24);
+  drawClassicBadge(ctx, (W - 140) / 2, H - 160, 140, 75, 'FILM', '#ffffff', '#22c55e', 24);
   return canvas.toDataURL('image/webp', 0.95);
 }
 
-function generateGreenFieldCover() {
+function generateGreenFieldCover(gfsLogoImg) {
   const canvas = document.createElement('canvas');
   canvas.width = 800; canvas.height = 1560;
   const ctx = canvas.getContext('2d');
   const W = 800, H = 1560;
 
+  // Deep collegiate emerald gradient
   const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, '#0e2918');
-  bg.addColorStop(0.4, '#091c10');
-  bg.addColorStop(0.75, '#051109');
-  bg.addColorStop(1, '#020704');
+  bg.addColorStop(0, '#062b19');
+  bg.addColorStop(0.35, '#041f12');
+  bg.addColorStop(0.75, '#03140b');
+  bg.addColorStop(1, '#010a05');
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
+  // Subtle linen weave texture
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.02)';
+  for (let y = 0; y < H; y += 4) ctx.fillRect(0, y, W, 1);
+  for (let x = 0; x < W; x += 4) ctx.fillRect(x, 0, 1, H);
+
   drawAuthenticWear(ctx, W, H, true);
 
+  // Double Collegiate Emerald & Gold Borders
+  ctx.strokeStyle = 'rgba(34, 197, 94, 0.55)'; ctx.lineWidth = 1.8;
+  ctx.strokeRect(36, 36, W - 72, H - 72);
+
+  ctx.strokeStyle = 'rgba(250, 204, 21, 0.4)'; ctx.lineWidth = 1;
+  ctx.strokeRect(44, 44, W - 88, H - 88);
+
+  // Corner academic brackets
+  const bL = 22;
+  [[48, 48], [W - 48, 48], [48, H - 48], [W - 48, H - 48]].forEach(([cx, cy], idx) => {
+    ctx.strokeStyle = '#4ade80'; ctx.lineWidth = 2;
+    const sx = idx % 2 === 0 ? 1 : -1;
+    const sy = idx < 2 ? 1 : -1;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy + sy * bL);
+    ctx.lineTo(cx, cy);
+    ctx.lineTo(cx + sx * bL, cy);
+    ctx.stroke();
+  });
+
   // Top header
-  ctx.fillStyle = '#e5c07b';
-  ctx.font = '600 14px "Inter Tight", sans-serif';
-  ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
-  ctx.fillText('GREEN FIELD SCHOOL // ANTHEM CAMPAIGN', W / 2, 85);
+  ctx.fillStyle = '#4ade80';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.34em';
+  ctx.fillText('INSTITUTIONAL ANTHEM // CINEMATIC COMMERCIAL', W / 2, 88);
 
-  // Title
-  ctx.fillStyle = '#ffffff';
-  ctx.font = '700 90px "Newsreader", serif';
-  ctx.letterSpacing = '0.04em';
-  ctx.fillText('GREEN FIELD', W / 2, 195);
+  // Sub-header
+  ctx.fillStyle = '#f0fdf4';
+  ctx.font = '700 16px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.28em';
+  ctx.fillText('GREEN FIELD SCHOOL • GFS INTERNATIONAL', W / 2, 122);
 
-  ctx.fillStyle = '#e5c07b';
-  ctx.font = '700 24px "Inter Tight", sans-serif';
-  ctx.letterSpacing = '0.32em';
-  ctx.fillText('INTERNATIONAL', W / 2, 245);
+  // Emerald & gold divider rule
+  ctx.strokeStyle = 'rgba(34, 197, 94, 0.45)'; ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.moveTo(160, 146); ctx.lineTo(W - 160, 146); ctx.stroke();
 
-  ctx.strokeStyle = 'rgba(229, 192, 123, 0.45)';
-  ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(140, 275); ctx.lineTo(W - 140, 275); ctx.stroke();
-
-  // Hero: Ornate Gold Heraldic Shield with Tree of Knowledge
-  const cX = W / 2, cY = 690;
-  const sW = 260, sH = 320;
+  // Hero Card: Inset Satin-Ivory Debossed Heraldic Plaque
+  const cardW = 680, cardH = 560;
+  const cardX = (W - cardW) / 2;
+  const cardY = 270;
 
   ctx.save();
-  ctx.translate(cX, cY);
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.65)';
+  ctx.shadowBlur = 26;
+  ctx.shadowOffsetY = 14;
 
-  const aura = ctx.createRadialGradient(0, 0, 30, 0, 0, 280);
-  aura.addColorStop(0, 'rgba(229, 192, 123, 0.35)');
-  aura.addColorStop(1, 'transparent');
-  ctx.fillStyle = aura; ctx.beginPath(); ctx.arc(0, 0, 280, 0, Math.PI * 2); ctx.fill();
+  const cardBg = ctx.createLinearGradient(cardX, cardY, cardX, cardY + cardH);
+  cardBg.addColorStop(0, '#ffffff');
+  cardBg.addColorStop(0.85, '#fafaf9');
+  cardBg.addColorStop(1, '#f3f4f6');
+  ctx.fillStyle = cardBg;
 
-  // Shield Path
   ctx.beginPath();
-  ctx.moveTo(-sW / 2, -sH / 2);
-  ctx.lineTo(sW / 2, -sH / 2);
-  ctx.lineTo(sW / 2, sH / 6);
-  ctx.quadraticCurveTo(0, sH / 2 + 30, 0, sH / 2 + 50);
-  ctx.quadraticCurveTo(0, sH / 2 + 30, -sW / 2, sH / 6);
+  const r = 16;
+  ctx.moveTo(cardX + r, cardY);
+  ctx.lineTo(cardX + cardW - r, cardY);
+  ctx.quadraticCurveTo(cardX + cardW, cardY, cardX + cardW, cardY + r);
+  ctx.lineTo(cardX + cardW, cardY + cardH - r);
+  ctx.quadraticCurveTo(cardX + cardW, cardY + cardH, cardX + cardW - r, cardY + cardH);
+  ctx.lineTo(cardX + r, cardY + cardH);
+  ctx.quadraticCurveTo(cardX, cardY + cardH, cardX, cardY + cardH - r);
+  ctx.lineTo(cardX, cardY + r);
+  ctx.quadraticCurveTo(cardX, cardY, cardX + r, cardY);
   ctx.closePath();
-  ctx.fillStyle = '#06130b';
   ctx.fill();
-
-  ctx.strokeStyle = '#e5c07b'; ctx.lineWidth = 3.5;
-  ctx.stroke();
-
-  // Tree of Knowledge branches
-  ctx.strokeStyle = '#fef08a'; ctx.lineWidth = 2.4;
-  ctx.beginPath();
-  ctx.moveTo(0, sH / 4); ctx.lineTo(0, -sH / 6);
-  ctx.lineTo(-45, -sH / 3);
-  ctx.moveTo(0, -sH / 6); ctx.lineTo(45, -sH / 3);
-  ctx.moveTo(0, -sH / 10); ctx.lineTo(-30, -sH / 5);
-  ctx.moveTo(0, -sH / 10); ctx.lineTo(30, -sH / 5);
-  ctx.stroke();
   ctx.restore();
 
-  // Editorial
-  const subY = 1110;
-  ctx.fillStyle = '#dcfce7';
+  // Plaque inner decorative borders: Emerald & Gold
+  ctx.strokeStyle = 'rgba(21, 128, 61, 0.35)'; ctx.lineWidth = 1.6;
+  ctx.strokeRect(cardX + 12, cardY + 12, cardW - 24, cardH - 24);
+
+  ctx.strokeStyle = 'rgba(250, 204, 21, 0.45)'; ctx.lineWidth = 1;
+  ctx.strokeRect(cardX + 18, cardY + 18, cardW - 36, cardH - 36);
+
+  // Draw the official GFS Logo inside the card
+  if (gfsLogoImg) {
+    const cleanCanvas = makeTransparentCanvas(gfsLogoImg, 240);
+    const bounds = getImageBounds(cleanCanvas);
+    const targetW = 420;
+    const targetH = targetW * (bounds.h / bounds.w);
+    const drawX = cardX + (cardW - targetW) / 2;
+    const drawY = cardY + (cardH - targetH) / 2 - 10;
+
+    ctx.save();
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.18)';
+    ctx.shadowBlur = 12;
+    ctx.shadowOffsetY = 6;
+    ctx.drawImage(
+      cleanCanvas,
+      bounds.x, bounds.y, bounds.w, bounds.h,
+      drawX, drawY, targetW, targetH
+    );
+    ctx.restore();
+  }
+
+  // Under-card radiating decorative heraldic arcs
+  const arcY = cardY + cardH + 50;
+  ctx.strokeStyle = 'rgba(74, 222, 128, 0.25)'; ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.arc(W / 2, arcY + 80, 70, Math.PI, 0); ctx.stroke();
+  ctx.beginPath(); ctx.arc(W / 2, arcY + 80, 110, Math.PI, 0); ctx.stroke();
+
+  // Editorial Section
+  const subY = 1010;
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 34px "Newsreader", serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.04em';
+  ctx.fillText('NURTURING GLOBAL LEADERS', W / 2, subY);
+
+  ctx.fillStyle = '#e2e8f0';
   ctx.font = 'italic 19px "Newsreader", serif';
-  ctx.textAlign = 'center'; ctx.letterSpacing = '0.01em';
-  ctx.fillText('“A cinematic brand commercial celebrating institutional heritage and youth.”', W / 2, subY);
+  ctx.letterSpacing = '0.01em';
+  ctx.fillText('“A cinematic brand commercial celebrating institutional heritage, discovery, and youth.”', W / 2, subY + 44);
 
   ctx.font = '700 13px "Inter Tight", sans-serif';
-  ctx.fillStyle = '#e5c07b'; ctx.letterSpacing = '0.24em';
-  ctx.fillText('HAND-DRAWN MOTION ACCENTS • SPATIAL SOUND • 2024', W / 2, subY + 36);
+  ctx.fillStyle = '#4ade80'; ctx.letterSpacing = '0.24em';
+  ctx.fillText('HAND-DRAWN MOTION ACCENTS • SPATIAL SOUND DESIGN • 4K CINEMA', W / 2, subY + 82);
 
+  // Bottom specs & credits
   ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(80, H - 200); ctx.lineTo(W - 80, H - 200); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(80, H - 210); ctx.lineTo(W - 80, H - 210); ctx.stroke();
 
   ctx.textAlign = 'left';
-  ctx.fillStyle = '#e5c07b'; ctx.font = '700 13px "Inter Tight", sans-serif'; ctx.letterSpacing = '0.20em';
-  ctx.fillText('MOTION DIRECTION', 80, H - 160);
+  ctx.fillStyle = '#4ade80'; ctx.font = '700 13px "Inter Tight", sans-serif'; ctx.letterSpacing = '0.20em';
+  ctx.fillText('COMMERCIAL DIRECTION & MOTION', 80, H - 165);
   ctx.fillStyle = '#ffffff'; ctx.font = '700 16px "Inter Tight", sans-serif';
-  ctx.fillText('SAI KRISHNA BETHAMCHARLA', 80, H - 134);
+  ctx.fillText('SAI KRISHNA BETHAMCHARLA', 80, H - 138);
 
-  drawClassicBadge(ctx, W - 80 - 250, H - 172, 250, 74, 'COMMERCIAL FILM', '#ffffff', '#e5c07b', 21);
+  drawClassicBadge(ctx, W - 80 - 270, H - 180, 270, 74, 'COMMERCIAL FILM', '#ffffff', '#22c55e', 19);
   return canvas.toDataURL('image/webp', 0.95);
 }
 
-// ============================================================================
-// 5. AURA ORGANICS LUXURY (Book 9 - Brand Systems)
-// ============================================================================
 function generateAuraSpine(auraKeshImg, auraFullImg) {
   const canvas = document.createElement('canvas');
   canvas.width = 300; canvas.height = 1800;
@@ -7494,7 +7571,8 @@ async function init() {
     auraKeshImg,
     auraFullImg,
     viruPortraitImg,
-    viruYogiImg
+    viruYogiImg,
+    gfsLogoImg
   ] = await Promise.all([
     loadImg('./assets/gmcks/ph-logo.png'),
     loadImg('./assets/gmcks/gmcks-pencil-portrait.jpg'),
@@ -7517,7 +7595,8 @@ async function init() {
     loadImg('./assets/aura/aura-kesh.png'),
     loadImg('./assets/aura/aura-logo-full.png'),
     loadImg('./assets/virupaksha/portrait-arch.jpg'),
-    loadImg('./assets/virupaksha/yogi-arch.jpg')
+    loadImg('./assets/virupaksha/yogi-arch.jpg'),
+    loadImg('./assets/greenfield/gfs-logo.png')
   ]);
 
   const gmcksFilm = FILMS.find(f => f.id === 'gmcks');
@@ -7566,8 +7645,8 @@ async function init() {
 
   const greenFieldFilm = FILMS.find(f => f.id === 'storm');
   if (greenFieldFilm) {
-    greenFieldFilm.customSpineUrl = generateGreenFieldSpine();
-    greenFieldFilm.customCoverUrl = generateGreenFieldCover();
+    greenFieldFilm.customSpineUrl = generateGreenFieldSpine(gfsLogoImg);
+    greenFieldFilm.customCoverUrl = generateGreenFieldCover(gfsLogoImg);
   }
 
   const auraFilm = FILMS.find(f => f.id === 'tide');

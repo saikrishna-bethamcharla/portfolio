@@ -56,8 +56,8 @@ export function MainframeContact() {
   const targetTimeRef = useRef<number>(0);
   const isSeekingRef = useRef<boolean>(false);
 
-  // Typewriter effect for A.R.I.A prompt
-  const typewriterText = "Glad you stopped in. Good taste tends to find us. Now, what are we building?";
+  // Typewriter effect for prompt
+  const typewriterText = "Glad you stopped in. Good taste tends to find us. Now, what are we creating together?";
   const { displayed, done } = useTypewriter(typewriterText, 38, 600);
 
   // Pills reveal 400ms after component mounts
@@ -208,20 +208,20 @@ export function MainframeContact() {
 
   const pillActions = [
     {
-      label: 'Pitch us an idea',
-      href: 'mailto:saikrishnabethamcharla@gmail.com?subject=Project%20Pitch%20%E2%80%94%20Sai%20Krishna',
+      label: 'Pitch a project',
+      href: 'mailto:saikrishnabethamcharla@gmail.com?subject=Project%20Inquiry%20%E2%80%94%20Sai%20Krishna',
     },
     {
-      label: 'Come work here',
-      href: 'mailto:saikrishnabethamcharla@gmail.com?subject=Collaboration%20Inquiry',
+      label: 'Creative direction',
+      href: 'mailto:saikrishnabethamcharla@gmail.com?subject=Creative%20Direction%20Collaboration',
     },
     {
       label: 'Send a brief hello',
-      href: 'mailto:saikrishnabethamcharla@gmail.com?subject=Hello%20from%20Portfolio',
+      href: 'mailto:saikrishnabethamcharla@gmail.com?subject=Hello%20Sai%20Krishna',
     },
     {
-      label: 'See how we operate',
-      href: 'mailto:saikrishnabethamcharla@gmail.com?subject=Advisory%20Inquiry',
+      label: 'Technical advisory',
+      href: 'mailto:saikrishnabethamcharla@gmail.com?subject=Technical%20Advisory%20Inquiry',
     },
   ];
 
@@ -296,7 +296,7 @@ export function MainframeContact() {
             style={{ fontFamily: 'var(--font-heading)' }}
             className="text-[17px] sm:text-[20px] tracking-tight text-white leading-none hidden sm:inline"
           >
-            Mainframe®
+            Sai Krishna®
           </span>
           <span className="text-[18px] text-red-500 select-none leading-none drop-shadow-[0_0_10px_rgba(239,68,68,0.8)] hidden sm:inline">
             ✳︎
@@ -317,20 +317,22 @@ export function MainframeContact() {
       {/* 4. MAIN CONTENT (z-index: 1) */}
       <main className="h-screen flex flex-col justify-end pb-16 md:justify-center md:pb-0 px-5 sm:px-8 md:px-10 overflow-hidden relative z-[1]">
         <div className="max-w-xl relative z-10">
-          {/* 1. Blurred intro label */}
+          {/* 1. Personalized intro label (Unblurred, crisp high-end typography) */}
           <div
-            className="pointer-events-none select-none mb-5 sm:mb-6"
+            className="select-none mb-5 sm:mb-6"
             style={{
-              fontSize: 'clamp(18px, 4vw, 26px)',
-              lineHeight: 1.3,
+              fontSize: 'clamp(18px, 3.8vw, 26px)',
+              lineHeight: 1.35,
               fontWeight: 400,
               color: '#ffffff',
-              filter: 'blur(4px)',
             }}
           >
-            Hey there, meet A.R.I.A,
+            <span className="text-zinc-300 font-light">Hey there, I’m </span>
+            <span className="text-white font-medium">Sai Krishna Bethamcharla</span>,
             <br />
-            Mainframe's Adaptive Response Interface Agent
+            <span className="text-red-400 font-mono text-[0.85em] tracking-wide">
+              Creative Director, AI Filmmaker & Technical Lead
+            </span>
           </div>
 
           {/* 2. Typewriter text */}
@@ -379,7 +381,7 @@ export function MainframeContact() {
               title="Click to copy direct email"
             >
               <span>
-                Reach us:{' '}
+                Direct inbox:{' '}
                 <span className="underline underline-offset-1">
                   {copied ? 'Copied to clipboard! ✓' : 'saikrishnabethamcharla@gmail.com'}
                 </span>

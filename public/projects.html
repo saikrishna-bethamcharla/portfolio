@@ -1050,16 +1050,16 @@ const FILMS = [
   },
   {
     id: 'war',
-    category: 'branding',
-    title: 'Dr. Rashmi Katari',
-    romaji: 'VIRUPAKSHA',
+    category: 'websites',
+    title: 'Virupaksha Wellness',
+    romaji: 'VIRUPAKSHA WELLNESS',
     kanji: '',
     year: '2024',
-    genre: 'SANCTUARY BRAND',
-    minutes: '12 BRAND ASSETS',
-    synopsis: 'Holistic visual identity, content strategy, and patient booking portal for Virupaksha Niramayata Living Sanctuary.',
-    credit: 'Brand Architecture — Sai Krishna Bethamcharla',
-    liveUrl: '#',
+    genre: 'HOLISTIC WELLNESS PORTAL',
+    minutes: 'SACRED SANCTUARY',
+    synopsis: 'Designed and engineered the official website and digital presence for Virupaksha Wellness (Dr. Rashmi Katari) — a sacred digital sanctuary guided by the five elements, conscious living, and holistic wellness.',
+    credit: 'Website Architecture & Design — Sai Krishna Bethamcharla',
+    liveUrl: 'https://virupakshawellness.com/',
     customTextures: true,
     customSpineUrl: null,
     customCoverUrl: null
@@ -4382,142 +4382,269 @@ function generateAuraCover(auraFullImg, auraKeshImg) {
   return canvas.toDataURL('image/webp', 0.95);
 }
 
-function generateVirupakshaSpine() {
+function generateVirupakshaSpine(portraitImg) {
   const canvas = document.createElement('canvas');
   canvas.width = 300; canvas.height = 1800;
   const ctx = canvas.getContext('2d');
   const W = 300, H = 1800;
 
+  // Deep twilight starlight indigo-forest gradient
   const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, '#1c2821');
-  bg.addColorStop(0.5, '#131b16');
-  bg.addColorStop(1, '#0b100d');
+  bg.addColorStop(0, '#0a1622');
+  bg.addColorStop(0.35, '#07121b');
+  bg.addColorStop(0.7, '#040b12');
+  bg.addColorStop(1, '#02060a');
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
+  // Subtle starlight shimmer particles
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
+  for (let i = 0; i < H; i += 4) {
+    ctx.fillRect(0, i, W, 1);
+  }
+
   drawCornerSpineWear(ctx, W, H);
 
-  // Zen Stones Glyph
-  const gY = 160;
-  ctx.fillStyle = '#86efac';
-  ctx.beginPath(); ctx.ellipse(W / 2, gY + 24, 38, 14, 0, 0, Math.PI * 2); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(W / 2, gY, 28, 12, 0, 0, Math.PI * 2); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(W / 2, gY - 22, 18, 10, 0, 0, Math.PI * 2); ctx.fill();
+  // Top Hero: Cameo Portrait Arch
+  const aY = 175;
+  const aW = 100, aH = 135;
 
-  // Vertical Title
+  ctx.save();
+  ctx.shadowColor = 'rgba(251, 146, 60, 0.35)';
+  ctx.shadowBlur = 16;
+
+  // Arch clip path
+  ctx.beginPath();
+  const r = aW / 2;
+  ctx.arc(W / 2, aY - aH / 2 + r, r, Math.PI, 0);
+  ctx.lineTo(W / 2 + r, aY + aH / 2);
+  ctx.lineTo(W / 2 - r, aY + aH / 2);
+  ctx.closePath();
+
+  ctx.fillStyle = '#060d14';
+  ctx.fill();
+  ctx.clip();
+
+  if (portraitImg && portraitImg.complete && portraitImg.naturalWidth) {
+    // Focus on face & torso
+    const nw = portraitImg.naturalWidth;
+    const nh = portraitImg.naturalHeight;
+    ctx.drawImage(portraitImg, 0, 0, nw, nh * 0.75, W / 2 - aW / 2, aY - aH / 2, aW, aH);
+  } else {
+    // Sacred Flame Glyph
+    ctx.fillStyle = '#fb923c';
+    ctx.beginPath();
+    ctx.ellipse(W / 2, aY, 20, 36, 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
+
+  // Ornate Arch Border
+  ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 2.2;
+  ctx.beginPath();
+  ctx.arc(W / 2, aY - aH / 2 + r, r, Math.PI, 0);
+  ctx.lineTo(W / 2 + r, aY + aH / 2);
+  ctx.lineTo(W / 2 - r, aY + aH / 2);
+  ctx.closePath();
+  ctx.stroke();
+
+  // Thin gold divider
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.45)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(W / 2 - 45, aY + aH / 2 + 25); ctx.lineTo(W / 2 + 45, aY + aH / 2 + 25); ctx.stroke();
+
+  // Vertical Title: VIRUPAKSHA WELLNESS
   ctx.save();
   ctx.translate(W / 2, H * 0.53);
   ctx.rotate(Math.PI / 2);
   ctx.textAlign = 'center';
-  ctx.fillStyle = '#ffffff';
-  ctx.font = '700 78px "Newsreader", serif';
-  ctx.letterSpacing = '0.12em';
+
+  ctx.shadowColor = 'rgba(251, 146, 60, 0.4)';
+  ctx.shadowBlur = 10;
+  ctx.fillStyle = '#f8fafc';
+  ctx.font = '700 76px "Newsreader", serif';
+  ctx.letterSpacing = '0.10em';
   ctx.fillText('VIRUPAKSHA', 0, 26);
   ctx.restore();
 
-  ctx.fillStyle = '#86efac';
+  // Bottom info
+  ctx.fillStyle = '#d4af37';
   ctx.font = '700 22px "Inter Tight", sans-serif';
   ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
-  ctx.fillText('SAI KRISHNA', W / 2, H - 228);
+  ctx.fillText('SAI KRISHNA', W / 2, H - 232);
 
-  ctx.fillStyle = '#bbf7d0';
+  ctx.fillStyle = '#fdba74';
   ctx.font = '700 13px "Inter Tight", sans-serif';
   ctx.letterSpacing = '0.24em';
-  ctx.fillText('SANCTUARY BRAND', W / 2, H - 198);
+  ctx.fillText('VIRUPAKSHAWELLNESS.COM', W / 2, H - 202);
 
-  drawClassicBadge(ctx, (W - 140) / 2, H - 155, 140, 75, 'BRAND', '#ffffff', '#86efac', 24);
+  drawClassicBadge(ctx, (W - 140) / 2, H - 160, 140, 75, 'WEB', '#ffffff', '#0284c7', 24);
   return canvas.toDataURL('image/webp', 0.95);
 }
 
-function generateVirupakshaCover() {
+function generateVirupakshaCover(portraitImg, nightLakeImg) {
   const canvas = document.createElement('canvas');
   canvas.width = 800; canvas.height = 1560;
   const ctx = canvas.getContext('2d');
   const W = 800, H = 1560;
 
+  // Deep starry night indigo-slate gradient
   const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, '#22322a');
-  bg.addColorStop(0.4, '#17231d');
-  bg.addColorStop(0.75, '#0e1713');
-  bg.addColorStop(1, '#060b08');
+  bg.addColorStop(0, '#0a1624');
+  bg.addColorStop(0.35, '#07111c');
+  bg.addColorStop(0.75, '#040b12');
+  bg.addColorStop(1, '#020609');
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
+  // Subtle starlight grain
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.025)';
+  for (let y = 0; y < H; y += 4) ctx.fillRect(0, y, W, 1);
+  for (let x = 0; x < W; x += 4) ctx.fillRect(x, 0, 1, H);
+
   drawAuthenticWear(ctx, W, H, true);
 
-  ctx.fillStyle = '#86efac';
-  ctx.font = '600 14px "Inter Tight", sans-serif';
-  ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
-  ctx.fillText('NIRAMAYATA LIVING SANCTUARY // AYURVEDA', W / 2, 85);
+  // Sacred Gold & Amber Border
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.45)'; ctx.lineWidth = 1.6;
+  ctx.strokeRect(36, 36, W - 72, H - 72);
 
-  ctx.fillStyle = '#ffffff';
-  ctx.font = '700 90px "Newsreader", serif';
-  ctx.letterSpacing = '0.04em';
-  ctx.fillText('VIRUPAKSHA', W / 2, 195);
+  ctx.strokeStyle = 'rgba(251, 146, 60, 0.35)'; ctx.lineWidth = 1;
+  ctx.strokeRect(44, 44, W - 88, H - 88);
 
-  ctx.fillStyle = '#86efac';
-  ctx.font = '700 24px "Inter Tight", sans-serif';
-  ctx.letterSpacing = '0.30em';
-  ctx.fillText('DR. RASHMI KATARI', W / 2, 245);
+  // Corner temple accents
+  const bL = 22;
+  [[48, 48], [W - 48, 48], [48, H - 48], [W - 48, H - 48]].forEach(([cx, cy], idx) => {
+    ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 2;
+    const sx = idx % 2 === 0 ? 1 : -1;
+    const sy = idx < 2 ? 1 : -1;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy + sy * bL);
+    ctx.lineTo(cx, cy);
+    ctx.lineTo(cx + sx * bL, cy);
+    ctx.stroke();
+  });
 
-  ctx.strokeStyle = 'rgba(134, 239, 172, 0.4)';
-  ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(140, 275); ctx.lineTo(W - 140, 275); ctx.stroke();
+  // Top header
+  ctx.fillStyle = '#d4af37';
+  ctx.font = '700 13px "Inter Tight", sans-serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.34em';
+  ctx.fillText('A SACRED SPACE // GUIDED BY THE FIVE ELEMENTS', W / 2, 88);
 
-  // Hero: Zen Balance River Stones inside Sacred Lotus Enso
-  const cX = W / 2, cY = 700;
+  // Sub-header
+  ctx.fillStyle = '#fdba74';
+  ctx.font = '700 16px "Inter Tight", sans-serif';
+  ctx.letterSpacing = '0.28em';
+  ctx.fillText('VIRUPAKSHA WELLNESS • DR. RASHMI KATARI', W / 2, 122);
+
+  // Amber divider rule
+  ctx.strokeStyle = 'rgba(251, 146, 60, 0.45)'; ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.moveTo(160, 146); ctx.lineTo(W - 160, 146); ctx.stroke();
+
+  // Hero Card: The Sacred Arch Portrait
+  const cardW = 680, cardH = 580;
+  const cardX = (W - cardW) / 2;
+  const cardY = 270;
+
   ctx.save();
-  ctx.translate(cX, cY);
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.75)';
+  ctx.shadowBlur = 28;
+  ctx.shadowOffsetY = 14;
 
-  const aura = ctx.createRadialGradient(0, 0, 30, 0, 0, 270);
-  aura.addColorStop(0, 'rgba(134, 239, 172, 0.35)');
-  aura.addColorStop(1, 'transparent');
-  ctx.fillStyle = aura; ctx.beginPath(); ctx.arc(0, 0, 270, 0, Math.PI * 2); ctx.fill();
+  // Background of card: deep nocturnal lake background
+  const cardBg = ctx.createLinearGradient(cardX, cardY, cardX, cardY + cardH);
+  cardBg.addColorStop(0, '#0c1a29');
+  cardBg.addColorStop(1, '#050c14');
+  ctx.fillStyle = cardBg;
 
-  // Sacred circular enso ring
-  ctx.strokeStyle = '#86efac'; ctx.lineWidth = 3.5;
-  ctx.beginPath(); ctx.arc(0, 0, 210, 0.3, Math.PI * 2 - 0.2); ctx.stroke();
+  ctx.beginPath();
+  const r = 16;
+  ctx.moveTo(cardX + r, cardY);
+  ctx.lineTo(cardX + cardW - r, cardY);
+  ctx.quadraticCurveTo(cardX + cardW, cardY, cardX + cardW, cardY + r);
+  ctx.lineTo(cardX + cardW, cardY + cardH - r);
+  ctx.quadraticCurveTo(cardX + cardW, cardY + cardH, cardX + cardW - r, cardY + cardH);
+  ctx.lineTo(cardX + r, cardY + cardH);
+  ctx.quadraticCurveTo(cardX, cardY + cardH, cardX, cardY + cardH - r);
+  ctx.lineTo(cardX, cardY + r);
+  ctx.quadraticCurveTo(cardX, cardY, cardX + r, cardY);
+  ctx.closePath();
+  ctx.fill();
+  ctx.clip();
 
-  // Smooth River Stones
-  const drawStone = (y, rx, ry, col) => {
-    ctx.fillStyle = col;
-    ctx.beginPath(); ctx.ellipse(0, y, rx, ry, 0, 0, Math.PI * 2); ctx.fill();
-    ctx.strokeStyle = '#86efac'; ctx.lineWidth = 2; ctx.stroke();
-  };
+  // Draw nocturnal landscape or yogi background if available
+  if (nightLakeImg && nightLakeImg.complete && nightLakeImg.naturalWidth) {
+    ctx.drawImage(nightLakeImg, 0, 0, nightLakeImg.naturalWidth, nightLakeImg.naturalHeight, cardX, cardY, cardW, cardH);
+  }
 
-  drawStone(100, 110, 42, '#0c1410');
-  drawStone(35, 85, 34, '#14201a');
-  drawStone(-25, 65, 28, '#1b2b23');
-  drawStone(-80, 45, 22, '#23372c');
-  drawStone(-125, 28, 16, '#2e483a');
+  // Draw centered or left-aligned sacred arched portrait
+  if (portraitImg && portraitImg.complete && portraitImg.naturalWidth) {
+    const archW = 340, archH = 480;
+    const archX = cardX + (cardW - archW) / 2;
+    const archY = cardY + 45;
+
+    ctx.save();
+    ctx.beginPath();
+    const aR = archW / 2;
+    ctx.arc(archX + aR, archY + aR, aR, Math.PI, 0);
+    ctx.lineTo(archX + archW, archY + archH);
+    ctx.lineTo(archX, archY + archH);
+    ctx.closePath();
+    ctx.clip();
+
+    ctx.drawImage(portraitImg, 0, 0, portraitImg.naturalWidth, portraitImg.naturalHeight, archX, archY, archW, archH);
+    ctx.restore();
+
+    // Arch outline
+    ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.arc(archX + aR, archY + aR, aR, Math.PI, 0);
+    ctx.lineTo(archX + archW, archY + archH);
+    ctx.lineTo(archX, archY + archH);
+    ctx.closePath();
+    ctx.stroke();
+  }
   ctx.restore();
 
-  const subY = 1110;
+  // Plaque outer borders
+  ctx.strokeStyle = 'rgba(212, 175, 55, 0.5)'; ctx.lineWidth = 1.8;
+  ctx.strokeRect(cardX + 2, cardY + 2, cardW - 4, cardH - 4);
+
+  // Subtitle / Mantra under hero
+  const tagY = cardY + cardH + 50;
+  ctx.fillStyle = '#f8fafc';
+  ctx.font = '700 24px "Newsreader", serif';
+  ctx.textAlign = 'center'; ctx.letterSpacing = '0.08em';
+  ctx.fillText('HEALING • GROUNDING • CONSCIOUS LIVING', W / 2, tagY);
+
+  // Editorial Section
+  const subY = 1010;
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '700 34px "Newsreader", serif';
+  ctx.letterSpacing = '0.04em';
+  ctx.fillText('HOLISTIC WELLNESS SANCTUARY', W / 2, subY);
+
   ctx.fillStyle = '#e2e8f0';
   ctx.font = 'italic 19px "Newsreader", serif';
-  ctx.textAlign = 'center'; ctx.letterSpacing = '0.01em';
-  ctx.fillText('“Holistic visual identity and patient booking portal for living sanctuary.”', W / 2, subY);
+  ctx.letterSpacing = '0.01em';
+  ctx.fillText('“A serene living canvas where nature, sacred ritual, and inner stillness meet.”', W / 2, subY + 44);
 
   ctx.font = '700 13px "Inter Tight", sans-serif';
-  ctx.fillStyle = '#86efac'; ctx.letterSpacing = '0.24em';
-  ctx.fillText('12 BRAND ASSETS • HEALING ARCHITECTURE • 2024', W / 2, subY + 36);
+  ctx.fillStyle = '#fdba74'; ctx.letterSpacing = '0.24em';
+  ctx.fillText('WEB ARCHITECTURE • REACT 19 • AMBIENT CANVAS • VIRUPAKSHAWELLNESS.COM', W / 2, subY + 82);
 
+  // Bottom specs & credits
   ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(80, H - 200); ctx.lineTo(W - 80, H - 200); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(80, H - 210); ctx.lineTo(W - 80, H - 210); ctx.stroke();
 
   ctx.textAlign = 'left';
-  ctx.fillStyle = '#86efac'; ctx.font = '700 13px "Inter Tight", sans-serif'; ctx.letterSpacing = '0.20em';
-  ctx.fillText('BRAND ARCHITECTURE', 80, H - 160);
+  ctx.fillStyle = '#d4af37'; ctx.font = '700 13px "Inter Tight", sans-serif'; ctx.letterSpacing = '0.20em';
+  ctx.fillText('WEBSITE ARCHITECTURE & DESIGN', 80, H - 165);
   ctx.fillStyle = '#ffffff'; ctx.font = '700 16px "Inter Tight", sans-serif';
-  ctx.fillText('SAI KRISHNA BETHAMCHARLA', 80, H - 134);
+  ctx.fillText('SAI KRISHNA BETHAMCHARLA', 80, H - 138);
 
-  drawClassicBadge(ctx, W - 80 - 250, H - 172, 250, 74, 'SANCTUARY BRAND', '#ffffff', '#86efac', 20);
+  drawClassicBadge(ctx, W - 80 - 240, H - 180, 240, 74, 'WEBSITE', '#ffffff', '#0284c7', 22);
   return canvas.toDataURL('image/webp', 0.95);
 }
 
-// ============================================================================
-// 7. ABACUS CAMPUS IDENTITY (Book 11 - Brand Systems)
-// ============================================================================
 function generateAbacusSpine(abacusLogoImg) {
   const canvas = document.createElement('canvas');
   canvas.width = 300; canvas.height = 1800;
@@ -5335,7 +5462,9 @@ async function init() {
     gheeLogoImg,
     knbLogoImg,
     auraKeshImg,
-    auraFullImg
+    auraFullImg,
+    viruPortraitImg,
+    viruYogiImg
   ] = await Promise.all([
     loadImg('./assets/gmcks/ph-logo.png'),
     loadImg('./assets/gmcks/gmcks-pencil-portrait.jpg'),
@@ -5356,7 +5485,9 @@ async function init() {
     loadImg('./assets/godavari/godavari-logo.png'),
     loadImg('./assets/godavari/knb-logo.png'),
     loadImg('./assets/aura/aura-kesh.png'),
-    loadImg('./assets/aura/aura-logo-full.png')
+    loadImg('./assets/aura/aura-logo-full.png'),
+    loadImg('./assets/virupaksha/portrait-arch.jpg'),
+    loadImg('./assets/virupaksha/yogi-arch.jpg')
   ]);
 
   const gmcksFilm = FILMS.find(f => f.id === 'gmcks');
@@ -5421,8 +5552,8 @@ async function init() {
 
   const virupakshaFilm = FILMS.find(f => f.id === 'war');
   if (virupakshaFilm) {
-    virupakshaFilm.customSpineUrl = generateVirupakshaSpine();
-    virupakshaFilm.customCoverUrl = generateVirupakshaCover();
+    virupakshaFilm.customSpineUrl = generateVirupakshaSpine(viruPortraitImg);
+    virupakshaFilm.customCoverUrl = generateVirupakshaCover(viruPortraitImg, viruYogiImg);
   }
 
   const godavariFilm = FILMS.find(f => f.id === 'godavari');

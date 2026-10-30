@@ -15,8 +15,8 @@
 }
 
 :root {
-  --paper: #000000;
-  --sheet: #0a0a0d;
+  --paper: #050507;
+  --sheet: #050507;
   --ink: #ffffff;
   --muted: #8e8e93;
   --cobalt: #dc2626; /* Crimson Red matching Apple Hero glow */
@@ -1046,6 +1046,8 @@ let dragStartX = 0;
 let dragStartT = 0;
 let hasDragged = false;
 let wheelTimer = null;
+let isWheelActive = false;
+let lastInteractionTime = performance.now();
 let lastTime = performance.now();
 
 const lifts = new Float32Array(TOTAL);
@@ -6325,10 +6327,17 @@ function render(now) {
   lastTime = now;
 
   // Spring physics
-  const k = isDragging ? 18 : 5.2;
+  const k = isDragging ? 18 : (isWheelActive ? 8.5 : 5.2);
   const springFactor = 1 - Math.exp(-k * dt);
   s += (T - s) * springFactor;
   if (Math.abs(T - s) < 1e-4) s = T;
+
+  // Continuous ambient drift when user is idle (not hovering, dragging, or actively scrolling)
+  const isIdle = !isOpen && !isDragging && !isWheelActive && hover === -1 && !onCover && (now - lastInteractionTime > 2500);
+  if (isIdle) {
+    const driftSpeed = 0.12; // units per second (~1 project every 8 seconds)
+    T += driftSpeed * dt;
+  }
 
   // Normalising loops beyond ±4
   if (Math.abs(s) > 4 * N) {
@@ -6729,29 +6738,44 @@ stage.addEventListener('pointerleave', e => {
 }, true);
 
 // Navigation arrows
-arrLeft.addEventListener('click',  () => { T = Math.round(T) - 1; });
-arrRight.addEventListener('click', () => { T = Math.round(T) + 1; });
+arrLeft.addEventListener('click',  () => { lastInteractionTime = performance.now(); T = Math.round(T) - 1; });
+arrRight.addEventListener('click', () => { lastInteractionTime = performance.now(); T = Math.round(T) + 1; });
 
-// Wheel — Allow natural vertical page scroll while keeping horizontal book navigation
+// Wheel — Active Continuous Scroll (Vertical mouse wheel & trackpad rotate 3D shelf continuously)
 window.addEventListener('wheel', e => {
   if (isOpen) return;
 
-  // If dominant horizontal scroll (trackpad gesture or shift+wheel), slide books horizontally
-  if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey) {
-    e.preventDefault();
-    const delta = e.shiftKey ? e.deltaY : e.deltaX;
-    T += (delta / (ws + gap)) * 0.5;
+  // Dominant scroll delta (supports standard vertical mouse wheel and trackpad)
+  const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+  if (Math.abs(delta) < 0.2) return;
 
-    clearTimeout(wheelTimer);
-    wheelTimer = setTimeout(() => {
-      T = Math.round(T);
-    }, 160);
+  // If user scrolls up strongly near the top edge, smoothly scroll back to Contact section
+  if (e.deltaY < -60 && (my < 140 || e.clientY < 140) && window.parent && window.parent !== window) {
+    window.parent.postMessage({ type: 'SCROLL_TO_CONTACT' }, '*');
+    return;
   }
-  // Otherwise, allow natural vertical scroll between showcase and contact section!
+
+  e.preventDefault();
+
+  isWheelActive = true;
+  lastInteractionTime = performance.now();
+
+  // Continuous velocity scroll scaled to book width + gap
+  const sensitivity = 0.45;
+  T += (delta / (ws + gap)) * sensitivity;
+
+  // Maintain smooth continuous momentum during active scroll;
+  // smoothly settle to nearest project once scrolling rests.
+  clearTimeout(wheelTimer);
+  wheelTimer = setTimeout(() => {
+    isWheelActive = false;
+    T = Math.round(T);
+  }, 380);
 }, { passive: false });
 
 // Keyboard
 window.addEventListener('keydown', e => {
+  lastInteractionTime = performance.now();
   if (e.key === 'ArrowLeft')  { T = Math.round(T) - 1; }
   if (e.key === 'ArrowRight') { T = Math.round(T) + 1; }
   if (e.key === 'Enter' && !isOpen) { openDetail(); }
@@ -6762,6 +6786,7 @@ window.addEventListener('keydown', e => {
 window.addEventListener('pointermove', e => {
   mx = e.clientX;
   my = e.clientY;
+  lastInteractionTime = performance.now();
 
   const onInteractive = e.target && e.target.closest && e.target.closest('button, a, .box') && !e.target.closest('#stage');
   if (cursor) {
@@ -6772,6 +6797,7 @@ window.addEventListener('pointermove', e => {
 // Category Tabs Navigation
 tabBtns.forEach(btn => {
   btn.addEventListener('click', () => {
+    lastInteractionTime = performance.now();
     const cat = btn.dataset.category;
     let targetIdx = 0; // "ALL" jumps to 0
     if (cat !== 'all') {

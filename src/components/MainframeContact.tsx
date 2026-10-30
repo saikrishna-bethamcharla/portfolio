@@ -387,8 +387,8 @@ export function MainframeContact() {
         </div>
 
         {/* Footer Credit & Return Link */}
-        <div className="absolute bottom-6 left-5 sm:left-8 right-5 sm:right-8 z-10 flex flex-row justify-between items-center text-[10px] tracking-[0.2em] text-white/40 uppercase font-mono border-t border-white/10 pt-4">
-          <span>© 2026 SAI KRISHNA BETHAMCHARLA. ALL RIGHTS RESERVED.</span>
+        <div className="absolute bottom-6 left-5 sm:left-8 right-5 sm:right-8 z-10 flex flex-row justify-between items-center text-[10px] tracking-[0.2em] text-white/40 uppercase font-mono">
+          <span>© 2026 SAI KRISHNA BETHAMCHARLA</span>
           <button
             type="button"
             onClick={scrollToHero}

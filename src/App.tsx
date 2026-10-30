@@ -26,12 +26,40 @@ export function App() {
 
   return (
     <div className="relative min-h-screen bg-[#050507] text-white overflow-x-hidden selection:bg-red-500/30 selection:text-white">
-      {/* 1. Hero Section (Your dedicated Hero preserved for your custom plans) */}
+      {/* 1. Hero Section */}
       <section id="hero" className="relative w-full h-screen overflow-hidden">
         <HeroVisual />
       </section>
 
-      {/* 2. 3D Filmography Shelf Showcase */}
+      {/* 2. Direct Channels & Studio Contact (Switched to 2nd section for seamless scroll flow) */}
+      <section
+        id="contact"
+        className="relative w-full h-screen overflow-hidden bg-[#050507]"
+      >
+        {/* Seamless top dissolve receiving the Hero */}
+        <div
+          aria-hidden="true"
+          className="absolute top-0 left-0 right-0 h-32 sm:h-40 pointer-events-none z-20"
+          style={{
+            background:
+              'linear-gradient(to bottom, #050507 0%, rgba(5,5,7,0.85) 35%, transparent 100%)',
+          }}
+        />
+
+        <MainframeContact />
+
+        {/* Seamless bottom dissolve into the 3D Shelf below */}
+        <div
+          aria-hidden="true"
+          className="absolute bottom-0 left-0 right-0 h-32 sm:h-40 pointer-events-none z-20"
+          style={{
+            background:
+              'linear-gradient(to bottom, transparent 0%, rgba(5,5,7,0.85) 65%, #050507 100%)',
+          }}
+        />
+      </section>
+
+      {/* 3. 3D Filmography Shelf Showcase (Now 3rd section at bottom, resolving scroll traps) */}
       <section
         id="shelf"
         className="relative w-screen h-screen overflow-hidden bg-[#050507]"
@@ -42,7 +70,7 @@ export function App() {
           className="w-full h-full border-none block"
         />
 
-        {/* Seamless top dissolve receiving the Hero above */}
+        {/* Seamless top dissolve receiving the Contact section above */}
         <div
           aria-hidden="true"
           className="absolute top-0 left-0 right-0 h-28 pointer-events-none z-10"
@@ -51,33 +79,6 @@ export function App() {
               'linear-gradient(to bottom, #050507 0%, rgba(5,5,7,0.7) 40%, transparent 100%)',
           }}
         />
-
-        {/* Seamless bottom dissolve from Shelf into Contact section */}
-        <div
-          aria-hidden="true"
-          className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-10"
-          style={{
-            background:
-              'linear-gradient(to bottom, transparent 0%, rgba(5,5,7,0.5) 45%, #050507 100%)',
-          }}
-        />
-      </section>
-
-      {/* 3. Contact & Channels Section (Mainframe A.R.I.A seamlessly blended) */}
-      <section
-        id="contact"
-        className="relative w-full h-screen overflow-hidden bg-[#050507]"
-      >
-        {/* Seamless top dissolve receiving the Shelf above */}
-        <div
-          aria-hidden="true"
-          className="absolute top-0 left-0 right-0 h-40 sm:h-48 pointer-events-none z-20"
-          style={{
-            background:
-              'linear-gradient(to bottom, #050507 0%, rgba(5,5,7,0.85) 30%, rgba(5,5,7,0.3) 70%, transparent 100%)',
-          }}
-        />
-        <MainframeContact />
       </section>
     </div>
   );

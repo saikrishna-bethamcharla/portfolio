@@ -7871,6 +7871,9 @@ if ('IntersectionObserver' in window) {
 // NAVIGATION BUTTONS & INTERACTIONS
 if (contactToggleBtn) {
   contactToggleBtn.addEventListener('click', () => {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ type: 'SCROLL_TO_CONTACT' }, '*');
+    }
     contactSec.scrollIntoView({ behavior: 'smooth' });
     startPhysics();
   });

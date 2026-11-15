@@ -11,6 +11,27 @@ import React, { useEffect, useRef, useState } from 'react';
 export const HeroVisual: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0, mouseX: 50, mouseY: 50 });
+  const [nameReady, setNameReady] = useState(false);
+
+  // The WebGL wordmark pulls three.js from a CDN and builds stone textures, so it can
+  // take a beat on a cold cache. Keep a typographic stand-in on screen until it paints.
+  useEffect(() => {
+    let cancelled = false;
+    const started = Date.now();
+    const timer = window.setInterval(() => {
+      const gl = document.querySelector<HTMLCanvasElement>('#hero-name-3d canvas');
+      if (gl && gl.width > 0 && !gl.classList.contains('fallback')) {
+        window.clearInterval(timer);
+        window.setTimeout(() => !cancelled && setNameReady(true), 2600);
+      } else if (Date.now() - started > 9000) {
+        window.clearInterval(timer);
+      }
+    }, 120);
+    return () => {
+      cancelled = true;
+      window.clearInterval(timer);
+    };
+  }, []);
 
   // Mouse tracking for dynamic 3D perspective tilt & light sheen
   useEffect(() => {
@@ -149,9 +170,35 @@ export const HeroVisual: React.FC = () => {
         }}
       />
 
+      {/* Lens vignette to pull the frame down at the corners */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 4,
+          pointerEvents: 'none',
+          background:
+            'radial-gradient(ellipse 76% 70% at 50% 46%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%)',
+        }}
+      />
+
       {/* 3D Cinematic Name Animation (Three.js WebGL) */}
       <h1 className="hero-name">SAI KRISHNA</h1>
-      <div id="hero-name-3d"></div>
+      <div
+        id="hero-name-3d"
+        style={{ opacity: nameReady ? 1 : 0, transition: 'opacity 1s ease' }}
+      ></div>
+
+      {/* Typographic stand-in for the first seconds while WebGL warms up */}
+      <div
+        aria-hidden="true"
+        className="hero-name-fallback"
+        style={{ opacity: nameReady ? 0 : 1 }}
+      >
+        <span>SAI</span>
+        <span>KRISHNA</span>
+      </div>
 
       {/* Looping Desk Developer Animation — Bottom-Left Corner */}
       <div

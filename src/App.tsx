@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { HeroVisual } from './components/HeroVisual';
 import { MainframeContact } from './components/MainframeContact';
+import { CommandPalette } from './components/CommandPalette';
 
 /**
  * App — 3-Phase Seamless Single-Page Portfolio:
@@ -9,6 +10,65 @@ import { MainframeContact } from './components/MainframeContact';
  * 3. #contact: Mainframe / A.R.I.A Interactive Direct Channels
  */
 export function App() {
+  const shelfRef = useRef<HTMLElement | null>(null);
+  const shelfFrameRef = useRef<HTMLIFrameElement | null>(null);
+  const [shelfReady, setShelfReady] = useState(false);
+  const [shelfLoaded, setShelfLoaded] = useState(false);
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const [projectRequest, setProjectRequest] = useState<{ id: string } | null>(null);
+
+  // ⌘K / Ctrl+K opens the mainframe command palette
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        setPaletteOpen((open) => !open);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
+
+  const navigateToSection = useCallback((sectionId: string) => {
+    const target = document.getElementById(sectionId);
+    if (!target) return;
+    if (sectionId === 'shelf') setShelfReady(true);
+    target.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
+  // A palette choice deep-links into the shelf app once its frame has loaded.
+  const selectProject = useCallback((projectId: string) => {
+    setShelfReady(true);
+    document.getElementById('shelf')?.scrollIntoView({ behavior: 'smooth' });
+    setProjectRequest({ id: projectId });
+  }, []);
+
+  useEffect(() => {
+    if (!shelfLoaded || !projectRequest) return;
+    shelfFrameRef.current?.contentWindow?.postMessage(
+      { type: 'SELECT_PROJECT', id: projectRequest.id },
+      '*',
+    );
+  }, [shelfLoaded, projectRequest]);
+
+  // The shelf ships its own app plus ~30 MB of artwork. Mount it only once the
+  // reader is heading toward it, so the hero stays light on first load.
+  useEffect(() => {
+    const el = shelfRef.current;
+    if (!el || shelfReady) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShelfReady(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: '600px 0px' },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [shelfReady]);
+
   useEffect(() => {
     // Listen for cross-frame navigation messages from the shelf iframe
     const handleMsg = (e: MessageEvent) => {
@@ -74,13 +134,27 @@ export function App() {
       {/* 3. 3D Filmography Shelf Showcase (Now 3rd section at bottom, resolving scroll traps) */}
       <section
         id="shelf"
+        ref={shelfRef}
         className="relative w-screen h-screen overflow-hidden bg-[#050507]"
       >
-        <iframe
-          src="./projects.html"
-          title="Filmography Showcase"
-          className="w-full h-full border-none block"
-        />
+        {shelfReady ? (
+          <iframe
+            ref={shelfFrameRef}
+            src="./projects.html"
+            title="Filmography Showcase — shelved case studies and archive stills"
+            onLoad={() => setShelfLoaded(true)}
+            className="w-full h-full border-none block"
+          />
+        ) : (
+          <div
+            className="w-full h-full flex items-center justify-center"
+            aria-hidden="true"
+          >
+            <span className="font-mono text-[10px] tracking-[0.4em] text-[#5a5148]">
+              PREPARING THE SHELF
+            </span>
+          </div>
+        )}
 
         {/* Seamless top dissolve receiving the Contact section above */}
         <div
@@ -92,6 +166,42 @@ export function App() {
           }}
         />
       </section>
+
+      {/* Command palette trigger — quiet, persistent, desktop only */}
+      <button
+        type="button"
+        onClick={() => setPaletteOpen(true)}
+        aria-label="Open command palette"
+        className="hidden md:flex fixed bottom-5 right-6 z-40 items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.22em] text-white/30 transition-colors hover:text-white/80 cursor-pointer"
+      >
+        <kbd className="rounded-sm border border-white/15 px-1.5 py-0.5 text-[9.5px] tracking-[0.1em] text-white/40">
+          ⌘K
+        </kbd>
+        Command
+      </button>
+
+      <CommandPalette
+        isOpen={paletteOpen}
+        onClose={() => setPaletteOpen(false)}
+        onNavigateSection={navigateToSection}
+        onSelectProject={selectProject}
+      />
+
+      {/* One emulsion over the whole page: film grain above every section and the shelf */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 60,
+          pointerEvents: 'none',
+          opacity: 0.42,
+          mixBlendMode: 'soft-light',
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)' opacity='0.6'/%3E%3C/svg%3E\")",
+          backgroundSize: '200px 200px',
+        }}
+      />
     </div>
   );
 }

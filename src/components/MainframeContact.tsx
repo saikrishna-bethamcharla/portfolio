@@ -133,6 +133,28 @@ export function MainframeContact() {
     };
   }, []);
 
+  // Touch devices have no cursor to scrub with, so let the character breathe on its own
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!coarse || reduce) return;
+
+    video.loop = true;
+    video.playbackRate = 0.55;
+
+    const play = () => {
+      video.play().catch(() => {
+        /* autoplay refused — the still frame stays */
+      });
+    };
+    if (video.readyState >= 2) play();
+    video.addEventListener('canplay', play);
+    return () => video.removeEventListener('canplay', play);
+  }, []);
+
   // Video Scrubbing Logic
   const performSeek = useCallback(() => {
     const video = videoRef.current;
@@ -153,9 +175,11 @@ export function MainframeContact() {
   }, [performSeek]);
 
   useEffect(() => {
+    const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
     const handleMouseMove = (e: MouseEvent) => {
       const video = videoRef.current;
-      if (video) {
+      // Touch devices get autonomous playback instead of scrub-seeking
+      if (video && !coarsePointer) {
         if (prevXRef.current === null) {
           prevXRef.current = e.clientX;
         } else {
@@ -278,16 +302,18 @@ export function MainframeContact() {
         }}
       >
         <div
-          className="absolute inset-0 w-full h-full flex items-center justify-end"
+          className="absolute inset-0 w-full h-full flex items-start md:items-center justify-end"
           style={{
-            transform: `perspective(1000px) rotateY(${parallax.x * 7}deg) rotateX(${-parallax.y * 4}deg) translate3d(${parallax.x * 28}px, ${-parallax.y * 16}px, 35px)`,
-            transformOrigin: '75% 50%',
+            // Kept inside the frame: the old 35px push-in scaled the video past the
+            // section edges and shaved the top of his hair off.
+            transform: `perspective(1000px) translate3d(${parallax.x * 18}px, ${-parallax.y * 6}px, 0) rotateY(${parallax.x * 6}deg) rotateX(${-parallax.y * 3}deg) scale(0.985)`,
+            transformOrigin: '72% 50%',
             transition: 'transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1)',
           }}
         >
           <video
             ref={videoRef}
-            className="w-full h-full object-cover pointer-events-none"
+            className="contact-character w-full h-full object-cover pointer-events-none"
             style={{
               objectPosition: '72% center',
               filter: 'brightness(1.03) contrast(1.08) saturate(1.06)',
@@ -300,8 +326,7 @@ export function MainframeContact() {
             preload="auto"
             onSeeked={handleSeeked}
           >
-            <source src="./character_keyed.webm" type="video/webm" />
-            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260826_041744_63efcd78-bf7d-4039-99e2-2461e8a61903.mp4" type="video/mp4" />
+            <source src="./character-studio.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
@@ -316,6 +341,16 @@ export function MainframeContact() {
         }}
       />
 
+      {/* ── Mobile-only scrim: keeps the display heading legible over the character ── */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-[74%] pointer-events-none z-[3] md:hidden"
+        style={{
+          background:
+            'linear-gradient(to top, #050507 0%, rgba(5,5,7,0.95) 40%, rgba(5,5,7,0.62) 64%, transparent 100%)',
+        }}
+      />
+
       {/* ── PLANE 3: Upward drifting luminous dust particles ── */}
       <canvas
         ref={canvasRef}
@@ -324,9 +359,16 @@ export function MainframeContact() {
       />
 
       {/* ── PLANE 4: MAIN CONTENT & CONTACT CHANNELS (z-index: 10) ── */}
-      <main className="h-screen flex flex-col justify-end pb-16 md:justify-center md:pb-0 px-6 sm:px-12 md:px-16 lg:px-24 overflow-hidden relative z-[10]">
+      <main className="h-screen flex flex-col justify-end pb-28 sm:pb-16 md:justify-center md:pb-0 px-6 sm:px-12 md:px-16 lg:px-24 overflow-hidden relative z-[10]">
         <div className="max-w-xl relative z-10">
-          {/* 1. Personalized intro label (Unblurred, crisp high-end typography) */}
+          {/* 1. Display heading — carved stone, same voice as the hero and the shelf */}
+          <h2 className="stone-heading">
+            Let’s make something
+            <br />
+            worth watching.
+          </h2>
+
+          {/* 2. Personalized intro label (Unblurred, crisp high-end typography) */}
           <div
             className="select-none mb-4 sm:mb-5"
             style={{
@@ -336,21 +378,31 @@ export function MainframeContact() {
               color: '#ffffff',
             }}
           >
-            <span className="text-zinc-300 font-light">Hey there, I’m </span>
-            <span className="text-white font-medium">Sai Krishna Bethamcharla</span>,
+            <span className="font-light" style={{ color: '#c6bdae' }}>Hey there, I’m </span>
+            <span className="font-medium" style={{ color: '#f4ecdd' }}>Sai Krishna Bethamcharla</span>,
             <br />
-            <span className="text-red-400 font-mono text-[0.85em] tracking-wide">
-              Creative Director, AI Filmmaker & Technical Lead
+            <span
+              className="font-mono text-[0.85em] tracking-wide"
+              style={{
+                color: '#ede3d0',
+                textShadow: '0 1px 14px rgba(0, 0, 0, 0.65)',
+              }}
+            >
+              <span aria-hidden="true" style={{ color: '#fca5a5', marginRight: '0.55em' }}>
+                /
+              </span>
+              Creative Director, AI Filmmaker &amp; Technical Lead
             </span>
           </div>
 
-          {/* 2. Typewriter text */}
+          {/* 3. Typewriter text */}
           <p
-            className="text-white mb-5 sm:mb-6 min-h-[54px]"
+            className="mb-5 sm:mb-6 min-h-[54px]"
             style={{
               fontSize: 'clamp(18px, 3.8vw, 25px)',
               lineHeight: 1.35,
               fontWeight: 400,
+              color: '#e9e0cf',
             }}
           >
             {displayed}
@@ -362,7 +414,7 @@ export function MainframeContact() {
             )}
           </p>
 
-          {/* 3. Action pill buttons (Matching Image 3 exact design system) */}
+          {/* 4. Action pill buttons (Matching Image 3 exact design system) */}
           <div
             className="flex flex-wrap items-center gap-2 sm:gap-2.5 pt-1"
             style={{
@@ -386,7 +438,7 @@ export function MainframeContact() {
             <button
               type="button"
               onClick={handleCopyEmail}
-              className={`inline-flex items-center justify-center gap-2 font-medium text-[13.5px] sm:text-[14.5px] px-4 sm:px-5 py-[6px] rounded-full border transition-colors duration-200 cursor-pointer whitespace-nowrap shadow-[0_2px_12px_rgba(0,0,0,0.25)] ${
+              className={`inbox-pill inline-flex items-center justify-center gap-2 font-medium text-[13.5px] sm:text-[14.5px] px-4 sm:px-5 py-[6px] rounded-full border transition-colors duration-200 cursor-pointer whitespace-nowrap shadow-[0_2px_12px_rgba(0,0,0,0.25)] ${
                 copied
                   ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.35)]'
                   : 'bg-black/60 text-white border-white/70 hover:bg-white hover:text-black hover:border-white'

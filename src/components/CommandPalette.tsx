@@ -1,193 +1,334 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Search, X, Volume2, VolumeX, Eye, Sparkles, History, Mail, Cpu } from 'lucide-react';
-import { soundFX } from '../utils/soundEffects';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { LucideIcon } from 'lucide-react';
+import {
+  ArrowDown,
+  ArrowUp,
+  Check,
+  CornerDownLeft,
+  Film,
+  Layers,
+  Mail,
+  Search,
+  X,
+} from 'lucide-react';
+import { PORTFOLIO_DATA } from '../data/portfolioData';
+
+/**
+ * CommandPalette — ⌘K / Ctrl+K "mainframe" command surface.
+ * Jumps between the three sections of the page and straight into any case on
+ * the 3D shelf, with a couple of contact shortcuts.
+ */
 
 interface CommandPaletteProps {
   isOpen: boolean;
   onClose: () => void;
-  soundEnabled: boolean;
-  onToggleSound: () => void;
-  highContrast: boolean;
-  onToggleHighContrast: () => void;
+  onNavigateSection: (sectionId: string) => void;
+  onSelectProject: (projectId: string) => void;
 }
 
-export const CommandPalette: React.FC<CommandPaletteProps> = ({
+type PaletteItem = {
+  key: string;
+  label: string;
+  hint: string;
+  group: 'SECTIONS' | 'PROJECTS' | 'ACTIONS';
+  icon: LucideIcon;
+  run: () => void;
+  /** Keep the palette open so the command can report back */
+  keepOpen?: boolean;
+};
+
+const SECTIONS = [
+  { id: 'hero', label: 'Sai Krishna — Opening Frame', hint: '01 / HERO' },
+  { id: 'contact', label: 'Direct Channels & Contact', hint: '02 / CONTACT' },
+  { id: 'shelf', label: 'The Filmography Shelf', hint: '03 / 12 CASES' },
+];
+
+// Mirrors the case ids in public/projects.html
+const PROJECTS = [
+  { id: 'valley', title: 'Vasudha Pharma Chem Limited', category: 'WEBSITES' },
+  { id: 'bluehour', title: 'Zai Labs AI Platform', category: 'WEBSITES' },
+  { id: 'river', title: 'Pranic Healing Portal', category: 'WEBSITES' },
+  { id: 'war', title: 'Virupaksha Wellness', category: 'WEBSITES' },
+  { id: 'summer', title: 'The Door at 11:47', category: 'CINEMATIC' },
+  { id: 'green', title: 'Odyssey Narrative', category: 'CINEMATIC' },
+  { id: 'gmcks', title: 'GMCKS Documentary', category: 'MOTION & POST' },
+  { id: 'birds', title: 'Neo Belva Commercial', category: 'MOTION & POST' },
+  { id: 'godavari', title: 'Godavari Ghee Heritage Ad', category: 'MOTION & POST' },
+  { id: 'storm', title: 'Green Field School International', category: 'MOTION & POST' },
+  { id: 'tide', title: 'Aura Organics Luxury', category: 'BRAND SYSTEMS' },
+  { id: 'door', title: 'Abacus Campus Brain Gym', category: 'BRAND SYSTEMS' },
+];
+
+const GROUP_ORDER: PaletteItem['group'][] = ['SECTIONS', 'PROJECTS', 'ACTIONS'];
+
+export function CommandPalette({
   isOpen,
   onClose,
-  soundEnabled,
-  onToggleSound,
-  highContrast,
-  onToggleHighContrast,
-}) => {
+  onNavigateSection,
+  onSelectProject,
+}: CommandPaletteProps) {
   const [query, setQuery] = useState('');
+  const [cursor, setCursor] = useState(0);
+  const [copied, setCopied] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 50);
-      soundFX.playTransition();
-    } else {
-      setQuery('');
+  const email = PORTFOLIO_DATA.profile.email;
+
+  const handleCopyEmail = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = email;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
     }
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2000);
+  }, [email]);
+
+  const items = useMemo<PaletteItem[]>(() => {
+    const sectionItems: PaletteItem[] = SECTIONS.map((section) => ({
+      key: `section-${section.id}`,
+      label: section.label,
+      hint: section.hint,
+      group: 'SECTIONS',
+      icon: Layers,
+      run: () => onNavigateSection(section.id),
+    }));
+
+    const projectItems: PaletteItem[] = PROJECTS.map((project) => ({
+      key: `project-${project.id}`,
+      label: project.title,
+      hint: project.category,
+      group: 'PROJECTS',
+      icon: Film,
+      run: () => onSelectProject(project.id),
+    }));
+
+    const actionItems: PaletteItem[] = [
+      {
+        key: 'action-copy-email',
+        label: copied ? 'Email copied to clipboard' : 'Copy direct email',
+        hint: copied ? 'DONE' : email,
+        group: 'ACTIONS',
+        icon: copied ? Check : Mail,
+        run: handleCopyEmail,
+        keepOpen: true,
+      },
+      {
+        key: 'action-mail',
+        label: 'Start an email',
+        hint: 'MAILTO',
+        group: 'ACTIONS',
+        icon: Mail,
+        run: () => {
+          window.location.href = `mailto:${email}?subject=Project%20Inquiry%20%E2%80%94%20Sai%20Krishna`;
+        },
+      },
+    ];
+
+    return [...sectionItems, ...projectItems, ...actionItems];
+  }, [copied, email, handleCopyEmail, onNavigateSection, onSelectProject]);
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return items;
+    return items.filter((item) =>
+      `${item.label} ${item.hint} ${item.group}`.toLowerCase().includes(q),
+    );
+  }, [items, query]);
+
+  // Reset the cursor whenever the result set changes shape
+  useEffect(() => {
+    setCursor(0);
+  }, [query, isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setQuery('');
+      return;
+    }
+    setCopied(false);
+    const id = window.setTimeout(() => inputRef.current?.focus(), 40);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.clearTimeout(id);
+      document.body.style.overflow = previousOverflow;
+    };
   }, [isOpen]);
 
-  // Handle ESC
+  const choose = useCallback(
+    (item: PaletteItem | undefined) => {
+      if (!item) return;
+      if (item.keepOpen) {
+        item.run();
+        return;
+      }
+      onClose();
+      // Let the overlay unmount before the page starts moving
+      window.setTimeout(() => item.run(), 0);
+    },
+    [onClose],
+  );
+
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
+    if (!isOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
         onClose();
+      } else if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        setCursor((prev) => (filtered.length ? (prev + 1) % filtered.length : 0));
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        setCursor((prev) =>
+          filtered.length ? (prev - 1 + filtered.length) % filtered.length : 0,
+        );
+      } else if (event.key === 'Enter') {
+        event.preventDefault();
+        choose(filtered[cursor]);
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, onClose]);
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [choose, cursor, filtered, isOpen, onClose]);
 
   if (!isOpen) return null;
-
-  const navigateTo = (vH: number) => {
-    soundFX.playClick();
-    onClose();
-    window.scrollTo({
-      top: vH * window.innerHeight,
-      behavior: 'smooth',
-    });
-  };
-
-  const navItems = [
-    { label: 'Flagship Systems & Deployments (4)', vH: 1.5, icon: Cpu, tag: 'Architecture' },
-    { label: 'Evolutionary Trajectory (2022-2026)', vH: 3.2, icon: History, tag: 'Milestones' },
-    { label: 'Capabilities & Tooling Matrix', vH: 4.4, icon: Sparkles, tag: 'Proficiency' },
-    { label: 'Direct Commission & Contact', vH: 5.4, icon: Mail, tag: 'Direct Comm' },
-  ];
-
-  const filteredNav = navItems.filter((item) =>
-    item.label.toLowerCase().includes(query.toLowerCase()) ||
-    item.tag.toLowerCase().includes(query.toLowerCase())
-  );
 
   return (
     <div
       role="dialog"
       aria-modal="true"
-      aria-label="Command HUD Terminal"
-      className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/85 backdrop-blur-md"
+      aria-label="Mainframe command palette"
+      className="fixed inset-0 z-[80] flex items-start justify-center px-4 pt-[12vh] sm:pt-[16vh] bg-black/85 backdrop-blur-md"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-xl bg-[#08090d] border border-neutral-700/80 rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden text-neutral-200"
-        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-xl overflow-hidden rounded-sm border border-white/10 bg-[#08090b]/95 shadow-[0_30px_90px_rgba(0,0,0,0.85)]"
+        onClick={(event) => event.stopPropagation()}
       >
         {/* Search header */}
-        <div className="flex items-center px-4 py-3.5 border-b border-neutral-800 bg-neutral-950/60">
-          <Search className="w-5 h-5 text-amber-500 mr-3 shrink-0" aria-hidden="true" />
+        <div className="flex items-center gap-3 border-b border-white/10 px-4 py-3.5">
+          <Search className="h-4 w-4 shrink-0 text-[#a89c8a]" aria-hidden="true" />
           <input
             ref={inputRef}
             type="text"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Type command, search systems, or navigate... [ESC to cancel]"
-            className="w-full bg-transparent text-sm text-neutral-100 placeholder-neutral-500 focus:outline-none font-mono"
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Jump to a section or a case…"
+            role="combobox"
+            aria-expanded="true"
+            aria-controls="command-palette-results"
+            aria-autocomplete="list"
+            className="w-full bg-transparent font-mono text-[13px] tracking-wide text-[#f2ead9] placeholder:text-white/25 focus:outline-none"
           />
           <button
+            type="button"
             onClick={onClose}
             aria-label="Close command palette"
-            className="p-1 rounded text-neutral-400 hover:text-neutral-100 hover:bg-neutral-800 transition"
+            className="rounded-sm p-1 text-white/35 transition-colors hover:bg-white/5 hover:text-white/80"
           >
-            <X className="w-4 h-4" />
+            <X className="h-3.5 w-3.5" />
           </button>
         </div>
 
-        {/* Content list */}
-        <div className="p-3 max-h-80 overflow-y-auto space-y-4">
-          <div>
-            <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-500 px-3 font-semibold">
-              SYSTEM TARGETS
-            </span>
-            <div className="mt-1 space-y-1">
-              {filteredNav.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <button
-                    key={item.label}
-                    onClick={() => navigateTo(item.vH)}
-                    className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-left text-sm hover:bg-neutral-900 border border-transparent hover:border-neutral-800 transition group cursor-pointer"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <Icon className="w-4 h-4 text-amber-500 group-hover:scale-110 transition-transform" />
-                      <span className="text-neutral-200 font-medium group-hover:text-amber-300">
-                        {item.label}
+        {/* Results */}
+        <div
+          id="command-palette-results"
+          role="listbox"
+          aria-label="Command results"
+          className="max-h-[54vh] overflow-y-auto px-2 py-2"
+        >
+          {GROUP_ORDER.map((group) => {
+            const groupItems = filtered.filter((item) => item.group === group);
+            if (!groupItems.length) return null;
+            return (
+              <div key={group} className="mb-1">
+                <p className="px-3 pb-1 pt-2 font-mono text-[9px] uppercase tracking-[0.32em] text-white/25">
+                  {group}
+                </p>
+                {groupItems.map((item) => {
+                  const index = filtered.indexOf(item);
+                  const active = index === cursor;
+                  const Icon = item.icon;
+                  return (
+                    <button
+                      key={item.key}
+                      type="button"
+                      role="option"
+                      aria-selected={active}
+                      onMouseEnter={() => setCursor(index)}
+                      onClick={() => choose(item)}
+                      className={`group flex w-full items-center justify-between gap-4 rounded-sm px-3 py-2.5 text-left transition-colors ${
+                        active ? 'bg-white/[0.07]' : 'bg-transparent'
+                      }`}
+                    >
+                      <span className="flex min-w-0 items-center gap-3">
+                        <Icon
+                          className={`h-3.5 w-3.5 shrink-0 transition-colors ${
+                            active ? 'text-red-400' : 'text-[#8a8074]'
+                          }`}
+                          aria-hidden="true"
+                        />
+                        <span
+                          className={`truncate text-[13.5px] transition-colors ${
+                            active ? 'text-[#f6efe0]' : 'text-[#c9c0b1]'
+                          }`}
+                        >
+                          {item.label}
+                        </span>
                       </span>
-                    </div>
-                    <span className="text-[10px] font-mono text-neutral-400 border border-neutral-800 px-2 py-0.5 rounded bg-black/40">
-                      {item.tag}
-                    </span>
-                  </button>
-                );
-              })}
-              {filteredNav.length === 0 && (
-                <p className="text-xs text-neutral-500 px-3 py-2 font-mono">No matching system target.</p>
-              )}
-            </div>
-          </div>
+                      <span className="flex shrink-0 items-center gap-2">
+                        <span className="max-w-[16rem] truncate font-mono text-[9.5px] uppercase tracking-[0.18em] text-white/30">
+                          {item.hint}
+                        </span>
+                        {active && (
+                          <CornerDownLeft
+                            className="h-3 w-3 text-white/30"
+                            aria-hidden="true"
+                          />
+                        )}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            );
+          })}
 
-          {/* Quick HUD Toggles */}
-          <div className="pt-2 border-t border-neutral-800/80">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-500 px-3 font-semibold">
-              TELEMETRY & ACCESSIBILITY CONTROLS
-            </span>
-            <div className="mt-2 grid grid-cols-2 gap-2 px-1">
-              <button
-                onClick={() => {
-                  soundFX.playClick();
-                  onToggleSound();
-                }}
-                className="flex items-center justify-between px-3 py-2.5 rounded-lg bg-neutral-950/60 border border-neutral-800 hover:border-amber-500/50 transition text-xs"
-              >
-                <span className="flex items-center gap-2 text-neutral-300 font-mono">
-                  {soundEnabled ? (
-                    <Volume2 className="w-4 h-4 text-amber-400" />
-                  ) : (
-                    <VolumeX className="w-4 h-4 text-neutral-500" />
-                  )}
-                  Synthesized Audio
-                </span>
-                <span className={`font-mono text-[10px] px-1.5 py-0.5 rounded ${soundEnabled ? 'bg-amber-500/20 text-amber-300 font-bold' : 'bg-neutral-800 text-neutral-400'}`}>
-                  {soundEnabled ? 'ON' : 'MUTED'}
-                </span>
-              </button>
-
-              <button
-                onClick={() => {
-                  soundFX.playClick();
-                  onToggleHighContrast();
-                }}
-                className="flex items-center justify-between px-3 py-2.5 rounded-lg bg-neutral-950/60 border border-neutral-800 hover:border-amber-500/50 transition text-xs"
-              >
-                <span className="flex items-center gap-2 text-neutral-300 font-mono">
-                  <Eye className="w-4 h-4 text-amber-400" />
-                  High Contrast
-                </span>
-                <span className={`font-mono text-[10px] px-1.5 py-0.5 rounded ${highContrast ? 'bg-amber-500/20 text-amber-300 font-bold' : 'bg-neutral-800 text-neutral-400'}`}>
-                  {highContrast ? 'ACTIVE' : 'DEFAULT'}
-                </span>
-              </button>
-            </div>
-          </div>
+          {filtered.length === 0 && (
+            <p className="px-3 py-6 font-mono text-[11px] tracking-wide text-white/30">
+              No target matched “{query.trim()}”.
+            </p>
+          )}
         </div>
 
-        {/* Footer info */}
-        <div className="px-4 py-2.5 bg-neutral-950 border-t border-neutral-800 flex items-center justify-between text-[11px] font-mono text-neutral-500">
-          <div className="flex items-center gap-2">
-            <span>HUD TERMINAL</span>
-            <span>•</span>
-            <span className="text-emerald-400">WCAG 2.2 AAA VERIFIED</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <kbd className="bg-neutral-800 text-neutral-300 px-1.5 py-0.5 rounded text-[10px]">ESC</kbd>
-            <span>to close</span>
-          </div>
+        {/* Footer */}
+        <div className="flex items-center justify-between border-t border-white/10 bg-black/40 px-4 py-2.5 font-mono text-[9.5px] uppercase tracking-[0.22em] text-white/30">
+          <span className="flex items-center gap-3">
+            <span className="flex items-center gap-1">
+              <ArrowUp className="h-3 w-3" aria-hidden="true" />
+              <ArrowDown className="h-3 w-3" aria-hidden="true" />
+              MOVE
+            </span>
+            <span className="flex items-center gap-1">
+              <CornerDownLeft className="h-3 w-3" aria-hidden="true" />
+              OPEN
+            </span>
+            <span>ESC CLOSE</span>
+          </span>
+          <span className="text-[#a89c8a]/60">MAINFRAME</span>
         </div>
       </div>
     </div>
   );
-};
+}
+
+export default CommandPalette;

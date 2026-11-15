@@ -6,7 +6,7 @@
 <title>Works — Sai Krishna Bethamcharla</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Noto+Sans+JP:wght@500;700&family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter+Tight:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&family=Noto+Sans+JP:wght@500;700&family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after {
   box-sizing: border-box;
@@ -17,10 +17,10 @@
 :root {
   --paper: #050507;
   --sheet: #050507;
-  --ink: #ffffff;
-  --muted: #8e8e93;
+  --ink: #efe6d4;
+  --muted: #a2988a;
   --cobalt: #dc2626; /* Crimson Red matching Apple Hero glow */
-  --rule: rgba(255, 255, 255, 0.14);
+  --rule: rgba(239, 230, 212, 0.16);
   --ease: cubic-bezier(.2, .8, .2, 1);
   --H: min(46vh, 31vw);
 }
@@ -47,6 +47,17 @@ html, body {
   button, a, .tab-btn, .arr, .tape, .tape .face, #play-ring, [role="button"] {
     cursor: pointer !important;
   }
+}
+
+/* ── STONE DISPLAY (matches the hero lettering) ────────────────── */
+.stone-type {
+  font-family: "Cinzel", Georgia, serif;
+  background-image: linear-gradient(180deg, #f8f2e6 0%, #e2d8c6 52%, #b7ac99 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.55));
 }
 
 /* ── LABEL SYSTEM ───────────────────────────────────────────────── */
@@ -81,7 +92,7 @@ html, body {
   z-index: 40;
   pointer-events: none;
   mix-blend-mode: screen;
-  opacity: .14;
+  opacity: .09;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='paperGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.85 0 0 0 0 0.85 0 0 0 0 0.85 0 0 0 0.35 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23paperGrain)'/%3E%3C/svg%3E");
 }
 
@@ -277,14 +288,12 @@ html, body {
 }
 
 #cap-title .cap-mask {
-  font-family: "Newsreader", Georgia, serif;
-  font-weight: 400;
-  font-size: clamp(34px, 3.8vw, 46px);
-  line-height: 1.15;
-  letter-spacing: -.015em;
-  color: #ffffff;
+  font-family: "Cinzel", Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(28px, 3.2vw, 42px);
+  line-height: 1.24;
+  letter-spacing: .015em;
   min-height: 40px;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
 }
 
 #cap-sub .cap-mask {
@@ -508,12 +517,11 @@ html, body {
 }
 
 #dl-title {
-  font-family: "Newsreader", Georgia, serif;
-  font-weight: 400;
-  font-size: clamp(42px, 4.6vw, 74px);
-  line-height: 1.05;
-  letter-spacing: -.025em;
-  color: var(--ink);
+  font-family: "Cinzel", Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(33px, 3.9vw, 58px);
+  line-height: 1.16;
+  letter-spacing: .015em;
 }
 
 #dl-meta {
@@ -526,7 +534,7 @@ html, body {
   font-size: 16px;
   line-height: 1.5;
   max-width: 44ch;
-  color: #d1d1d6;
+  color: #d3c9b9;
 }
 
 #dl-credit {
@@ -562,6 +570,147 @@ html, body {
   filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.85));
 }
 
+/* ── DETAIL: SCOPE CHIPS ────────────────────────────────────────── */
+#dl-scope {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.scope-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 23px;
+  padding: 0 9px;
+  border: 1px solid var(--rule);
+  background: rgba(255, 255, 255, 0.04);
+  color: #cdc3b2;
+  font-family: "Inter Tight", "Noto Sans JP", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 9.5px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── 10. INTERNAL ARCHIVE SHEET ─────────────────────────────────── */
+#archive {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: var(--paper);
+  visibility: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 84px 6vw 64px;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.95);
+}
+
+#archive-close {
+  position: absolute;
+  top: 28px;
+  left: 6vw;
+  z-index: 20;
+  cursor: pointer !important;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(22, 22, 28, 0.95);
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: .12em;
+  padding: 0 14px;
+  height: 27px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+#archive-close:hover {
+  border-color: #ffffff;
+  background: var(--cobalt);
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
+  transform: translateY(-1px);
+}
+
+#archive-head {
+  max-width: 780px;
+  margin: 0 0 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#archive-kicker {
+  color: var(--cobalt);
+}
+
+#archive-title {
+  font-family: "Cinzel", Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(29px, 3.4vw, 48px);
+  line-height: 1.2;
+  letter-spacing: .015em;
+}
+
+#archive-note {
+  font-family: "Newsreader", Georgia, serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #d3c9b9;
+  max-width: 58ch;
+}
+
+#archive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.archive-card {
+  border: 1px solid var(--rule);
+  background: #0a0a0e;
+  overflow: hidden;
+}
+
+.archive-card .archive-media {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: #060608;
+}
+
+.archive-card.is-mark .archive-media {
+  object-fit: contain;
+  padding: 26px;
+}
+
+.archive-card figcaption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 13px 12px;
+  border-top: 1px solid var(--rule);
+}
+
+.archive-card .archive-label {
+  color: var(--ink);
+}
+
+.archive-card .archive-note {
+  font-family: "Newsreader", Georgia, serif;
+  font-style: italic;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: right;
+}
+
+#archive-empty {
+  color: var(--muted);
+  font-family: "Newsreader", Georgia, serif;
+  font-style: italic;
+  padding: 24px 0;
+}
+
 /* ── REDUCED MOTION ─────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -573,30 +722,66 @@ html, body {
 /* ── RESPONSIVE (≤ 767px) ───────────────────────────────────────── */
 @media (max-width: 767px) {
   :root {
-    --H: min(60vw, 40svh);
+    --H: min(78vw, 34svh);
+  }
+
+  #tabs {
+    left: 0;
+    right: 0;
+    width: 100%;
+    transform: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 8px;
+    box-shadow: none;
   }
 
   #tab-indicator {
-    height: 27px;
+    display: none;
   }
 
   .tab-btn {
+    flex: 0 0 auto;
     height: 27px;
-    padding: 0 9px;
-    font-size: 9.5px;
-    letter-spacing: .08em;
+    padding: 0 12px;
+    margin-left: 0;
+    font-size: 10px;
+    letter-spacing: .07em;
+    background: rgba(10, 10, 12, 0.6);
+    backdrop-filter: blur(8px);
+  }
+
+  .tab-btn.active {
+    background: var(--cobalt);
+    border-color: var(--cobalt);
+    box-shadow: 0 0 18px rgba(220, 38, 38, 0.45);
   }
 
   #cap-title .cap-mask {
-    font-size: 24px;
+    font-size: 22px;
+    line-height: 1.28;
+    min-height: 32px;
+    width: min(86vw, 640px);
+  }
+
+  #cap-sub .cap-mask {
+    font-size: 11px;
+    letter-spacing: .18em;
   }
 
   #arr-left {
-    left: 8px;
+    left: 16px;
   }
 
   #arr-right {
-    right: 8px;
+    right: 16px;
+  }
+
+  #arr-left,
+  #arr-right {
+    top: auto !important;
+    bottom: 20px;
   }
 
   #footer {
@@ -637,6 +822,39 @@ html, body {
   #detail-logo {
     height: 64px;
   }
+
+  #archive {
+    padding: 76px 20px 48px;
+  }
+
+  #archive-close {
+    top: 16px;
+    left: 20px;
+  }
+
+  #archive-head {
+    margin-bottom: 28px;
+  }
+
+  #archive-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── SHORT PHONES (≤ 767px wide, ≤ 640px tall) ──────────────────── */
+@media (max-width: 767px) and (max-height: 640px) {
+  :root {
+    --H: min(78vw, 30svh);
+  }
+
+  #cap-title .cap-mask {
+    font-size: 24px;
+  }
+
+  #arr-left,
+  #arr-right {
+    bottom: 14px;
+  }
 }
 
 
@@ -676,7 +894,7 @@ html, body {
 
   <!-- 5. CAPTION -->
   <div id="caption" aria-live="polite">
-    <div id="cap-title"><div class="cap-mask"><span></span></div></div>
+    <div id="cap-title"><div class="cap-mask stone-type"><span></span></div></div>
     <div id="cap-sub"><div class="cap-mask"><span></span></div></div>
   </div>
 
@@ -710,10 +928,11 @@ html, body {
 
   <div id="detail-left">
     <div class="dl-mask"><div id="dl-sub" class="lbl"></div></div>
-    <div class="dl-mask"><div id="dl-title"></div></div>
+    <div class="dl-mask"><div id="dl-title" class="stone-type"></div></div>
     <div class="dl-mask"><div id="dl-meta" class="lbl"></div></div>
     <div class="dl-mask"><div id="dl-synopsis"></div></div>
     <div class="dl-mask"><div id="dl-credit"></div></div>
+    <div class="dl-mask"><div id="dl-scope"></div></div>
     <div class="dl-mask">
       <button id="dl-watch" class="lbl box">EXPLORE PROJECT</button>
     </div>
@@ -738,7 +957,19 @@ html, body {
   </div>
 </div>
 
-<!-- 9. CUSTOM CURSOR -->
+<!-- 9. INTERNAL ARCHIVE SHEET -->
+<div id="archive" role="dialog" aria-modal="true" aria-labelledby="archive-title" aria-hidden="true">
+  <button id="archive-close" class="lbl box" aria-label="Close archive">CLOSE</button>
+  <header id="archive-head">
+    <div id="archive-kicker" class="lbl"></div>
+    <h2 id="archive-title" class="stone-type"></h2>
+    <p id="archive-note"></p>
+  </header>
+  <div id="archive-grid"></div>
+  <p id="archive-empty" hidden>Archive imagery is being prepared.</p>
+</div>
+
+<!-- 10. CUSTOM CURSOR -->
 <div id="cursor" aria-hidden="true">
   <div id="cur-ring"></div>
   <div id="cur-dot"></div>
@@ -951,6 +1182,17 @@ const FILMS = [
     synopsis: 'Commercial brand film and FMCG broadcast campaign for Godavari Ghee (KNB Group Since 1951), celebrating traditional culinary warmth, pure cow & desi ghee, and motherly love across generations.',
     credit: 'Commercial Direction & Post — Sai Krishna Bethamcharla',
     liveUrl: '#',
+    scope: ['Commercial direction', 'Cinematography', 'Edit & grade', 'Sound design', 'Broadcast delivery'],
+    gallery: [
+      { src: './assets/godavari/ghee-end.jpg', label: 'Closing packshot', note: 'Godavari Ghee heritage film.' },
+      { src: './assets/godavari/frame-1.jpg', label: 'Film still 01', note: 'Frame from the broadcast cut.' },
+      { src: './assets/godavari/frame-3.jpg', label: 'Film still 03', note: 'Frame from the broadcast cut.' },
+      { src: './assets/godavari/frame-5.jpg', label: 'Film still 05', note: 'Frame from the broadcast cut.' },
+      { src: './assets/godavari/frame-7.jpg', label: 'Film still 07', note: 'Frame from the broadcast cut.' },
+      { src: './assets/godavari/frame-9.jpg', label: 'Film still 09', note: 'Frame from the broadcast cut.' },
+      { src: './assets/godavari/godavari-logo.png', label: 'Brand mark', note: 'Godavari Ghee wordmark.', fit: 'mark' },
+      { src: './assets/godavari/knb-logo.png', label: 'House mark', note: 'KNB Group — since 1951.', fit: 'mark' }
+    ],
     customTextures: true,
     customSpineUrl: null,
     customCoverUrl: null
@@ -985,6 +1227,13 @@ const FILMS = [
     synopsis: 'Comprehensive luxury brand identity, high-end packaging design, product cinematography, and e-commerce architecture.',
     credit: 'Creative Direction — Sai Krishna Bethamcharla',
     liveUrl: '#',
+    scope: ['Brand identity', 'Packaging suite', '5 SKUs', 'Product cinematography', 'E-commerce architecture'],
+    gallery: [
+      { src: './assets/aura/aura-logo-full.png', label: 'Primary lockup', note: 'Aura Organics full logo suite.', fit: 'mark' },
+      { src: './assets/aura/aura-kesh.png', label: 'Kesh', note: 'One of the five botanical SKUs.' },
+      { src: './assets/aura/aura-vector-logo.png', label: 'Vector master', note: 'Production-ready brand artwork.', fit: 'mark' },
+      { src: './assets/aura/aura-user-logo.png', label: 'Applied mark', note: 'Mark prepared for product application.', fit: 'mark' }
+    ],
     customTextures: true,
     customSpineUrl: null,
     customCoverUrl: null
@@ -1017,6 +1266,10 @@ const FILMS = [
     synopsis: 'Visual identity system, collegiate signage architecture, environmental wayfinding, and spatial brand deployment for Abacus Campus Brain Gym.',
     credit: 'Brand Architecture & Identity — Sai Krishna Bethamcharla',
     liveUrl: '#',
+    scope: ['Visual identity', 'Collegiate signage', 'Environmental wayfinding', 'Spatial brand deployment'],
+    gallery: [
+      { src: './assets/abacus/abacus-logo.jpg', label: 'Campus mark', note: 'Abacus Campus Brain Gym identity.' }
+    ],
     customTextures: true,
     customSpineUrl: null,
     customCoverUrl: null
@@ -1048,6 +1301,14 @@ const dlMeta      = document.getElementById('dl-meta');
 const dlSyn       = document.getElementById('dl-synopsis');
 const dlCredit    = document.getElementById('dl-credit');
 const dlWatch     = document.getElementById('dl-watch');
+const dlScope     = document.getElementById('dl-scope');
+const archive     = document.getElementById('archive');
+const archiveGrid = document.getElementById('archive-grid');
+const archiveEmpty = document.getElementById('archive-empty');
+const archiveTitle = document.getElementById('archive-title');
+const archiveKicker = document.getElementById('archive-kicker');
+const archiveNote  = document.getElementById('archive-note');
+const archiveClose = document.getElementById('archive-close');
 const posterImg   = document.getElementById('poster-img');
 const blobsEl     = document.getElementById('blobs');
 const cursor      = document.getElementById('cursor');
@@ -1065,6 +1326,7 @@ let cx = mx, cy = my;
 let tiltX = 0, tiltY = 0;
 let onCover = false;
 let isOpen = false;
+let isArchiveOpen = false;
 let isDragging = false;
 let dragStartX = 0;
 let dragStartT = 0;
@@ -1108,7 +1370,7 @@ function measureDimensions() {
 
   tabsNav.style.top     = Math.max(28, Math.round(SH / 2 - H / 2 - 118)) + 'px';
 
-  const captionTop = SH / 2 + H / 2 + 64;
+  const captionTop = SH / 2 + H / 2 + (SH < 700 ? 40 : 64);
   document.getElementById('caption').style.top = captionTop + 'px';
 
   const arrowTop = captionTop + 10;
@@ -1439,7 +1701,7 @@ function drawClassicBadge(ctx, x, y, w, h, text, textColor, borderColor, fontSiz
   ctx.strokeRect(x + 4, y + 4, w - 8, h - 8);
 
   ctx.fillStyle = textColor;
-  ctx.font = `700 ${fontSize}px "Newsreader", "Times New Roman", Georgia, serif`;
+  ctx.font = `700 ${fontSize}px "Cinzel", "Times New Roman", Georgia, serif`;
   ctx.textAlign = 'center';
   ctx.letterSpacing = '0.14em';
   ctx.fillText(text, x + w / 2, y + h * 0.68);
@@ -1459,7 +1721,7 @@ function drawCondensedSerifTitle(ctx, lines, centerX, startY, options = {}) {
 
   ctx.save();
   ctx.scale(scaleX, scaleY);
-  ctx.font = `700 ${fontSize}px "Newsreader", "Times New Roman", Georgia, serif`;
+  ctx.font = `700 ${fontSize}px "Cinzel", "Times New Roman", Georgia, serif`;
   ctx.letterSpacing = letterSpacing;
   ctx.textAlign = 'center';
 
@@ -1597,7 +1859,7 @@ function generateDoorSpine() {
   ctx.textAlign = 'center';
 
   ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-  ctx.font = '700 78px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.font = '700 78px "Cinzel", "Times New Roman", Georgia, serif';
   ctx.letterSpacing = '0.12em';
   ctx.fillText('THE DOOR AT 11:47', 2, 28);
 
@@ -1661,14 +1923,14 @@ function generateDoorCover() {
 
   // 2. TOP CREDIT
   ctx.fillStyle = '#c5b8a5';
-  ctx.font = '600 16px "Newsreader", Georgia, serif';
+  ctx.font = '600 16px "Cinzel", Georgia, serif';
   ctx.textAlign = 'center';
   ctx.letterSpacing = '0.30em';
   ctx.fillText('A FILM BY SAI KRISHNA', W / 2, 85);
 
   // 3. TITLE
   ctx.fillStyle = '#f0e8d8';
-  ctx.font = '700 86px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.font = '700 86px "Cinzel", "Times New Roman", Georgia, serif';
   ctx.letterSpacing = '0.04em';
   ctx.fillText('THE DOOR', W / 2, 195);
   ctx.fillText('AT 11:47', W / 2, 290);
@@ -1835,7 +2097,7 @@ function generateGmcksCover(portraitImg) {
 
   // 3. MONUMENTAL TITLE & AMBER SUBTITLE
   ctx.fillStyle = '#f5eedc';
-  ctx.font = '700 108px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.font = '700 108px "Cinzel", "Times New Roman", Georgia, serif';
   ctx.letterSpacing = '-0.02em';
   ctx.fillText('GMCKS', W / 2, 245);
 
@@ -2006,7 +2268,7 @@ function generateGmcksSpine(phLogoImg) {
   ctx.textAlign = 'center';
   
   ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-  ctx.font = '700 82px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.font = '700 82px "Cinzel", "Times New Roman", Georgia, serif';
   ctx.letterSpacing = '0.08em';
   ctx.fillText('GMCKS DOCUMENTARY', 2, 28);
 
@@ -2181,7 +2443,7 @@ function generateVasudhaSpine(vLogoImg) {
   
   // Subtle dark drop-shadow for debossed foil effect
   ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
-  ctx.font = '700 82px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.font = '700 82px "Cinzel", "Times New Roman", Georgia, serif';
   ctx.letterSpacing = '0.08em';
   ctx.fillText('VASUDHA PHARMA', 2, 28);
 
@@ -2227,7 +2489,7 @@ function generateVasudhaSpine(vLogoImg) {
   ctx.strokeRect(badgeX + 3.5, badgeY + 3.5, badgeW - 7, badgeH - 7);
 
   ctx.fillStyle = '#102740';
-  ctx.font = '700 42px "Newsreader", Georgia, serif';
+  ctx.font = '700 42px "Cinzel", Georgia, serif';
   ctx.textAlign = 'center';
   ctx.letterSpacing = '0.12em';
   ctx.fillText('WEB', W / 2, badgeY + badgeH * 0.72);
@@ -2290,7 +2552,7 @@ function generateVasudhaCover(vLogoImg, chairmanImg, siteImg, cleanroomImg) {
 
   // 3. MONUMENTAL CORPORATE TITLE
   ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
-  ctx.font = '700 100px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.font = '700 100px "Cinzel", "Times New Roman", Georgia, serif';
   ctx.letterSpacing = '-0.01em';
   ctx.fillText('VASUDHA', W / 2 + 2, 237);
 
@@ -2572,7 +2834,7 @@ function generateZaiLabsSpine(zaiLogoImg, zaiMarkImg) {
   ctx.strokeRect(badgeX + 3.5, badgeY + 3.5, badgeW - 7, badgeH - 7);
 
   ctx.fillStyle = '#0a1017';
-  ctx.font = '700 40px "Newsreader", Georgia, serif';
+  ctx.font = '700 40px "Cinzel", Georgia, serif';
   ctx.textAlign = 'center';
   ctx.letterSpacing = '0.12em';
   ctx.fillText('WEB', W / 2, badgeY + badgeH * 0.72);
@@ -2853,7 +3115,7 @@ function generatePranicHealingSpine(phLogoImg) {
 
   // Warm engraved shadow
   ctx.fillStyle = 'rgba(160, 130, 80, 0.35)';
-  ctx.font = '700 78px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.font = '700 78px "Cinzel", "Times New Roman", Georgia, serif';
   ctx.letterSpacing = '0.22em';
   ctx.fillText('PRANIC HEALING', 2, 28);
 
@@ -2882,7 +3144,7 @@ function generatePranicHealingSpine(phLogoImg) {
 
   // Architect credit
   ctx.fillStyle = '#5c4918';
-  ctx.font = '700 22px "Newsreader", Georgia, serif';
+  ctx.font = '700 22px "Cinzel", Georgia, serif';
   ctx.textAlign = 'center';
   ctx.letterSpacing = '0.24em';
   ctx.fillText('SAI KRISHNA', W / 2, H - 228);
@@ -2908,7 +3170,7 @@ function generatePranicHealingSpine(phLogoImg) {
   ctx.strokeRect(badgeX + 3.5, badgeY + 3.5, badgeW - 7, badgeH - 7);
 
   ctx.fillStyle = '#0f3c3a';
-  ctx.font = '700 40px "Newsreader", Georgia, serif';
+  ctx.font = '700 40px "Cinzel", Georgia, serif';
   ctx.textAlign = 'center';
   ctx.letterSpacing = '0.12em';
   ctx.fillText('WEB', W / 2, badgeY + badgeH * 0.72);
@@ -3058,7 +3320,7 @@ function generatePranicHealingCover(phLogoImg, mandalaImg, gmcksImg) {
   ctx.fillText('ENERGY HEALING BY GRAND MASTER CHOA KOK SUI', W / 2, tY);
 
   ctx.fillStyle = '#0f3c3a';
-  ctx.font = '700 82px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.font = '700 82px "Cinzel", "Times New Roman", Georgia, serif';
   ctx.letterSpacing = '0.04em';
   ctx.fillText('PRANIC HEALING', W / 2, tY + 84);
 
@@ -3161,7 +3423,7 @@ function generateOdysseySpine() {
   ctx.rotate(Math.PI / 2);
   ctx.textAlign = 'center';
   ctx.fillStyle = '#ffffff';
-  ctx.font = '700 80px "Newsreader", serif';
+  ctx.font = '700 80px "Cinzel", serif';
   ctx.letterSpacing = '0.12em';
   ctx.fillText('ODYSSEY NARRATIVE', 0, 26);
   ctx.restore();
@@ -3205,13 +3467,13 @@ function generateOdysseyCover() {
 
   // Top header
   ctx.fillStyle = '#93c5fd';
-  ctx.font = '600 16px "Newsreader", Georgia, serif';
+  ctx.font = '600 16px "Cinzel", Georgia, serif';
   ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
   ctx.fillText('A FILM BY SAI KRISHNA', W / 2, 85);
 
   // Title
   ctx.fillStyle = '#ffffff';
-  ctx.font = '700 90px "Newsreader", serif';
+  ctx.font = '700 90px "Cinzel", serif';
   ctx.letterSpacing = '0.06em';
   ctx.fillText('ODYSSEY', W / 2, 195);
   ctx.fillText('NARRATIVE', W / 2, 290);
@@ -3361,7 +3623,7 @@ function generateGmcksSpine(phLogoImg) {
   ctx.textAlign = 'center';
   
   ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-  ctx.font = '700 82px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.font = '700 82px "Cinzel", "Times New Roman", Georgia, serif';
   ctx.letterSpacing = '0.08em';
   ctx.fillText('GMCKS DOCUMENTARY', 2, 28);
 
@@ -3536,7 +3798,7 @@ function generateVasudhaSpine(vLogoImg) {
   
   // Subtle dark drop-shadow for debossed foil effect
   ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
-  ctx.font = '700 82px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.font = '700 82px "Cinzel", "Times New Roman", Georgia, serif';
   ctx.letterSpacing = '0.08em';
   ctx.fillText('VASUDHA PHARMA', 2, 28);
 
@@ -3582,7 +3844,7 @@ function generateVasudhaSpine(vLogoImg) {
   ctx.strokeRect(badgeX + 3.5, badgeY + 3.5, badgeW - 7, badgeH - 7);
 
   ctx.fillStyle = '#102740';
-  ctx.font = '700 42px "Newsreader", Georgia, serif';
+  ctx.font = '700 42px "Cinzel", Georgia, serif';
   ctx.textAlign = 'center';
   ctx.letterSpacing = '0.12em';
   ctx.fillText('WEB', W / 2, badgeY + badgeH * 0.72);
@@ -3645,7 +3907,7 @@ function generateVasudhaCover(vLogoImg, chairmanImg, siteImg, cleanroomImg) {
 
   // 3. MONUMENTAL CORPORATE TITLE
   ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
-  ctx.font = '700 100px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.font = '700 100px "Cinzel", "Times New Roman", Georgia, serif';
   ctx.letterSpacing = '-0.01em';
   ctx.fillText('VASUDHA', W / 2 + 2, 237);
 
@@ -3927,7 +4189,7 @@ function generateZaiLabsSpine(zaiLogoImg, zaiMarkImg) {
   ctx.strokeRect(badgeX + 3.5, badgeY + 3.5, badgeW - 7, badgeH - 7);
 
   ctx.fillStyle = '#0a1017';
-  ctx.font = '700 40px "Newsreader", Georgia, serif';
+  ctx.font = '700 40px "Cinzel", Georgia, serif';
   ctx.textAlign = 'center';
   ctx.letterSpacing = '0.12em';
   ctx.fillText('WEB', W / 2, badgeY + badgeH * 0.72);
@@ -4208,7 +4470,7 @@ function generatePranicHealingSpine(phLogoImg) {
 
   // Warm engraved shadow
   ctx.fillStyle = 'rgba(160, 130, 80, 0.35)';
-  ctx.font = '700 78px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.font = '700 78px "Cinzel", "Times New Roman", Georgia, serif';
   ctx.letterSpacing = '0.22em';
   ctx.fillText('PRANIC HEALING', 2, 28);
 
@@ -4237,7 +4499,7 @@ function generatePranicHealingSpine(phLogoImg) {
 
   // Architect credit
   ctx.fillStyle = '#5c4918';
-  ctx.font = '700 22px "Newsreader", Georgia, serif';
+  ctx.font = '700 22px "Cinzel", Georgia, serif';
   ctx.textAlign = 'center';
   ctx.letterSpacing = '0.24em';
   ctx.fillText('SAI KRISHNA', W / 2, H - 228);
@@ -4263,7 +4525,7 @@ function generatePranicHealingSpine(phLogoImg) {
   ctx.strokeRect(badgeX + 3.5, badgeY + 3.5, badgeW - 7, badgeH - 7);
 
   ctx.fillStyle = '#0f3c3a';
-  ctx.font = '700 40px "Newsreader", Georgia, serif';
+  ctx.font = '700 40px "Cinzel", Georgia, serif';
   ctx.textAlign = 'center';
   ctx.letterSpacing = '0.12em';
   ctx.fillText('WEB', W / 2, badgeY + badgeH * 0.72);
@@ -4413,7 +4675,7 @@ function generatePranicHealingCover(phLogoImg, mandalaImg, gmcksImg) {
   ctx.fillText('ENERGY HEALING BY GRAND MASTER CHOA KOK SUI', W / 2, tY);
 
   ctx.fillStyle = '#0f3c3a';
-  ctx.font = '700 82px "Newsreader", "Times New Roman", Georgia, serif';
+  ctx.font = '700 82px "Cinzel", "Times New Roman", Georgia, serif';
   ctx.letterSpacing = '0.04em';
   ctx.fillText('PRANIC HEALING', W / 2, tY + 84);
 
@@ -4516,7 +4778,7 @@ function generateOdysseySpine() {
   ctx.rotate(Math.PI / 2);
   ctx.textAlign = 'center';
   ctx.fillStyle = '#ffffff';
-  ctx.font = '700 80px "Newsreader", serif';
+  ctx.font = '700 80px "Cinzel", serif';
   ctx.letterSpacing = '0.12em';
   ctx.fillText('ODYSSEY NARRATIVE', 0, 26);
   ctx.restore();
@@ -4560,13 +4822,13 @@ function generateOdysseyCover() {
 
   // Top header
   ctx.fillStyle = '#93c5fd';
-  ctx.font = '600 16px "Newsreader", Georgia, serif';
+  ctx.font = '600 16px "Cinzel", Georgia, serif';
   ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
   ctx.fillText('A FILM BY SAI KRISHNA', W / 2, 85);
 
   // Title
   ctx.fillStyle = '#ffffff';
-  ctx.font = '700 90px "Newsreader", serif';
+  ctx.font = '700 90px "Cinzel", serif';
   ctx.letterSpacing = '0.06em';
   ctx.fillText('ODYSSEY', W / 2, 195);
   ctx.fillText('NARRATIVE', W / 2, 290);
@@ -4665,7 +4927,7 @@ function generateNoonSpine() {
   ctx.rotate(Math.PI / 2);
   ctx.textAlign = 'center';
   ctx.fillStyle = '#23140a';
-  ctx.font = '700 80px "Newsreader", serif';
+  ctx.font = '700 80px "Cinzel", serif';
   ctx.letterSpacing = '0.12em';
   ctx.fillText('NOON IN ASHES', 0, 26);
   ctx.restore();
@@ -4703,13 +4965,13 @@ function generateNoonCover() {
 
   // Top header
   ctx.fillStyle = '#4a2810';
-  ctx.font = '600 16px "Newsreader", Georgia, serif';
+  ctx.font = '600 16px "Cinzel", Georgia, serif';
   ctx.textAlign = 'center'; ctx.letterSpacing = '0.30em';
   ctx.fillText('A FILM BY SAI KRISHNA', W / 2, 85);
 
   // Title
   ctx.fillStyle = '#231206';
-  ctx.font = '700 92px "Newsreader", serif';
+  ctx.font = '700 92px "Cinzel", serif';
   ctx.letterSpacing = '0.04em';
   ctx.fillText('NOON IN', W / 2, 195);
   ctx.fillText('ASHES', W / 2, 290);
@@ -4901,7 +5163,7 @@ function generateNeoBelvaSpine(emblemImg) {
   ctx.shadowColor = 'rgba(56, 189, 248, 0.35)';
   ctx.shadowBlur = 12;
   ctx.fillStyle = '#ffffff';
-  ctx.font = '700 82px "Newsreader", serif';
+  ctx.font = '700 82px "Cinzel", serif';
   ctx.letterSpacing = '0.12em';
   ctx.fillText('NEO BELVA', 0, 26);
   ctx.restore();
@@ -5023,7 +5285,7 @@ function generateNeoBelvaCover(emblemImg, lockupImg) {
   // Editorial Section
   const subY = 1010;
   ctx.fillStyle = '#ffffff';
-  ctx.font = '700 34px "Newsreader", serif';
+  ctx.font = '700 34px "Cinzel", serif';
   ctx.textAlign = 'center'; ctx.letterSpacing = '0.04em';
   ctx.fillText('NURTURING POTENTIAL', W / 2, subY);
 
@@ -5113,7 +5375,7 @@ function generateGodavariSpine(gheeLogoImg, knbLogoImg) {
   ctx.shadowColor = 'rgba(239, 68, 68, 0.5)';
   ctx.shadowBlur = 10;
   ctx.fillStyle = '#facc15';
-  ctx.font = '800 78px "Newsreader", serif';
+  ctx.font = '800 78px "Cinzel", serif';
   ctx.letterSpacing = '0.10em';
   ctx.fillText('GODAVARI GHEE', 0, 26);
   ctx.restore();
@@ -5247,7 +5509,7 @@ function generateGodavariCover(packshotImg, gheeLogoImg) {
   // Editorial Section
   const subY = 1010;
   ctx.fillStyle = '#ffffff';
-  ctx.font = '700 34px "Newsreader", serif';
+  ctx.font = '700 34px "Cinzel", serif';
   ctx.letterSpacing = '0.04em';
   ctx.fillText('HERITAGE CULINARY TRADITION', W / 2, subY);
 
@@ -5332,7 +5594,7 @@ function generateGreenFieldSpine(gfsLogoImg) {
   ctx.shadowColor = 'rgba(34, 197, 94, 0.4)';
   ctx.shadowBlur = 10;
   ctx.fillStyle = '#f0fdf4';
-  ctx.font = '700 76px "Newsreader", serif';
+  ctx.font = '700 76px "Cinzel", serif';
   ctx.letterSpacing = '0.10em';
   ctx.fillText('GREEN FIELD', 0, 26);
   ctx.restore();
@@ -5478,7 +5740,7 @@ function generateGreenFieldCover(gfsLogoImg) {
   // Editorial Section
   const subY = 1010;
   ctx.fillStyle = '#ffffff';
-  ctx.font = '700 34px "Newsreader", serif';
+  ctx.font = '700 34px "Cinzel", serif';
   ctx.textAlign = 'center'; ctx.letterSpacing = '0.04em';
   ctx.fillText('NURTURING GLOBAL LEADERS', W / 2, subY);
 
@@ -5583,7 +5845,7 @@ function generateAuraSpine(auraKeshImg, auraFullImg) {
   ctx.shadowColor = 'rgba(212, 175, 55, 0.45)';
   ctx.shadowBlur = 10;
   ctx.fillStyle = '#fef3c7';
-  ctx.font = '700 80px "Newsreader", serif';
+  ctx.font = '700 80px "Cinzel", serif';
   ctx.letterSpacing = '0.12em';
   ctx.fillText('AURA ORGANICS', 0, 26);
   ctx.restore();
@@ -5730,7 +5992,7 @@ function generateAuraCover(auraFullImg, auraKeshImg) {
   // Editorial Section
   const subY = 1010;
   ctx.fillStyle = '#ffffff';
-  ctx.font = '700 34px "Newsreader", serif';
+  ctx.font = '700 34px "Cinzel", serif';
   ctx.textAlign = 'center'; ctx.letterSpacing = '0.04em';
   ctx.fillText('SANSKRIT-ROOTED LUXURY', W / 2, subY);
 
@@ -5836,7 +6098,7 @@ function generateVirupakshaSpine(portraitImg) {
   ctx.shadowColor = 'rgba(251, 146, 60, 0.4)';
   ctx.shadowBlur = 10;
   ctx.fillStyle = '#f8fafc';
-  ctx.font = '700 76px "Newsreader", serif';
+  ctx.font = '700 76px "Cinzel", serif';
   ctx.letterSpacing = '0.10em';
   ctx.fillText('VIRUPAKSHA', 0, 26);
   ctx.restore();
@@ -5986,14 +6248,14 @@ function generateVirupakshaCover(portraitImg, nightLakeImg) {
   // Subtitle / Mantra under hero
   const tagY = cardY + cardH + 50;
   ctx.fillStyle = '#f8fafc';
-  ctx.font = '700 24px "Newsreader", serif';
+  ctx.font = '700 24px "Cinzel", serif';
   ctx.textAlign = 'center'; ctx.letterSpacing = '0.08em';
   ctx.fillText('HEALING • GROUNDING • CONSCIOUS LIVING', W / 2, tagY);
 
   // Editorial Section
   const subY = 1010;
   ctx.fillStyle = '#ffffff';
-  ctx.font = '700 34px "Newsreader", serif';
+  ctx.font = '700 34px "Cinzel", serif';
   ctx.letterSpacing = '0.04em';
   ctx.fillText('HOLISTIC WELLNESS SANCTUARY', W / 2, subY);
 
@@ -6073,7 +6335,7 @@ function generateAbacusSpine(abacusLogoImg) {
   ctx.shadowColor = 'rgba(220, 38, 38, 0.6)';
   ctx.shadowBlur = 8;
   ctx.fillStyle = '#facc15';
-  ctx.font = '800 78px "Newsreader", serif';
+  ctx.font = '800 78px "Cinzel", serif';
   ctx.letterSpacing = '0.10em';
   ctx.fillText('ABACUS CAMPUS', 0, 26);
   ctx.restore();
@@ -6232,7 +6494,7 @@ function generateAbacusCover(abacusLogoImg) {
   // Editorial Section
   const subY = 1010;
   ctx.fillStyle = '#ffffff';
-  ctx.font = '700 34px "Newsreader", serif';
+  ctx.font = '700 34px "Cinzel", serif';
   ctx.textAlign = 'center'; ctx.letterSpacing = '0.04em';
   ctx.fillText('BRAIN GYM CAMPUS', W / 2, subY);
 
@@ -6537,6 +6799,80 @@ const INK_BLOBS = [
   { cx: 230, cy: 470, delay: 180 }
 ];
 
+function openArchive() {
+  if (isArchiveOpen) return;
+
+  const film = FILMS[active];
+  const items = [...(film.gallery || [])];
+
+  if (items.length < 2 && film.customCoverUrl) {
+    items.push({ src: film.customCoverUrl, label: 'Book cover', note: 'Generated shelf artwork.' });
+  }
+  if (!items.length) return;
+
+  isArchiveOpen = true;
+  archiveKicker.textContent = `${film.genre} — ${film.year}`;
+  archiveTitle.textContent = film.title;
+  archiveNote.textContent = film.synopsis;
+  archive.setAttribute('aria-hidden', 'false');
+
+  archiveGrid.innerHTML = '';
+  archiveEmpty.hidden = true;
+
+  items.forEach((item, i) => {
+    const fig = document.createElement('figure');
+    fig.className = 'archive-card' + (item.fit === 'mark' ? ' is-mark' : '');
+
+    const img = document.createElement('img');
+    img.className = 'archive-media';
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.alt = `${film.title} — ${item.label}`;
+    img.src = item.src;
+    img.addEventListener('error', () => {
+      fig.remove();
+      if (!archiveGrid.children.length) archiveEmpty.hidden = false;
+    });
+
+    const cap = document.createElement('figcaption');
+    const label = document.createElement('span');
+    label.className = 'archive-label lbl';
+    label.textContent = item.label;
+    cap.appendChild(label);
+
+    if (item.note) {
+      const note = document.createElement('span');
+      note.className = 'archive-note';
+      note.textContent = item.note;
+      cap.appendChild(note);
+    }
+
+    fig.appendChild(img);
+    fig.appendChild(cap);
+    archiveGrid.appendChild(fig);
+
+    fig.animate(
+      [{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'translateY(0)' }],
+      { duration: 500, delay: 80 + i * 55, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'both' }
+    );
+  });
+
+  archive.style.visibility = 'visible';
+  archive.scrollTop = 0;
+  archive.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 380, easing: 'ease', fill: 'both' });
+}
+
+function closeArchive() {
+  if (!isArchiveOpen) return;
+  const anim = archive.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220, easing: 'ease', fill: 'both' });
+  anim.onfinish = () => {
+    archive.style.visibility = 'hidden';
+    archive.setAttribute('aria-hidden', 'true');
+    archive.getAnimations().forEach(a => a.cancel());
+    isArchiveOpen = false;
+  };
+}
+
 function openDetail() {
   if (isOpen) return;
   isOpen = true;
@@ -6555,10 +6891,22 @@ function openDetail() {
   if (film.liveUrl && film.liveUrl !== '#') {
     dlWatch.textContent = 'EXPLORE PROJECT';
     dlWatch.onclick = () => window.open(film.liveUrl, '_blank', 'noopener,noreferrer');
+  } else if (film.gallery && film.gallery.length) {
+    dlWatch.textContent = 'VIEW CASE STUDY';
+    dlWatch.onclick = openArchive;
   } else {
     dlWatch.textContent = 'INTERNAL ARCHIVE';
     dlWatch.onclick = null;
   }
+
+  dlScope.innerHTML = '';
+  dlScope.parentElement.hidden = !(film.scope && film.scope.length);
+  (film.scope || []).forEach(item => {
+    const chip = document.createElement('span');
+    chip.className = 'scope-chip';
+    chip.textContent = item;
+    dlScope.appendChild(chip);
+  });
 
   // Detail poster SVG mapping:
   if (film.customTextures && film.customCoverUrl) {
@@ -6701,6 +7049,7 @@ if (backLink) {
 // Play ring & close button
 playRing.addEventListener('click', openDetail);
 detClose.addEventListener('click', closeDetail);
+archiveClose.addEventListener('click', closeArchive);
 
 // Stage Pointer Drag & Click
 stage.addEventListener('pointerdown', e => {
@@ -6819,6 +7168,7 @@ window.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft')  { T = Math.round(T) - 1; }
   if (e.key === 'ArrowRight') { T = Math.round(T) + 1; }
   if (e.key === 'Enter' && !isOpen) { openDetail(); }
+  if (e.key === 'Escape' && isArchiveOpen) { closeArchive(); return; }
   if (e.key === 'Escape' && isOpen) { closeDetail(); }
 });
 
@@ -6916,6 +7266,17 @@ async function init() {
     loadImg('./assets/greenfield/gfs-logo.png')
   ]);
 
+  // Covers are painted into canvas — make sure Cinzel is rasterised before drawing
+  try {
+    await Promise.all([
+      document.fonts.load('700 100px "Cinzel"'),
+      document.fonts.load('400 16px "Cinzel"'),
+      document.fonts.load('400 20px "Newsreader"'),
+      document.fonts.load('italic 20px "Newsreader"'),
+    ]);
+    await document.fonts.ready;
+  } catch { /* fall back to Georgia if the webfont never resolves */ }
+
   const gmcksFilm = FILMS.find(f => f.id === 'gmcks');
   if (gmcksFilm) {
     gmcksFilm.customSpineUrl = generateGmcksSpine(phLogoImg);
@@ -7012,9 +7373,46 @@ async function init() {
   requestAnimationFrame(render);
 }
 
+// Parent page (⌘K command palette): jump straight to a case on the shelf
+window.addEventListener('message', (e) => {
+  const data = e.data;
+  if (!data || data.type !== 'SELECT_PROJECT') return;
+
+  const idx = FILMS.findIndex(f => f.id === data.id);
+  if (idx < 0) return;
+
+  if (isArchiveOpen) closeArchive();
+  if (isOpen) closeDetail();
+
+  // Rotate by the shortest path around the shelf loop, then let the render
+  // loop settle the strip on the requested book.
+  T = Math.round(T);
+  const curMod = ((T % N) + N) % N;
+  let diff = idx - curMod;
+  if (diff > N / 2)  diff -= N;
+  if (diff < -N / 2) diff += N;
+  T += diff;
+  lastInteractionTime = performance.now();
+
+  if (data.open !== false) {
+    // Wait until the shelf has actually settled on the requested book, so the
+    // detail sheet opens on the right case instead of the one it flew past.
+    const target = idx;
+    let waited = 0;
+    const openWhenSettled = () => {
+      if (isOpen) return;
+      if (active === target || waited >= 3000) { openDetail(); return; }
+      waited += 120;
+      setTimeout(openWhenSettled, 120);
+    };
+    setTimeout(openWhenSettled, 180);
+  }
+});
+
 window.addEventListener('resize', () => {
   measureDimensions();
   buildShelf();
+  updateCategoryTabs(FILMS[active].category);
 });
 
 init();
